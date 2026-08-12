@@ -1,0 +1,50 @@
+USE `Biblioteka_VP_2026`;
+
+DROP VIEW IF EXISTS `svipodacioknjigamasaslikom`;
+DROP VIEW IF EXISTS `svipodacioknjigama`;
+
+CREATE VIEW `svipodacioknjigama` AS
+SELECT 
+    `knjiga`.`ISBN`,
+    `knjiga`.`Naziv`,
+    `knjiga`.`Autor`,
+    `zanr`.`Naziv` AS `NazivZanra`
+FROM `knjiga`
+INNER JOIN `zanr`
+ON `knjiga`.`OznakaZanra` = `zanr`.`Oznaka`;
+
+CREATE VIEW `svipodacioknjigamasaslikom` AS
+SELECT 
+    `knjiga`.`ISBN`,
+    `knjiga`.`Naziv`,
+    `knjiga`.`Autor`,
+    `zanr`.`Naziv` AS `NazivZanra`,
+    `knjiga`.`NazivFajlaSlike`
+FROM `knjiga`
+INNER JOIN `zanr`
+ON `knjiga`.`OznakaZanra` = `zanr`.`Oznaka`;
+
+DROP PROCEDURE IF EXISTS `DodajKnjigu`;
+
+DELIMITER $$
+
+CREATE PROCEDURE `DodajKnjigu`
+(
+    IN ISBNParametar VARCHAR(13),
+    IN NazivParametar VARCHAR(100),
+    IN AutorParametar VARCHAR(100),
+    IN OznakaZanraParametar CHAR(2),
+    IN NazivFajlaSlikeParametar VARCHAR(100)
+)
+BEGIN
+    INSERT INTO `knjiga`
+    (`ISBN`, `Naziv`, `Autor`, `OznakaZanra`, `NazivFajlaSlike`)
+    VALUES
+    (ISBNParametar, NazivParametar, AutorParametar, OznakaZanraParametar, NazivFajlaSlikeParametar);
+
+    UPDATE `zanr`
+    SET `UkupanBrojKnjiga` = `UkupanBrojKnjiga` + 1
+    WHERE `Oznaka` = OznakaZanraParametar;
+END $$
+
+DELIMITER ;
