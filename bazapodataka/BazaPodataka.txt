@@ -4,23 +4,23 @@ COLLATE utf8mb4_unicode_ci;
 
 USE `Biblioteka_VP_2026`;
 
-CREATE TABLE `zanr`
+CREATE TABLE `kategorija_igre`
 (
    `Oznaka` CHAR(2) NOT NULL PRIMARY KEY,
    `Naziv` VARCHAR(50) NOT NULL,
-   `UkupanBrojKnjiga` INT NOT NULL DEFAULT 0
+   `UkupanBrojIgara` INT NOT NULL DEFAULT 0
 );
 
-CREATE TABLE `knjiga`
+CREATE TABLE `drustvena_igra`
 (
-   `ISBN` VARCHAR(13) NOT NULL PRIMARY KEY,
+   `SifraIgre` VARCHAR(13) NOT NULL PRIMARY KEY,
    `Naziv` VARCHAR(100) NOT NULL,
-   `Autor` VARCHAR(100) NOT NULL,
-   `OznakaZanra` CHAR(2) NOT NULL,
+   `Proizvodjac` VARCHAR(100) NOT NULL,
+   `OznakaKategorije` CHAR(2) NOT NULL,
    `NazivFajlaSlike` VARCHAR(100) NULL,
    `Cena` DECIMAL(10,2) NULL,
-   CONSTRAINT `FK_KNJIGA_ZANR`
-   FOREIGN KEY (`OznakaZanra`) REFERENCES `zanr`(`Oznaka`)
+   CONSTRAINT `FK_IGRA_KATEGORIJA`
+   FOREIGN KEY (`OznakaKategorije`) REFERENCES `kategorija_igre`(`Oznaka`)
    ON DELETE RESTRICT
    ON UPDATE CASCADE
 );
@@ -40,24 +40,27 @@ CREATE TABLE `KORISNIK`
 CREATE TABLE `nabavka`
 (
    `IDNabavke` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   `BrojNaloga` VARCHAR(50) NOT NULL,
    `DatumNabavke` DATE NOT NULL,
    `Dobavljac` VARCHAR(100) NOT NULL,
-   `Napomena` VARCHAR(255) NULL
+   `Napomena` VARCHAR(255) NULL,
+   `NalogEvidentirao` VARCHAR(100) NOT NULL,
+   CONSTRAINT `UQ_NABAVKA_BROJNALOGA` UNIQUE (`BrojNaloga`)
 );
 
 CREATE TABLE `stavka_nabavke`
 (
    `IDStavke` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
    `IDNabavke` INT NOT NULL,
-   `ISBN` VARCHAR(13) NOT NULL,
+   `SifraIgre` VARCHAR(13) NOT NULL,
    `Kolicina` INT NOT NULL,
    `Cena` DECIMAL(10,2) NOT NULL,
    CONSTRAINT `FK_STAVKA_NABAVKA`
    FOREIGN KEY (`IDNabavke`) REFERENCES `nabavka`(`IDNabavke`)
    ON DELETE CASCADE
    ON UPDATE CASCADE,
-   CONSTRAINT `FK_STAVKA_KNJIGA`
-   FOREIGN KEY (`ISBN`) REFERENCES `knjiga`(`ISBN`)
+   CONSTRAINT `FK_STAVKA_IGRA`
+   FOREIGN KEY (`SifraIgre`) REFERENCES `drustvena_igra`(`SifraIgre`)
    ON DELETE RESTRICT
    ON UPDATE CASCADE
 );
@@ -67,24 +70,24 @@ INSERT INTO `KORISNIK`
 VALUES
 ('Кази', 'Љубица', 'ljubicakazi@hotmail.com', 'lkazi', 'lk', 'Ljubica.jpg', 'admin');
 
-INSERT INTO `zanr` (`Oznaka`, `Naziv`, `UkupanBrojKnjiga`)
+INSERT INTO `kategorija_igre` (`Oznaka`, `Naziv`, `UkupanBrojIgara`)
 VALUES
-('RM', 'Roman', 0),
-('DR', 'Drama', 0),
-('IS', 'Istorija', 0),
-('NA', 'Nauka', 0),
-('PR', 'Programiranje', 0);
+('ST', 'Strategija', 0),
+('PA', 'Zabavne', 0),
+('PO', 'Porodične', 0),
+('KO', 'Kooperativne', 0),
+('KA', 'Kartaške', 0);
 
-INSERT INTO `knjiga`
-(`ISBN`, `Naziv`, `Autor`, `OznakaZanra`, `NazivFajlaSlike`, `Cena`)
+INSERT INTO `drustvena_igra`
+(`SifraIgre`, `Naziv`, `Proizvodjac`, `OznakaKategorije`, `NazivFajlaSlike`, `Cena`)
 VALUES
-('9788652101234', 'Na Drini cuprija', 'Ivo Andric', 'RM', NULL, 1200.00),
-('9788679912345', 'Prokleta avlija', 'Ivo Andric', 'RM', NULL, 850.00),
-('9788654321001', 'PHP i MySQL', 'Marko Markovic', 'PR', NULL, 1500.00);
+('CATAN001', 'Catan', 'Klaus Teuber', 'ST', NULL, 4500.00),
+('MONO001', 'Monopol', 'Hasbro', 'PO', NULL, 3200.00),
+('AZUL001', 'Azul', 'Plan B Games', 'ST', NULL, 3800.00);
 
-UPDATE `zanr`
-SET `UkupanBrojKnjiga` = (
+UPDATE `kategorija_igre`
+SET `UkupanBrojIgara` = (
     SELECT COUNT(*)
-    FROM `knjiga`
-    WHERE `knjiga`.`OznakaZanra` = `zanr`.`Oznaka`
+    FROM `drustvena_igra`
+    WHERE `drustvena_igra`.`OznakaKategorije` = `kategorija_igre`.`Oznaka`
 );

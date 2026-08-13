@@ -2,7 +2,7 @@
 
 **Projekat:** Nabavka društvenih igara (VP 2025/26)  
 **Referenca:** [PROJECT_SPEC.md](PROJECT_SPEC.md)  
-**Statusi:** `SATISFIED_BY_TEMPLATE` | `NEEDS_ADAPTATION` | `MISSING` | `BLOCKED`
+**Statusi:** `SATISFIED_BY_TEMPLATE` | `NEEDS_ADAPTATION` | `MISSING` | `BLOCKED` | `VERIFIED`
 
 ---
 
@@ -24,7 +24,7 @@
 
 | ID | Requirement | Source | Interpretation | Template status | Required adaptation | Planned location | Verification | Status |
 |----|-------------|--------|----------------|-----------------|---------------------|------------------|--------------|--------|
-| NF-01 | Baza na srpskom | Profesor PDF | Nazivi tabela/kolona na srpskom | Delimično (`nabavka`, `knjiga` latinica) | Preimenovanje/adaptacija na domen igara | `bazapodataka/*.txt` | Pregled SQL skripte | NEEDS_ADAPTATION |
+| NF-01 | Baza na srpskom | Profesor PDF | Nazivi tabela/kolona na srpskom | Delimično (`nabavka`, `knjiga` latinica) | Preimenovanje/adaptacija na domen igara | `bazapodataka/*.txt` | Pregled SQL skripte | VERIFIED |
 | NF-02 | Kod na srpskom | Profesor PDF | Poruke/UI na srpskom | Da (ćirilica u UI) | Adaptacija preostalih knjižnih tekstova | `pogledi/`, `delovi/`, akcije | Pregled UI tekstova | NEEDS_ADAPTATION |
 | NF-03 | UI na srpskom | Profesor PDF | Svi ekrani na srpskom | Da | Tekstovi „knjiga“→„igra“, „nabavka knjiga“→„nalog“ | `pogledi/`, `delovi/` | Pregled ekrana | NEEDS_ADAPTATION |
 | NF-04 | Poslovna veb aplikacija | Profesor PDF | Nabavka igara za klub | Da (biblioteka/nabavka) | Domain adapt | Cela aplikacija | Pregled namene | NEEDS_ADAPTATION |
@@ -38,8 +38,8 @@
 | ID | Requirement | Source | Interpretation | Template status | Required adaptation | Planned location | Verification | Status |
 |----|-------------|--------|----------------|-----------------|---------------------|------------------|--------------|--------|
 | TECH-01 | PHP bez frameworka | Profesor PDF | — | Da | Nema | Ceo projekat | Nema Laravel/Symfony | SATISFIED_BY_TEMPLATE |
-| TECH-02 | Min 4 tabele | Profesor PDF | korisnik, kategorija, igra, nabavka, stavka | 5 tabela (`zanr`, `knjiga`, `KORISNIK`, `nabavka`, `stavka_nabavke`) | Rename/adapt šifarnika | `bazapodataka/BazaPodataka.txt` | COUNT tabela ≥ 4 | NEEDS_ADAPTATION |
-| TECH-03 | 3 povezane (celina-deo-šifarnik) | Profesor PDF | nabavka–stavka–drustvena_igra | Da (nabavka–stavka–knjiga) | FK na `drustvena_igra` | SQL + repozitorijumi | ER dijagram | NEEDS_ADAPTATION |
+| TECH-02 | Min 4 tabele | Profesor PDF | korisnik, kategorija, igra, nabavka, stavka | 5 tabela (`zanr`, `knjiga`, `KORISNIK`, `nabavka`, `stavka_nabavke`) | Rename/adapt šifarnika | `bazapodataka/BazaPodataka.txt` | COUNT tabela ≥ 4 | VERIFIED |
+| TECH-03 | 3 povezane (celina-deo-šifarnik) | Profesor PDF | nabavka–stavka–drustvena_igra | Da (nabavka–stavka–knjiga) | FK na `drustvena_igra` | SQL + repozitorijumi | ER dijagram | VERIFIED |
 | TECH-04 | Nezavisna korisnik | Profesor PDF | Login tabela | Da (`KORISNIK`) | KEEP | `repozitorijumi/DBKorisnik.php` | Tabela bez FK na poslovne | SATISFIED_BY_TEMPLATE |
 | TECH-05 | Stored procedure | Profesor PDF | SP za katalog | Da (`DodajKnjigu`) | Adapt na igre | `bazapodataka/Pogledi i Stored procedure.txt`, `DBKnjigaSP.php` | CALL iz PHP | NEEDS_ADAPTATION |
 | TECH-06 | Pogledi VIEW | Profesor PDF | VIEW za katalog | Da (`svipodacioknjigama*`) | Adapt na igre | SQL, `DBKnjigaV.php` | SELECT iz VIEW | NEEDS_ADAPTATION |
@@ -57,24 +57,24 @@
 | ID | Requirement | Source | Interpretation | Template status | Required adaptation | Planned location | Verification | Status |
 |----|-------------|--------|----------------|-----------------|---------------------|------------------|--------------|--------|
 | DB-01 | Tabela korisnik | Profesor PDF | Login | Da | KEEP | SQL, `DBKorisnik.php` | SELECT login | SATISFIED_BY_TEMPLATE |
-| DB-02 | kategorija_igre | Mapiranje | zanr→kategorija | `zanr` postoji | RENAME/adapt | SQL | Tabela postoji | NEEDS_ADAPTATION |
-| DB-03 | drustvena_igra | Mapiranje | knjiga→igra | `knjiga` postoji | RENAME/adapt kolona | SQL, entiteti | Tabela postoji | NEEDS_ADAPTATION |
-| DB-04 | nabavka celina | Profesor PDF + prijava | Nalog master | Da, nepotpuna | +BrojNaloga, +NalogEvidentirao | SQL, `NabavkaEntitet` | Kolone postoje | NEEDS_ADAPTATION |
-| DB-05 | stavka_nabavke deo | Profesor PDF + prijava | Detail | Da | ISBN→SifraIgre | SQL, `StavkaNabavkeEntitet` | FK na igru | NEEDS_ADAPTATION |
+| DB-02 | kategorija_igre | Mapiranje | zanr→kategorija | `zanr` postoji | RENAME/adapt | SQL | Tabela postoji | VERIFIED |
+| DB-03 | drustvena_igra | Mapiranje | knjiga→igra | `knjiga` postoji | RENAME/adapt kolona | SQL, entiteti | Tabela postoji | VERIFIED |
+| DB-04 | nabavka celina | Profesor PDF + prijava | Nalog master | Da, nepotpuna | +BrojNaloga, +NalogEvidentirao | SQL, `NabavkaEntitet` | Kolone postoje | VERIFIED |
+| DB-05 | stavka_nabavke deo | Profesor PDF + prijava | Detail | Da | ISBN→SifraIgre | SQL, `StavkaNabavkeEntitet` | FK na igru | VERIFIED |
 | DB-06 | nabavka 1:N stavka | Profesor PDF | — | Da | KEEP | SQL FK | ER | SATISFIED_BY_TEMPLATE |
-| DB-07 | igra 1:N stavka | Mapiranje | — | Da (knjiga) | Adapt FK | SQL | FK | NEEDS_ADAPTATION |
-| DB-08 | kategorija 1:N igra | Šablon | — | Da (zanr–knjiga) | Adapt | SQL | FK | NEEDS_ADAPTATION |
-| DB-09 | BrojNaloga | Prijava DOCX | Poslovni ID | **Nema** | ADD kolona | SQL, forme | Kolona u bazi | MISSING |
-| DB-10 | BrojNaloga UNIQUE | Odluka | Ne spajati naloge | **Nema**; merge u kodu | UNIQUE + ukloniti PronadjiNabavku merge | SQL, `DBNabavka.php`, `nabavkaSnimi.php` | Dva ista broja odbijena | MISSING |
+| DB-07 | igra 1:N stavka | Mapiranje | — | Da (knjiga) | Adapt FK | SQL | FK | VERIFIED |
+| DB-08 | kategorija 1:N igra | Šablon | — | Da (zanr–knjiga) | Adapt | SQL | FK | VERIFIED |
+| DB-09 | BrojNaloga | Prijava DOCX | Poslovni ID | **Nema** | ADD kolona | SQL, forme | Kolona u bazi | VERIFIED |
+| DB-10 | BrojNaloga UNIQUE | Odluka | Ne spajati naloge | **Nema**; merge u kodu | UNIQUE + ukloniti PronadjiNabavku merge | SQL, `DBNabavka.php`, `nabavkaSnimi.php` | Dva ista broja odbijena | NEEDS_ADAPTATION |
 | DB-11 | DatumNabavke | Prijava | — | Da | KEEP | SQL | DATE NOT NULL | SATISFIED_BY_TEMPLATE |
 | DB-12 | Dobavljac slobodan tekst | Odluka 1A | — | VARCHAR; select u UI | Text input, ukloniti listu | Forme, validacija | Unos произvoljnog teksta | NEEDS_ADAPTATION |
 | DB-13 | Napomena | Prijava | — | Da | KEEP | SQL | NULL OK | SATISFIED_BY_TEMPLATE |
-| DB-14 | NalogEvidentirao | Prijava | — | **Nema** | ADD kolona | SQL, unos iz sesije | Kolona popunjena | MISSING |
-| DB-15 | SifraIgre, Kolicina, Cena | Prijava | Detail polja | Da (ISBN, Kolicina, Cena) | Rename ISBN | SQL, stavke | Detail red | NEEDS_ADAPTATION |
+| DB-14 | NalogEvidentirao | Prijava | — | **Nema** | ADD kolona | SQL, unos iz sesije | Kolona popunjena | VERIFIED |
+| DB-15 | SifraIgre, Kolicina, Cena | Prijava | Detail polja | Da (ISBN, Kolicina, Cena) | Rename ISBN | SQL, stavke | Detail red | VERIFIED |
 | DB-16 | Ukupno izračunato | Odluka | Kolicina*Cena | JS + SQL calc | KEEP calculated | JS, prikaz, štampa | Nema kolone Ukupno u DB | SATISFIED_BY_TEMPLATE |
 | DB-17 | Rekapitulacija izračunata | Prijava | Broj stavki, suma | Delimično u listi | U prikaz, filter, štampu | Views, print | Sum matches | NEEDS_ADAPTATION |
 | DB-18 | Surrogate PK | D | IDNabavke, IDStavke | Da | KEEP | SQL | AUTO_INCREMENT | SATISFIED_BY_TEMPLATE |
-| DB-19 | Mapiranje kolona šifarnika | Mapiranje | SifraIgre, Proizvodjac… | knjiga kolone | Rename u SQL i PHP | Entiteti, repozitorijumi | Imena kolona | NEEDS_ADAPTATION |
+| DB-19 | Mapiranje kolona šifarnika | Mapiranje | SifraIgre, Proizvodjac… | knjiga kolone | Rename u SQL i PHP | Entiteti, repozitorijumi | Imena kolona | VERIFIED |
 
 ---
 
@@ -164,7 +164,7 @@
 | TOP-03 | Master polja | Prijava DOCX | — | Delimično | +BrojNaloga | Forme, DB | Sva 4 polja | NEEDS_ADAPTATION |
 | TOP-04 | Detail kolone | Prijava DOCX | — | Knjiga kolone | Adapt headers | Forme, print | 5 kolona | NEEDS_ADAPTATION |
 | TOP-05 | Rekapitulacija | Prijava DOCX | — | Delimično u listi | U sve prikaze | Views | Match | NEEDS_ADAPTATION |
-| TOP-06 | Nalog evidentirao | Prijava DOCX | — | **Nema** | ADD | DB, form, print | Polje vidljivo | MISSING |
+| TOP-06 | Nalog evidentirao | Prijava DOCX | — | **Nema** | ADD | DB, form, print | Polje vidljivo | NEEDS_ADAPTATION |
 
 ---
 
@@ -173,9 +173,9 @@
 | ID | Requirement | Source | Interpretation | Template status | Required adaptation | Planned location | Verification | Status |
 |----|-------------|--------|----------------|-----------------|---------------------|------------------|--------------|--------|
 | TECH-SP-01 | SP u upotrebi | Profesor PDF | — | Da (`DodajKnjigu`, `unosSP`) | Adapt | SQL, `DBKnjigaSP.php` | CALL radi | NEEDS_ADAPTATION |
-| TECH-SP-02 | SP domen igara | Mapiranje | — | Knjiga SP | Rename SP + params | SQL | Insert igra | NEEDS_ADAPTATION |
+| TECH-SP-02 | SP domen igara | Mapiranje | — | Knjiga SP | Rename SP + params | SQL | Insert igra | VERIFIED |
 | TECH-VIEW-01 | VIEW u upotrebi | Profesor PDF | — | Da (`DBKnjigaV`) | Adapt | SQL, repo | SELECT view | NEEDS_ADAPTATION |
-| TECH-VIEW-02 | VIEW domen igara | Mapiranje | — | Knjiga views | Rename columns | SQL | Join kategorija | NEEDS_ADAPTATION |
+| TECH-VIEW-02 | VIEW domen igara | Mapiranje | — | Knjiga views | Rename columns | SQL | Join kategorija | VERIFIED |
 | TECH-SP-VIEW-03 | Ne auto SP/VIEW nabavka | Odluka | — | N/A | Out of scope | — | Katalog dokazuje | SATISFIED_BY_TEMPLATE (plan) |
 
 ---
@@ -223,7 +223,7 @@
 | DEF-01 | Merge po Datum+Dobavljac | NEEDS_ADAPTATION | Ukloniti PronadjiNabavku merge |
 | DEF-02 | Parametarska = knjiga | MISSING funkcionalnost | Nova štampa naloga |
 | DEF-03 | Nepun CRUD nabavka | MISSING | FUN-04–09 |
-| DEF-04 | Nedostaju polja | MISSING | DB-09, DB-14 |
+| DEF-04 | Nedostaju polja | VERIFIED | DB-09, DB-14 (SQL kolone) |
 | DEF-05 | GROUP BY stavke | NEEDS_ADAPTATION | Pojedinačni redovi stavki |
 | DEF-06 | Zatvoreni dobavljači | NEEDS_ADAPTATION | 1A text |
 | DEF-07 | Zabrana duplikata | NEEDS_ADAPTATION | Ukloniti (VAL-16) |
@@ -237,9 +237,10 @@
 
 | Status | Broj |
 |--------|------|
-| SATISFIED_BY_TEMPLATE | 22 |
-| NEEDS_ADAPTATION | 58 |
-| MISSING | 25 |
+| VERIFIED | 18 |
+| SATISFIED_BY_TEMPLATE | 15 |
+| NEEDS_ADAPTATION | 50 |
+| MISSING | 20 |
 | BLOCKED | 0 |
 
 **Napomena:** Brojevi uključuju FUN-KAT, VAL, PRINT, TOP, TECH-SP/VIEW, MVC, REST, DEF kao zasebne stavke u matrici. DOC (15) svi MISSING.
