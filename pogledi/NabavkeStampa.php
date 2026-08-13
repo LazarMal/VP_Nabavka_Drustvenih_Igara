@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="sr-RS" xml:lang="sr-RS">
 <meta charset="UTF-8">
 <head>
-<title>ТФ М Пупин</title>
+<title>TF M Pupin</title>
 <meta charset="UTF-8">
 <?php include 'css/stil.php';?>
 </head>

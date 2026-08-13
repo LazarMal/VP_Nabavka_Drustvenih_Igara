@@ -27,7 +27,7 @@
 <td style="width:3%;">
 </td>
 <td align="center">
-<b><font face="Trebuchet MS" color="black" size="3px">ПРИЈАВА КОРИСНИКА</b></br>
+<b><font face="Trebuchet MS" color="black" size="3px">PRIJAVA KORISNIKA</b></br>
 </td>
 <td style="width:3%;">
 </td>
@@ -56,10 +56,10 @@
 
 <tr>
 <td align="right" valign="bottom">     
-<b><font face="Trebuchet MS" color="black" size="2px">Корисник&nbsp;&nbsp;</font></b>
+<b><font face="Trebuchet MS" color="black" size="2px">Korisnik&nbsp;&nbsp;</font></b>
 </td>
 <td align="left" valign="bottom">
-<input name="korisnickoIme" type="text" size="50" placeholder="Унесите корисничко име"  />
+<input name="korisnickoIme" type="text" size="50" placeholder="Unesite korisnicko ime"  />
 </td>
 </tr>
 
@@ -73,10 +73,10 @@
 
 <tr>
 <td align="right" valign="bottom">
-<b><font face="Trebuchet MS" color="black" size="2px">Шифра&nbsp;&nbsp;</font><br/></b>
+<b><font face="Trebuchet MS" color="black" size="2px">Sifra&nbsp;&nbsp;</font><br/></b>
 </td>
 <td align="left" valign="bottom">
-<input name="sifra" type="password" size="50" placeholder="Унесите шифру"/>
+<input name="sifra" type="password" size="50" placeholder="Unesite sifru"/>
 </td>
 </tr>
 
@@ -92,7 +92,7 @@
 
 <td>       
 </td>
-<td><input TYPE="submit" name="loginuser" value="ПРИЈАВИ СЕ" TABINDEX=3/>
+<td><input TYPE="submit" name="loginuser" value="PRIJAVI SE" TABINDEX=3/>
 </td>
 </form>
 </table>

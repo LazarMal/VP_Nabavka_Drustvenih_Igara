@@ -14,7 +14,7 @@
 <tr>
 <td style="width:3%;"></td>
 <td align="center">
-<b><font face="Trebuchet MS" color="black" size="3px">ИЗМЕНА ПОДАТАКА ДРУШТВЕНЕ ИГРЕ</font></b><br/>
+<b><font face="Trebuchet MS" color="black" size="3px">IZMENA PODATAKA DRUSTVENE IGRE</font></b><br/>
 </td>
 <td style="width:3%;"></td>
 </tr>
@@ -34,7 +34,7 @@
 
 <tr>
 <td align="right" valign="bottom">
-<b><font face="Trebuchet MS" color="black" size="2px">Шифра игре&nbsp;&nbsp;</font></b>
+<b><font face="Trebuchet MS" color="black" size="2px">Sifra igre&nbsp;&nbsp;</font></b>
 </td>
 <td align="left" valign="bottom">
 <input name="sifraIgre" id="sifraIgre" type="text" size="50" maxlength="13"
@@ -50,7 +50,7 @@ value="<?php echo $StariSifraIgre; ?>" required />
 
 <tr>
 <td align="right" valign="bottom">
-<b><font face="Trebuchet MS" color="black" size="2px">Назив игре&nbsp;&nbsp;</font><br/></b>
+<b><font face="Trebuchet MS" color="black" size="2px">Naziv igre&nbsp;&nbsp;</font><br/></b>
 </td>
 <td align="left" valign="bottom">
 <input name="naziv" id="naziv" type="text" size="50" maxlength="100"
@@ -65,7 +65,7 @@ value="<?php echo $StariNaziv; ?>" required />
 
 <tr>
 <td align="right" valign="bottom">
-<b><font face="Trebuchet MS" color="black" size="2px">Произвођач&nbsp;&nbsp;</font><br/></b>
+<b><font face="Trebuchet MS" color="black" size="2px">Proizvodjac&nbsp;&nbsp;</font><br/></b>
 </td>
 <td align="left" valign="bottom">
 <input name="proizvodjac" id="proizvodjac" type="text" size="50" maxlength="100"
@@ -80,11 +80,11 @@ value="<?php echo $StariProizvodjac; ?>" required />
 
 <tr>
 <td align="right" valign="top">
-<b><font face="Trebuchet MS" color="black" size="2px">Категорија&nbsp;&nbsp;</font><br/></b>
+<b><font face="Trebuchet MS" color="black" size="2px">Kategorija&nbsp;&nbsp;</font><br/></b>
 </td>
 <td align="left" valign="bottom">
 <select name="oznakaKategorije" id="oznakaKategorije" required tabindex="7">
-    <option value="">изаберите...</option>
+    <option value="">izaberite...</option>
     <?php
     if ($UkupanBrojZapisa > 0) 
     {                   
@@ -103,7 +103,7 @@ value="<?php echo $StariProizvodjac; ?>" required />
     ?>
 </select>
 <br/>
-<font face="Trebuchet MS" color="black" size="2px">Тренутна категорија: <?php echo $StaraOznakaKategorije; ?></font>
+<font face="Trebuchet MS" color="black" size="2px">Trenutna kategorija: <?php echo $StaraOznakaKategorije; ?></font>
 <input type="hidden" name="StaraOznakaKategorije" value="<?php echo $StaraOznakaKategorije; ?>">
 </td>
 </tr>
@@ -115,11 +115,11 @@ value="<?php echo $StariProizvodjac; ?>" required />
 
 <tr>
 <td align="right" valign="top">
-<b><font face="Trebuchet MS" color="black" size="2px">Слика игре&nbsp;&nbsp;</font><br/></b>
+<b><font face="Trebuchet MS" color="black" size="2px">Slika igre&nbsp;&nbsp;</font><br/></b>
 </td>
 <td align="left" valign="bottom">
 <input name="nazivFajlaSlike" type="file" size="50" accept=".jpg,.jpeg,.png" /> <br/>
-<font face="Trebuchet MS" color="black" size="2px">Стара слика: <?php echo $StariNazivFajlaSlike; ?></font>
+<font face="Trebuchet MS" color="black" size="2px">Stara slika: <?php echo $StariNazivFajlaSlike; ?></font>
 <input type="hidden" name="StariNazivFajlaSlike" value="<?php echo $StariNazivFajlaSlike; ?>">
 </td>
 </tr>
@@ -132,7 +132,7 @@ value="<?php echo $StariProizvodjac; ?>" required />
 <tr>
 <td></td>
 <td>
-<input type="submit" name="snimiButton" value="САЧУВАЈ ИЗМЕНУ" tabindex="3"/>
+<input type="submit" name="snimiButton" value="SACUVAJ IZMENU" tabindex="3"/>
 </td>
 </tr>
 

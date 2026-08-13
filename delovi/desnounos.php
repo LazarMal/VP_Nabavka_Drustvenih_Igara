@@ -14,7 +14,7 @@
 <tr>
 <td style="width:3%;"></td>
 <td align="left">
-<b><font face="Trebuchet MS" color="black" size="3px">УНОС НОВЕ ДРУШТВЕНЕ ИГРЕ</font></b><br/>
+<b><font face="Trebuchet MS" color="black" size="3px">UNOS NOVE DRUSTVENE IGRE</font></b><br/>
 </td>
 <td style="width:3%;"></td>
 </tr>
@@ -36,11 +36,11 @@
 
 <tr>
 <td align="right" valign="bottom">
-<b><font face="Trebuchet MS" color="black" size="2px">Шифра игре&nbsp;&nbsp;</font></b>
+<b><font face="Trebuchet MS" color="black" size="2px">Sifra igre&nbsp;&nbsp;</font></b>
 </td>
 <td align="left" valign="bottom">
 <input name="sifraIgre" id="sifraIgre" type="text" size="50" maxlength="13"
-placeholder="Унесите шифру игре" required />
+placeholder="Unesite sifru igre" required />
 </td>
 </tr>
 
@@ -51,11 +51,11 @@ placeholder="Унесите шифру игре" required />
 
 <tr>
 <td align="right" valign="bottom">
-<b><font face="Trebuchet MS" color="black" size="2px">Назив игре&nbsp;&nbsp;</font><br/></b>
+<b><font face="Trebuchet MS" color="black" size="2px">Naziv igre&nbsp;&nbsp;</font><br/></b>
 </td>
 <td align="left" valign="bottom">
 <input name="naziv" id="naziv" type="text" size="50" maxlength="100"
-placeholder="Унесите назив игре" required />
+placeholder="Unesite naziv igre" required />
 </td>
 </tr>
 
@@ -66,11 +66,11 @@ placeholder="Унесите назив игре" required />
 
 <tr>
 <td align="right" valign="bottom">
-<b><font face="Trebuchet MS" color="black" size="2px">Произвођач&nbsp;&nbsp;</font><br/></b>
+<b><font face="Trebuchet MS" color="black" size="2px">Proizvodjac&nbsp;&nbsp;</font><br/></b>
 </td>
 <td align="left" valign="bottom">
 <input name="proizvodjac" id="proizvodjac" type="text" size="50" maxlength="100"
-placeholder="Унесите произвођача" required />
+placeholder="Unesite proizvodjaca" required />
 </td>
 </tr>
 
@@ -81,12 +81,12 @@ placeholder="Унесите произвођача" required />
 
 <tr>
 <td align="right" valign="bottom">
-<b><font face="Trebuchet MS" color="black" size="2px">Категорија&nbsp;&nbsp;</font><br/></b>
+<b><font face="Trebuchet MS" color="black" size="2px">Kategorija&nbsp;&nbsp;</font><br/></b>
 </td>
 <td align="left" valign="bottom">
 
 <select name="oznakaKategorije" id="oznakaKategorije" required tabindex="7">
-    <option value="">изаберите...</option>
+    <option value="">izaberite...</option>
     <?php
     if ($UkupanBrojZapisa > 0) 
     {                   
@@ -109,7 +109,7 @@ placeholder="Унесите произвођача" required />
 
 <tr>
 <td align="right" valign="bottom">
-<b><font face="Trebuchet MS" color="black" size="2px">Слика игре&nbsp;&nbsp;</font><br/></b>
+<b><font face="Trebuchet MS" color="black" size="2px">Slika igre&nbsp;&nbsp;</font><br/></b>
 </td>
 <td align="left" valign="bottom">
 <input name="nazivFajlaSlike" type="file" size="50" accept=".jpg,.jpeg,.png" />
@@ -124,7 +124,7 @@ placeholder="Унесите произвођача" required />
 <tr>
 <td></td>
 <td>
-<input type="submit" name="snimiButton" value="САЧУВАЈ" tabindex="3"/>
+<input type="submit" name="snimiButton" value="SACUVAJ" tabindex="3"/>
 </td>
 </tr>
 
@@ -158,22 +158,22 @@ function proveriUnosIgre() {
     let kategorija = document.getElementById("oznakaKategorije").value;
 
     if (!/^[A-Za-z0-9]{1,13}$/.test(sifraIgre)) {
-        alert("Шифра игре мора бити алфанумеричка и до 13 карактера.");
+        alert("Sifra igre mora biti alfanumericka i do 13 karaktera.");
         return false;
     }
 
     if (naziv == "" || naziv.length > 100) {
-        alert("Назив игре је обавезан и не сме бити дужи од 100 карактера.");
+        alert("Naziv igre je obavezan i ne sme biti duzi od 100 karaktera.");
         return false;
     }
 
     if (proizvodjac == "" || proizvodjac.length > 100) {
-        alert("Произвођач је обавезан и не сме бити дужи од 100 карактера.");
+        alert("Proizvodjac je obavezan i ne sme biti duzi od 100 karaktera.");
         return false;
     }
 
     if (kategorija == "") {
-        alert("Морате изабрати категорију.");
+        alert("Morate izabrati kategoriju.");
         return false;
     }
 

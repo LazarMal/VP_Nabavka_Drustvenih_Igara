@@ -14,19 +14,19 @@ $Proizvodjac = isset($_POST['proizvodjac']) ? trim($_POST['proizvodjac']) : "";
 $OznakaKategorije = isset($_POST['oznakaKategorije']) ? trim($_POST['oznakaKategorije']) : "";
 
 if ($SifraIgre == "" || $Naziv == "" || $Proizvodjac == "" || $OznakaKategorije == "") {
-    die("Грешка: Сва обавезна поља морају бити попуњена.<br><br><a href=\"../Ruter.php?stranica=unos\">ПОВРАТАК</a>");
+    die("Greska: Sva obavezna polja moraju biti popunjena.<br><br><a href=\"../Ruter.php?stranica=unos\">POVRATAK</a>");
 }
 
 if (strlen($SifraIgre) > 13 || !preg_match('/^[A-Za-z0-9]+$/', $SifraIgre)) {
-    die("Грешка: Шифра игре мора бити алфанумеричка и до 13 карактера.<br><br><a href=\"../Ruter.php?stranica=unos\">ПОВРАТАК</a>");
+    die("Greska: Sifra igre mora biti alfanumericka i do 13 karaktera.<br><br><a href=\"../Ruter.php?stranica=unos\">POVRATAK</a>");
 }
 
 if (strlen($Naziv) > 100) {
-    die("Грешка: Назив игре не сме бити дужи од 100 карактера.<br><br><a href=\"../Ruter.php?stranica=unos\">ПОВРАТАК</a>");
+    die("Greska: Naziv igre ne sme biti duzi od 100 karaktera.<br><br><a href=\"../Ruter.php?stranica=unos\">POVRATAK</a>");
 }
 
 if (strlen($Proizvodjac) > 100) {
-    die("Грешка: Произвођач не сме бити дужи од 100 карактера.<br><br><a href=\"../Ruter.php?stranica=unos\">ПОВРАТАК</a>");
+    die("Greska: Proizvodjac ne sme biti duzi od 100 karaktera.<br><br><a href=\"../Ruter.php?stranica=unos\">POVRATAK</a>");
 }
 
 $name = "";
@@ -39,7 +39,7 @@ if (isset($_FILES["nazivFajlaSlike"]) && $_FILES["nazivFajlaSlike"]["error"] == 
     $dozvoljeneEkstenzije = array("jpg", "jpeg", "png");
 
     if (!in_array($ekstenzija, $dozvoljeneEkstenzije)) {
-        die("Грешка: Дозвољене су само JPG, JPEG и PNG слике.<br><br><a href=\"../Ruter.php?stranica=unos\">ПОВРАТАК</a>");
+        die("Greska: Dozvoljene su samo JPG, JPEG i PNG slike.<br><br><a href=\"../Ruter.php?stranica=unos\">POVRATAK</a>");
     }
 
     if (!empty($name)) {
@@ -56,7 +56,7 @@ $KonekcijaObject = new Konekcija(__DIR__ . '/../../tehnoloskeKlase/BaznaParametr
 $KonekcijaObject->connect();
 
 if (!$KonekcijaObject->konekcijaDB) {
-    die("Грешка: Није успостављена конекција са базом података.");
+    die("Greska: Nije uspostavljena konekcija sa bazom podataka.");
 }
 
 $konekcija = $KonekcijaObject->konekcijaDB;
@@ -71,13 +71,13 @@ $NazivFajlaSlike = mysqli_real_escape_string($konekcija, $NazivFajlaSlike);
 $proveraKat = mysqli_query($konekcija, "SELECT Oznaka FROM `$baza`.`kategorija_igre` WHERE Oznaka='$OznakaKategorije' LIMIT 1");
 
 if (mysqli_num_rows($proveraKat) == 0) {
-    die("Грешка: Изабрана категорија није у дозвољеном домену вредности.<br><br><a href=\"../Ruter.php?stranica=unos\">ПОВРАТАК</a>");
+    die("Greska: Izabrana kategorija nije u dozvoljenom domenu vrednosti.<br><br><a href=\"../Ruter.php?stranica=unos\">POVRATAK</a>");
 }
 
 $provera = mysqli_query($konekcija, "SELECT SifraIgre FROM `$baza`.`drustvena_igra` WHERE SifraIgre='$SifraIgre'");
 
 if (mysqli_num_rows($provera) > 0) {
-    die("Грешка: Игра са том шифром већ постоји.<br><br><a href=\"../Ruter.php?stranica=unos\">ПОВРАТАК</a>");
+    die("Greska: Igra sa tom sifrom vec postoji.<br><br><a href=\"../Ruter.php?stranica=unos\">POVRATAK</a>");
 }
 
 mysqli_begin_transaction($konekcija);
@@ -101,11 +101,11 @@ if ($rezultat1 && $rezultat2) {
     exit();
 } else {
     mysqli_rollback($konekcija);
-    echo "Грешка приликом снимања игре!";
+    echo "Greska prilikom snimanja igre!";
     echo "<br>";
     echo mysqli_error($konekcija);
     echo "<br><br>";
-    echo "<a href=\"../../Ruter.php?stranica=knjige\">ПОВРАТАК</a>";
+    echo "<a href=\"../../Ruter.php?stranica=knjige\">POVRATAK</a>";
 }
 
 $KonekcijaObject->disconnect();

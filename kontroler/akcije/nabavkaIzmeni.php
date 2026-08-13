@@ -10,7 +10,7 @@ if (!isset($korisnik)) {
 
 function prekiniSaGreskom($poruka, $povratakUrl)
 {
-    die($poruka . "<br><br><a href='" . $povratakUrl . "'>ПОВРАТАК</a>");
+    die($poruka . "<br><br><a href='" . $povratakUrl . "'>POVRATAK</a>");
 }
 
 $IDNabavke = isset($_POST['IDNabavke']) ? trim($_POST['IDNabavke']) : "";
@@ -27,36 +27,36 @@ $cenaNiz = isset($_POST['cena']) ? $_POST['cena'] : array();
 $povratakUrl = '../Ruter.php?stranica=nabavkaIzmeniForm&id=' . urlencode($IDNabavke);
 
 if ($IDNabavke == "") {
-    prekiniSaGreskom("Грешка: Nije izabran nalog za izmenu.", '../Ruter.php?stranica=nabavke');
+    prekiniSaGreskom("Greska: Nije izabran nalog za izmenu.", '../Ruter.php?stranica=nabavke');
 }
 
 if ($brojNaloga == "" || $datumNabavke == "" || $dobavljac == "") {
-    prekiniSaGreskom("Грешка: Sva obavezna polja o nalogu moraju biti popunjena.", $povratakUrl);
+    prekiniSaGreskom("Greska: Sva obavezna polja o nalogu moraju biti popunjena.", $povratakUrl);
 }
 
 if (strlen($brojNaloga) > 50) {
-    prekiniSaGreskom("Грешка: Broj naloga ne sme biti duži od 50 karaktera.", $povratakUrl);
+    prekiniSaGreskom("Greska: Broj naloga ne sme biti duzi od 50 karaktera.", $povratakUrl);
 }
 
 $datumProvera = DateTime::createFromFormat('Y-m-d', $datumNabavke);
 if (!$datumProvera || $datumProvera->format('Y-m-d') !== $datumNabavke) {
-    prekiniSaGreskom("Грешка: Datum nabavke nije ispravan.", $povratakUrl);
+    prekiniSaGreskom("Greska: Datum nabavke nije ispravan.", $povratakUrl);
 }
 
 if (strlen($dobavljac) > 100) {
-    prekiniSaGreskom("Грешка: Dobavljač ne sme biti duži od 100 karaktera.", $povratakUrl);
+    prekiniSaGreskom("Greska: Dobavljac ne sme biti duzi od 100 karaktera.", $povratakUrl);
 }
 
 if (strlen($napomena) > 255) {
-    prekiniSaGreskom("Грешka: Napomena ne sme biti duža od 255 karaktera.", $povratakUrl);
+    prekiniSaGreskom("Greska: Napomena ne sme biti duza od 255 karaktera.", $povratakUrl);
 }
 
 if (!is_array($sifraIgreNiz) || count($sifraIgreNiz) == 0) {
-    prekiniSaGreskom("Грешка: Nalog mora imati najmanje jednu stavku.", $povratakUrl);
+    prekiniSaGreskom("Greska: Nalog mora imati najmanje jednu stavku.", $povratakUrl);
 }
 
 if (count($sifraIgreNiz) != count($kolicinaNiz) || count($sifraIgreNiz) != count($cenaNiz) || count($sifraIgreNiz) != count($idStavkeNiz)) {
-    prekiniSaGreskom("Грешка: Podaci o stavkama naloga nisu ispravno prosleđeni.", $povratakUrl);
+    prekiniSaGreskom("Greska: Podaci o stavkama naloga nisu ispravno prosledjeni.", $povratakUrl);
 }
 
 require_once __DIR__ . '/../../kontroler/stranice/NabavkeController.php';
@@ -70,12 +70,12 @@ if (!$NabavkeController->DajKonekcijaObject()->konekcijaDB) {
 
 if ($NabavkeController->DajNabavkuPoID($IDNabavke) == null) {
     $NabavkeController->ZatvoriKonekciju();
-    prekiniSaGreskom("Грешка: Nalog ne postoji.", '../Ruter.php?stranica=nabavke');
+    prekiniSaGreskom("Greska: Nalog ne postoji.", '../Ruter.php?stranica=nabavke');
 }
 
 if ($NabavkeController->PostojiBrojNalogaOsim($brojNaloga, $IDNabavke)) {
     $NabavkeController->ZatvoriKonekciju();
-    prekiniSaGreskom("Грешка: Nalog sa tim brojem već postoji.", $povratakUrl);
+    prekiniSaGreskom("Greska: Nalog sa tim brojem već postoji.", $povratakUrl);
 }
 
 $stavkeZaSnimanje = array();
@@ -88,32 +88,32 @@ for ($i = 0; $i < count($sifraIgreNiz); $i++) {
 
     if ($sifraIgre == "" || $kolicina === "" || $cena === "") {
         $NabavkeController->ZatvoriKonekciju();
-        prekiniSaGreskom("Грешка: Sva polja u stavkama naloga moraju biti popunjena.", $povratakUrl);
+        prekiniSaGreskom("Greska: Sva polja u stavkama naloga moraju biti popunjena.", $povratakUrl);
     }
 
     if (strlen($sifraIgre) > 13 || !preg_match('/^[A-Za-z0-9]+$/', $sifraIgre)) {
         $NabavkeController->ZatvoriKonekciju();
-        prekiniSaGreskom("Грешка: Šifra igre mora biti alfanumerička i do 13 karaktera.", $povratakUrl);
+        prekiniSaGreskom("Greska: Sifra igre mora biti alfanumericka i do 13 karaktera.", $povratakUrl);
     }
 
     if (!is_numeric($kolicina) || (string)(int)$kolicina !== $kolicina || (int)$kolicina <= 0) {
         $NabavkeController->ZatvoriKonekciju();
-        prekiniSaGreskom("Грешка: Količina mora biti ceo broj veći od 0.", $povratakUrl);
+        prekiniSaGreskom("Greska: Kolicina mora biti ceo broj veci od 0.", $povratakUrl);
     }
 
     if (filter_var($cena, FILTER_VALIDATE_FLOAT) === false || (float)$cena <= 0) {
         $NabavkeController->ZatvoriKonekciju();
-        prekiniSaGreskom("Грешка: Cena mora biti pozitivna decimalna vrednost veća od 0.", $povratakUrl);
+        prekiniSaGreskom("Greska: Cena mora biti pozitivna decimalna vrednost veca od 0.", $povratakUrl);
     }
 
     if (!$NabavkeController->IgraPostojiUKatalogu($sifraIgre)) {
         $NabavkeController->ZatvoriKonekciju();
-        prekiniSaGreskom("Грешка: Šifra igre '" . htmlspecialchars($sifraIgre) . "' ne postoji u katalogu.", $povratakUrl);
+        prekiniSaGreskom("Greska: Sifra igre '" . htmlspecialchars($sifraIgre) . "' ne postoji u katalogu.", $povratakUrl);
     }
 
     if ($idStavke != "" && !$NabavkeController->StavkaPripadaNalogu($idStavke, $IDNabavke)) {
         $NabavkeController->ZatvoriKonekciju();
-        prekiniSaGreskom("Грешка: Stavka ne pripada izabranom nalogu.", $povratakUrl);
+        prekiniSaGreskom("Greska: Stavka ne pripada izabranom nalogu.", $povratakUrl);
     }
 
     $stavkeZaSnimanje[] = array(
@@ -134,10 +134,10 @@ $rezultatSnimanja = $NabavkeController->IzmeniNabavku(
 );
 
 if (!$rezultatSnimanja['uspeh']) {
-    echo "Грешка pri snimanju izmena naloga.";
+    echo "Greska pri snimanju izmena naloga.";
     echo "<br>";
     echo $rezultatSnimanja['greska'];
-    echo "<br><br><a href='" . $povratakUrl . "'>ПОВРАТАК</a>";
+    echo "<br><br><a href='" . $povratakUrl . "'>POVRATAK</a>";
     $NabavkeController->ZatvoriKonekciju();
 } else {
     $NabavkeController->ZatvoriKonekciju();

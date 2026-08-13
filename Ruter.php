@@ -148,52 +148,6 @@ switch ($stranica) {
         require 'kontroler/akcije/KnjigaObrisi.php';
         break;
 
-    case 'stampa':
-        proveriSesiju();
-
-        require_once 'kontroler/stranice/KnjigeController.php';
-
-        $KnjigeController = new KnjigeController();
-        $filter = isset($_GET['filtriraj']) ? $_GET['filter'] : null;
-        $KnjigaViewObject = $KnjigeController->DajSveKnjige($filter);
-
-        include 'pogledi/KnjigeStampa.php';
-
-        $KnjigeController->ZatvoriKonekciju();
-        break;
-
-    case 'parametarskaStampa':
-        proveriSesiju();
-        include 'pogledi/KnjigeParametarskaStampa.php';
-        break;
-
-    case 'stampaJedneKnjige':
-        proveriSesiju();
-
-        $ISBNZaStampu = isset($_POST['BrojIndeksaFilter']) ? $_POST['BrojIndeksaFilter'] : null;
-
-        require_once 'kontroler/stranice/KnjigeController.php';
-
-        $KnjigeController = new KnjigeController();
-        $KnjigaObject = $KnjigeController->DajKnjiguZaStampu($ISBNZaStampu);
-
-        $KolekcijaZapisaStudenata = $KnjigaObject->Kolekcija;
-        $UkupanBrojZapisaStudenata = $KnjigaObject->BrojZapisa;
-
-        if ($UkupanBrojZapisaStudenata > 0) {
-            $row = 0;
-            $ISBN = $KnjigaObject->DajVrednostPoRednomBrojuZapisaPoRBPolja($KolekcijaZapisaStudenata, $row, 0);
-            $Naziv = $KnjigaObject->DajVrednostPoRednomBrojuZapisaPoRBPolja($KolekcijaZapisaStudenata, $row, 1);
-            $Autor = $KnjigaObject->DajVrednostPoRednomBrojuZapisaPoRBPolja($KolekcijaZapisaStudenata, $row, 2);
-            $NazivZanra = $KnjigaObject->DajVrednostPoRednomBrojuZapisaPoRBPolja($KolekcijaZapisaStudenata, $row, 3);
-            $NazivFajlaSlike = $KnjigaObject->DajVrednostPoRednomBrojuZapisaPoRBPolja($KolekcijaZapisaStudenata, $row, 4);
-        }
-
-        include 'pogledi/StampaPodatakaOKnjizi.php';
-
-        $KnjigeController->ZatvoriKonekciju();
-        break;
-
     case 'novaNabavka':
         proveriSesiju();
 
@@ -202,7 +156,7 @@ switch ($stranica) {
         $NabavkeController = new NabavkeController();
         $rezultatKnjige = $NabavkeController->DajKnjigeZaNabavku();
 
-        $optionsKnjige = "<option value=\"\">изаберите игру...</option>";
+        $optionsKnjige = "<option value=\"\">izaberite igru...</option>";
 
         while ($igra = mysqli_fetch_assoc($rezultatKnjige)) {
             $optionsKnjige .= "<option value='".$igra['SifraIgre']."' data-cena='".$igra['Cena']."'>

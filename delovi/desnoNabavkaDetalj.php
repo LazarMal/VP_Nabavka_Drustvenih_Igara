@@ -10,7 +10,7 @@
 <td>
 <br/>
 <font face="Trebuchet MS" color="darkblue" size="4px">
-<b>ДЕТАЉИ НАЛОГА ЗА НАБАВКУ ДРУШТВЕНИХ ИГАРА</b><br/><br/>
+<b>DETALJI NALOGA ZA NABAVKU DRUSTVENIH IGAR</b><br/><br/>
 </font>
 </td>
 
@@ -28,25 +28,25 @@ if ($nabavka == null) {
 } else {
     echo "<table style=\"width:95%; padding:0; margin-bottom:15px;\" align=\"center\" cellspacing=\"0\" cellpadding=\"5\" border=\"1\" bgcolor=\"#FFFFFF\">";
     echo "<tr bgcolor=\"#B7F3FE\">";
-    echo "<td colspan=\"2\"><b>ПОДАЦИ O NALOGU</b></td>";
+    echo "<td colspan=\"2\"><b>PODACI O NALOGU</b></td>";
     echo "</tr>";
-    echo "<tr><td style=\"width:30%;\"><b>Број naloga</b></td><td>".htmlspecialchars($nabavka['BrojNaloga'])."</td></tr>";
-    echo "<tr><td><b>Датум nabavke</b></td><td>".htmlspecialchars($nabavka['DatumNabavke'])."</td></tr>";
-    echo "<tr><td><b>Добављач</b></td><td>".htmlspecialchars($nabavka['Dobavljac'])."</td></tr>";
-    echo "<tr><td><b>Напомена</b></td><td>".htmlspecialchars($nabavka['Napomena'])."</td></tr>";
+    echo "<tr><td style=\"width:30%;\"><b>Broj naloga</b></td><td>".htmlspecialchars($nabavka['BrojNaloga'])."</td></tr>";
+    echo "<tr><td><b>Datum nabavke</b></td><td>".htmlspecialchars($nabavka['DatumNabavke'])."</td></tr>";
+    echo "<tr><td><b>Dobavljac</b></td><td>".htmlspecialchars($nabavka['Dobavljac'])."</td></tr>";
+    echo "<tr><td><b>Napomena</b></td><td>".htmlspecialchars($nabavka['Napomena'])."</td></tr>";
     echo "<tr><td><b>Nalog evidentirao</b></td><td>".htmlspecialchars($nabavka['NalogEvidentirao'])."</td></tr>";
     echo "</table>";
 
     echo "<table style=\"width:95%; padding:0; margin-bottom:15px;\" align=\"center\" cellspacing=\"0\" cellpadding=\"5\" border=\"1\" bgcolor=\"#FFFFFF\">";
     echo "<tr bgcolor=\"#B7F3FE\">";
-    echo "<td colspan=\"5\"><b>СТАВКЕ NALOGA</b></td>";
+    echo "<td colspan=\"5\"><b>STAVKE NALOGA</b></td>";
     echo "</tr>";
     echo "<tr>";
-    echo "<td><b>Стavka</b></td>";
-    echo "<td><b>Друštvena igra</b></td>";
-    echo "<td><b>Цena po komadu</b></td>";
-    echo "<td><b>Количina</b></td>";
-    echo "<td><b>Укупno</b></td>";
+    echo "<td><b>Stavka</b></td>";
+    echo "<td><b>Drustvena igra</b></td>";
+    echo "<td><b>Cena po komadu</b></td>";
+    echo "<td><b>Kolicina</b></td>";
+    echo "<td><b>Ukupno</b></td>";
     echo "</tr>";
 
     $ukupnoNabavka = 0;
@@ -66,17 +66,17 @@ if ($nabavka == null) {
     }
 
     echo "<tr bgcolor=\"#E8F4FC\">";
-    echo "<td colspan=\"2\" align=\"right\"><b>Рекapitulacija:</b></td>";
+    echo "<td colspan=\"2\" align=\"right\"><b>Rekapitulacija:</b></td>";
     echo "<td colspan=\"2\"><b>Ukupan broj stavki: ".$brojStavki."</b></td>";
     echo "<td><b>".$ukupnoNabavka."</b></td>";
     echo "</tr>";
     echo "</table>";
 
-    echo "<a href=\"Ruter.php?stranica=nabavke\"><input type=\"button\" value=\"ПОВРАТАК NA LISTU\" /></a>";
+    echo "<a href=\"Ruter.php?stranica=nabavke\"><input type=\"button\" value=\"POVRATAK NA LISTU\" /></a>";
     echo "&nbsp;&nbsp;";
     echo "<form action=\"Ruter.php?stranica=nabavkaIzmeniForm\" method=\"POST\" style=\"display:inline;\">";
     echo "<input type=\"hidden\" name=\"IDNabavke\" value=\"".htmlspecialchars($nabavka['IDNabavke'])."\">";
-    echo "<input type=\"submit\" name=\"izmeniNalog\" value=\"ИЗМЕНИ\" />";
+    echo "<input type=\"submit\" name=\"izmeniNalog\" value=\"IZMENI\" />";
     echo "</form>";
 }
 ?>

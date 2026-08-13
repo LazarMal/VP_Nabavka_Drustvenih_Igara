@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="sr-RS" xml:lang="sr-RS">
 <head>
 <meta charset="UTF-8">
-<title>Нови nalog za nabavku društvenih igara</title>
+<title>Novi nalog za nabavku drustvenih igara</title>
 <?php include 'css/stil.php';?>
 </head>
 
@@ -50,7 +50,7 @@ $nalogEvidentirao = isset($_SESSION["korisnik"]) ? $_SESSION["korisnik"] : "";
 <tr>
 <td style="width:3%;"></td>
 <td align="left">
-<b><font face="Trebuchet MS" color="black" size="3px">НОВИ НАЛОГ ЗА НАБАВКУ ДРУШТВЕНИХ ИГАРА</font></b><br/><br/>
+<b><font face="Trebuchet MS" color="black" size="3px">NOVI NALOG ZA NABAVKU DRUSTVENIH IGAR</font></b><br/><br/>
 </td>
 <td style="width:3%;"></td>
 </tr>
@@ -64,36 +64,36 @@ $nalogEvidentirao = isset($_SESSION["korisnik"]) ? $_SESSION["korisnik"] : "";
 <table style="width:90%;" bgcolor="#B7F0F7" align="center" cellspacing="0" cellpadding="5" border="1">
 <tr>
 <td colspan="2" align="left">
-<b>ПОДАЦИ О НАБАВЦИ</b>
+<b>PODACI O NABAVCI</b>
 </td>
 </tr>
 
 <tr>
-<td align="right"><b>Броj naloga&nbsp;&nbsp;</b></td>
-<td align="left"><input type="text" name="brojNaloga" id="brojNaloga" maxlength="50" required placeholder="Унесите броj naloga"></td>
+<td align="right"><b>Broj naloga&nbsp;&nbsp;</b></td>
+<td align="left"><input type="text" name="brojNaloga" id="brojNaloga" maxlength="50" required placeholder="Unesite broj naloga"></td>
 </tr>
 
 <tr>
-<td align="right"><b>Датум nabavke&nbsp;&nbsp;</b></td>
+<td align="right"><b>Datum nabavke&nbsp;&nbsp;</b></td>
 <td align="left"><input type="date" name="datumNabavke" id="datumNabavke" required></td>
 </tr>
 
 <tr>
-<td align="right"><b>Добављач&nbsp;&nbsp;</b></td>
+<td align="right"><b>Dobavljac&nbsp;&nbsp;</b></td>
 <td align="left">
-<input type="text" name="dobavljac" id="dobavljac" maxlength="100" required placeholder="Унесите добављача">
+<input type="text" name="dobavljac" id="dobavljac" maxlength="100" required placeholder="Unesite dobavljaca">
 </td>
 </tr>
 
 <tr>
-<td align="right"><b>Напомена&nbsp;&nbsp;</b></td>
+<td align="right"><b>Napomena&nbsp;&nbsp;</b></td>
 <td align="left">
 <input type="text" name="napomena" id="napomena" size="50" maxlength="255" value="">
 </td>
 </tr>
 
 <tr>
-<td align="right"><b>Налог evidentirao&nbsp;&nbsp;</b></td>
+<td align="right"><b>Nalog evidentirao&nbsp;&nbsp;</b></td>
 <td align="left">
 <input type="text" value="<?php echo htmlspecialchars($nalogEvidentirao); ?>" readonly style="background-color:#EEEEEE;">
 </td>
@@ -106,16 +106,16 @@ $nalogEvidentirao = isset($_SESSION["korisnik"]) ? $_SESSION["korisnik"] : "";
 
 <tr>
 <td colspan="5" align="left">
-<b>СТАВКЕ НАЛОГА</b>
+<b>STAVKE NALOGA</b>
 </td>
 </tr>
 
 <tr>
-<td><b>Друштvena igra</b></td>
-<td><b>Количина</b></td>
-<td><b>Цena</b></td>
-<td><b>Укупно</b></td>
-<td><b>Акција</b></td>
+<td><b>Drustvena igra</b></td>
+<td><b>Kolicina</b></td>
+<td><b>Cena</b></td>
+<td><b>Ukupno</b></td>
+<td><b>Akcija</b></td>
 </tr>
 
 <tr class="stavkaRed">
@@ -138,7 +138,7 @@ $nalogEvidentirao = isset($_SESSION["korisnik"]) ? $_SESSION["korisnik"] : "";
 </td>
 
 <td>
-<button type="button" onclick="obrisiStavku(this)">ОБРИШИ</button>
+<button type="button" onclick="obrisiStavku(this)">OBRISI</button>
 </td>
 </tr>
 
@@ -149,9 +149,9 @@ $nalogEvidentirao = isset($_SESSION["korisnik"]) ? $_SESSION["korisnik"] : "";
 <table style="width:90%;" align="center">
 <tr>
 <td align="center">
-<button type="button" onclick="dodajStavku()">ДОДАЈ ЈОШ ЈЕДНУ СТАВКУ</button>
+<button type="button" onclick="dodajStavku()">DODAJ JOS JEDNU STAVKU</button>
 <br/><br/>
-<input type="submit" value="САЧУВАЈ НАЛОГ">
+<input type="submit" value="SACUVAJ NALOG">
 </td>
 </tr>
 </table>
@@ -259,7 +259,7 @@ function dodajStavku() {
             <input type="text" class="ukupnoInput" readonly style="width:90px;">
         </td>
         <td>
-            <button type="button" onclick="obrisiStavku(this)">ОБРИШИ</button>
+            <button type="button" onclick="obrisiStavku(this)">OBRISI</button>
         </td>
     `;
 
@@ -271,7 +271,7 @@ function obrisiStavku(dugme) {
     let redovi = document.querySelectorAll(".stavkaRed");
 
     if (redovi.length <= 1) {
-        alert("Нalog мора имати бар једну ставку.");
+        alert("Nalog mora imati bar jednu stavku.");
         return;
     }
 

@@ -18,12 +18,12 @@ if(session_id() == '') {
 <td style="width:1%;">
 </td>
 <td align="left" valign="middle" style="width:25%;">
-<font face="Trebuchet MS" color="white" size="2px">&nbsp;Корисник:&nbsp;<b><?php echo $korisnik ;?></b></font>
+<font face="Trebuchet MS" color="white" size="2px">&nbsp;Korisnik:&nbsp;<b><?php echo $korisnik ;?></b></font>
 </td>
 <td style="width:60%;">
 </td>
 <td align="right"> 
-<font face="Trebuchet MS" color="darkblue" size="2px"><a href="Ruter.php?stranica=odjava">&nbsp;Одјава&nbsp;</a> </font>
+<font face="Trebuchet MS" color="darkblue" size="2px"><a href="Ruter.php?stranica=odjava">&nbsp;Odjava&nbsp;</a> </font>
 </td>
 <td style="width:1%;">
 </td>

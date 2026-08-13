@@ -31,7 +31,7 @@
 <br/>
 <br/>
 <br/>
-<b><font face="Trebuchet MS" color="darkblue" size="5px">Добродошли, <?php echo $korisnik ;?> !</font></b><br/>
+<b><font face="Trebuchet MS" color="darkblue" size="5px">Dobrodosli, <?php echo $korisnik ;?> !</font></b><br/>
 <br/>
 <br/>
 <br/>

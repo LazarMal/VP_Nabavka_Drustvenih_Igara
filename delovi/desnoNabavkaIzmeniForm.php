@@ -14,7 +14,7 @@
 <tr>
 <td style="width:3%;"></td>
 <td align="left">
-<b><font face="Trebuchet MS" color="black" size="3px">ИЗМЕНА НАЛОГА ЗА НАБАВКУ ДРУШТВЕНИХ ИГАРА</font></b><br/><br/>
+<b><font face="Trebuchet MS" color="black" size="3px">IZMENA NALOGA ZA NABAVKU DRUSTVENIH IGAR</font></b><br/><br/>
 </td>
 <td style="width:3%;"></td>
 </tr>
@@ -25,8 +25,8 @@
 
 <?php
 if ($nabavka == null) {
-    echo "<font face=\"Trebuchet MS\" color=\"darkblue\" size=\"3px\">Nalog nije pronađen.</font>";
-    echo "<br/><br/><a href=\"Ruter.php?stranica=nabavke\"><input type=\"button\" value=\"ПОВРАТАК NA LISTU\" /></a>";
+    echo "<font face=\"Trebuchet MS\" color=\"darkblue\" size=\"3px\">Nalog nije pronadjen.</font>";
+    echo "<br/><br/><a href=\"Ruter.php?stranica=nabavke\"><input type=\"button\" value=\"POVRATAK NA LISTU\" /></a>";
 } else {
 
 function napraviOpcijeIgara($listaIgara, $selectedSifra = "")
@@ -50,27 +50,27 @@ function napraviOpcijeIgara($listaIgara, $selectedSifra = "")
 <table style="width:90%;" bgcolor="#B7F0F7" align="center" cellspacing="0" cellpadding="5" border="1">
 <tr>
 <td colspan="2" align="left">
-<b>ПОДАЦИ O NALOGU</b>
+<b>PODACI O NALOGU</b>
 </td>
 </tr>
 
 <tr>
-<td align="right"><b>Броj naloga&nbsp;&nbsp;</b></td>
+<td align="right"><b>Broj naloga&nbsp;&nbsp;</b></td>
 <td align="left"><input type="text" name="brojNaloga" id="brojNaloga" maxlength="50" required value="<?php echo htmlspecialchars($nabavka['BrojNaloga']); ?>"></td>
 </tr>
 
 <tr>
-<td align="right"><b>Датum nabavke&nbsp;&nbsp;</b></td>
+<td align="right"><b>Datum nabavke&nbsp;&nbsp;</b></td>
 <td align="left"><input type="date" name="datumNabavke" id="datumNabavke" required value="<?php echo htmlspecialchars($nabavka['DatumNabavke']); ?>"></td>
 </tr>
 
 <tr>
-<td align="right"><b>Добављач&nbsp;&nbsp;</b></td>
+<td align="right"><b>Dobavljac&nbsp;&nbsp;</b></td>
 <td align="left"><input type="text" name="dobavljac" id="dobavljac" maxlength="100" required value="<?php echo htmlspecialchars($nabavka['Dobavljac']); ?>"></td>
 </tr>
 
 <tr>
-<td align="right"><b>Напomena&nbsp;&nbsp;</b></td>
+<td align="right"><b>Napomena&nbsp;&nbsp;</b></td>
 <td align="left"><input type="text" name="napomena" id="napomena" size="50" maxlength="255" value="<?php echo htmlspecialchars($nabavka['Napomena']); ?>"></td>
 </tr>
 
@@ -87,8 +87,8 @@ function napraviOpcijeIgara($listaIgara, $selectedSifra = "")
 <td colspan="6" align="left"><b>STAVKE NALOGA</b></td>
 </tr>
 <tr>
-<td><b>Друštvena igra</b></td>
-<td><b>Količina</b></td>
+<td><b>Drustvena igra</b></td>
+<td><b>Kolicina</b></td>
 <td><b>Cena</b></td>
 <td><b>Ukupno</b></td>
 <td><b>Akcija</b></td>
@@ -108,7 +108,7 @@ if ($rezultatStavke != null && mysqli_num_rows($rezultatStavke) > 0) {
         echo "<td><input type=\"number\" name=\"kolicina[]\" class=\"kolicinaInput\" min=\"1\" step=\"1\" required style=\"width:90px;\" value=\"" . htmlspecialchars($stavka['Kolicina']) . "\"></td>";
         echo "<td><input type=\"number\" name=\"cena[]\" class=\"cenaInput\" min=\"0.01\" step=\"0.01\" required style=\"width:90px;\" value=\"" . htmlspecialchars($stavka['Cena']) . "\"></td>";
         echo "<td><input type=\"text\" class=\"ukupnoInput\" readonly style=\"width:90px;\" value=\"" . number_format($ukupnoRed, 2, '.', '') . "\"></td>";
-        echo "<td><button type=\"button\" onclick=\"obrisiStavku(this)\">ОБРИШИ</button></td>";
+        echo "<td><button type=\"button\" onclick=\"obrisiStavku(this)\">OBRISI</button></td>";
         echo "</tr>";
     }
 } else {
@@ -122,7 +122,7 @@ if ($rezultatStavke != null && mysqli_num_rows($rezultatStavke) > 0) {
     echo "<td><input type=\"number\" name=\"kolicina[]\" class=\"kolicinaInput\" min=\"1\" step=\"1\" required style=\"width:90px;\"></td>";
     echo "<td><input type=\"number\" name=\"cena[]\" class=\"cenaInput\" min=\"0.01\" step=\"0.01\" required style=\"width:90px;\"></td>";
     echo "<td><input type=\"text\" class=\"ukupnoInput\" readonly style=\"width:90px;\"></td>";
-    echo "<td><button type=\"button\" onclick=\"obrisiStavku(this)\">ОБРИШИ</button></td>";
+    echo "<td><button type=\"button\" onclick=\"obrisiStavku(this)\">OBRISI</button></td>";
     echo "</tr>";
 }
 ?>
@@ -133,11 +133,11 @@ if ($rezultatStavke != null && mysqli_num_rows($rezultatStavke) > 0) {
 <table style="width:90%;" align="center">
 <tr>
 <td align="center">
-<button type="button" onclick="dodajStavku()">DODAJ JOŠ JEDNU STAVKU</button>
+<button type="button" onclick="dodajStavku()">DODAJ JOS JEDNU STAVKU</button>
 <br/><br/>
-<input type="submit" value="SAČUVAJ IZMENE">
+<input type="submit" value="SACUVAJ IZMENE">
 <br/><br/>
-<a href="Ruter.php?stranica=nabavke"><input type="button" value="ОДУСТАНИ"></a>
+<a href="Ruter.php?stranica=nabavke"><input type="button" value="ODUSTANI"></a>
 </td>
 </tr>
 </table>
@@ -208,7 +208,7 @@ function dodajStavku() {
             <input type="text" class="ukupnoInput" readonly style="width:90px;">
         </td>
         <td>
-            <button type="button" onclick="obrisiStavku(this)">ОБРИШИ</button>
+            <button type="button" onclick="obrisiStavku(this)">OBRISI</button>
         </td>
     `;
 
@@ -241,17 +241,17 @@ function proveriNabavku() {
     }
 
     if (brojNaloga.length > 50) {
-        alert("Broj naloga ne sme biti duži od 50 karaktera.");
+        alert("Broj naloga ne sme biti duzi od 50 karaktera.");
         return false;
     }
 
     if (dobavljac.length > 100) {
-        alert("Dobavljač ne sme biti duži od 100 karaktera.");
+        alert("Dobavljac ne sme biti duzi od 100 karaktera.");
         return false;
     }
 
     if (napomena.length > 255) {
-        alert("Napomena ne sme biti duža od 255 karaktera.");
+        alert("Napomena ne sme biti duza od 255 karaktera.");
         return false;
     }
 
@@ -273,17 +273,17 @@ function proveriNabavku() {
         let cena = parseFloat(cenaVal);
 
         if (igra == "") {
-            alert("Morate izabrati društvenu igru u svakoj stavci.");
+            alert("Morate izabrati drustvenu igru u svakoj stavci.");
             return false;
         }
 
         if (kolicinaVal === "" || isNaN(kolicina) || String(kolicina) !== String(parseInt(kolicinaVal, 10)) || kolicina <= 0) {
-            alert("Količina mora biti pozitivan ceo broj veći od 0.");
+            alert("Kolicina mora biti pozitivan ceo broj veci od 0.");
             return false;
         }
 
         if (cenaVal === "" || isNaN(cena) || cena <= 0) {
-            alert("Cena mora biti pozitivna decimalna vrednost veća od 0.");
+            alert("Cena mora biti pozitivna decimalna vrednost veca od 0.");
             return false;
         }
     }

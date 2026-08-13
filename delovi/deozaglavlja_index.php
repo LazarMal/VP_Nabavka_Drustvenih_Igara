@@ -10,7 +10,7 @@
 <td style="width:50%;">
 </td>
 <td align="right" valign="middle"> 
- <font face="Trebuchet MS" color="darkblue" size="2px"><a href="ruter.php?stranica=prijava">&nbsp;Пријава&nbsp;</a> </font>
+ <font face="Trebuchet MS" color="darkblue" size="2px"><a href="Ruter.php?stranica=prijava">&nbsp;Prijava&nbsp;</a> </font>
 </td>
 <td style="width:1%;">
 </td>

@@ -32,7 +32,7 @@
 <tr>
 <td style="width:1px;"></td>
 <td>
-<b><font face="Trebuchet MS" color="black" size="4px">&nbsp;&nbsp;АДМИН ОПЦИЈЕ</font></b><br/>
+<b><font face="Trebuchet MS" color="black" size="4px">&nbsp;&nbsp;ADMIN OPCIJE</font></b><br/>
 <hr color="white">
 </td>
 <td style="width:1px;"></td>
@@ -41,7 +41,7 @@
 <tr>
 <td style="width:1px;"></td>
 <td>
-<a href="ruter.php?stranica=welcome"><b><font face="Trebuchet MS" color="black" size="3px">&nbsp;ПОЧЕТНА</font></b></a>
+<a href="Ruter.php?stranica=welcome"><b><font face="Trebuchet MS" color="black" size="3px">&nbsp;POCETNA</font></b></a>
 </td>
 <td style="width:1px;"></td>
 </tr>
@@ -49,7 +49,7 @@
 <tr>
 <td style="width:1px;"></td>
 <td>
-<b><font face="Trebuchet MS" color="black" size="3px">&nbsp;ПОДАЦИ О ДРУШТВЕНИМ ИГРАМА</font></b>
+<b><font face="Trebuchet MS" color="black" size="3px">&nbsp;PODACI O DRUSTVENIM IGRAMA</font></b>
 </td>
 <td style="width:1px;"></td>
 </tr>
@@ -57,7 +57,7 @@
 <tr>
 <td style="width:1px;"></td>
 <td>
-<a href="Ruter.php?stranica=unos"><font face="Trebuchet MS" color="black" size="2px">&nbsp;Унос игре</font></a>
+<a href="Ruter.php?stranica=unos"><font face="Trebuchet MS" color="black" size="2px">&nbsp;Unos igre</font></a>
 </td>
 <td style="width:1px;"></td>
 </tr>
@@ -65,7 +65,7 @@
 <tr>
 <td style="width:1px;"></td>
 <td>
-<a href="Ruter.php?stranica=unosSP"><font face="Trebuchet MS" color="black" size="2px">&nbsp;Унос игре (SP)</font></a>
+<a href="Ruter.php?stranica=unosSP"><font face="Trebuchet MS" color="black" size="2px">&nbsp;Unos igre (SP)</font></a>
 </td>
 <td style="width:1px;"></td>
 </tr>
@@ -73,7 +73,7 @@
 <tr>
 <td style="width:1px;"></td>
 <td>
-<a href="Ruter.php?stranica=knjige"><font face="Trebuchet MS" color="black" size="2px">&nbsp;Листа и ажурирање</font></a>
+<a href="Ruter.php?stranica=knjige"><font face="Trebuchet MS" color="black" size="2px">&nbsp;Lista i azuriranje</font></a>
 </td>
 <td style="width:1px;"></td>
 </tr>
@@ -81,8 +81,8 @@
 <tr>
 <td style="width:1px;"></td>
 <td>
-<a href="ruter.php?stranica=novaNabavka">
-<font face="Trebuchet MS" color="black" size="2px">&nbsp;Нова набавка</font>
+<a href="Ruter.php?stranica=novaNabavka">
+<font face="Trebuchet MS" color="black" size="2px">&nbsp;Nova nabavka</font>
 </a>
 </td>
 <td style="width:1px;"></td>
@@ -91,7 +91,7 @@
 <tr>
 <td style="width:1px;"></td>
 <td style="align:center">
-<a href="ruter.php?stranica=nabavke">
+<a href="Ruter.php?stranica=nabavke">
 <font face="Trebuchet MS" color="black" size="2px">
 &nbsp;Nalozi za nabavku
 </font>
@@ -104,7 +104,7 @@
 <tr>
 <td style="width:1px;"></td>
 <td>
-<a href="Ruter.php?stranica=stampaNabavke"><font face="Trebuchet MS" color="black" size="2px">&nbsp;Štampa naloga</font></a>
+<a href="Ruter.php?stranica=stampaNabavke"><font face="Trebuchet MS" color="black" size="2px">&nbsp;Stampa naloga</font></a>
 </td>
 <td style="width:1px;"></td>
 </tr>
@@ -112,7 +112,7 @@
 <tr>
 <td style="width:1px;"></td>
 <td>
-<a href="Ruter.php?stranica=parametarskaStampaNabavke"><font face="Trebuchet MS" color="black" size="2px">&nbsp;Parametarska štampa naloga</font></a>
+<a href="Ruter.php?stranica=parametarskaStampaNabavke"><font face="Trebuchet MS" color="black" size="2px">&nbsp;Parametarska stampa naloga</font></a>
 </td>
 <td style="width:1px;"></td>
 </tr>

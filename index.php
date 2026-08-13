@@ -16,7 +16,7 @@ $KnjigaViewObject = $KnjigeController->DajSveKnjige($filter);
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="sr-RS" xml:lang="sr-RS">
 <meta charset="UTF-8">
 <head>
-<title>ТФ М Пупин Зрењанин</title>
+<title>TF M Pupin Zrenjanin</title>
 <meta charset="UTF-8">
 <!-----<link rel="stylesheet" type="text/css" href="css/style.css" media="screen">--->
 <!----- POSTAVLJEN U PHP DA BI SE ODMAH VIDELA PROMENA, A NE DA VUCE IZ KESIRANOG FOLDERA U BROWSERU---->

@@ -10,10 +10,11 @@
 <td>
 <br/> 
 <font face="Trebuchet MS" color="darkblue" size="4px">
-<b>СПИСАК ДРУШТВЕНИХ ИГАРА</b><br/><br/>
+<b>SPISAK DRUSTVENIH IGAR</b><br/><br/>
 
-<form action="" method="GET">
-Назив / шифра / произвођач: <input type="text" name="filter" />
+<form action="Ruter.php" method="GET">
+<input type="hidden" name="stranica" value="knjige">
+Naziv / sifra / proizvodjac: <input type="text" name="filter" />
 <input type="submit" name="filtriraj" value="FILTRIRAJ" />
 <input type="submit" name="svi" value="SVI" />
 </form>
@@ -33,19 +34,19 @@
 <?php
 if ($KnjigaViewObject->BrojZapisa==0)
 {
-    echo "НЕМА ЗАПИСА У ТАБЕЛИ!";
+    echo "NEMA ZAPISA U TABELI!";
 }
 else
 {
     echo "<table style=\"width:98%; padding:0\" align=\"center\" cellspacing=\"0\" cellpadding=\"3\" border=\"1\" bgcolor=\"#D8E7F4\">";
     echo "<tr>";
-    echo "<td style=\"width:10%;\"><b><font face=\"Trebuchet MS\" color:#3F4534 size=\"2px\">СЛИКА</font></b></td>";
-    echo "<td style=\"width:16%;\"><b><font face=\"Trebuchet MS\" color:#3F4534 size=\"2px\">ШИФРА</font></b></td>";
-    echo "<td style=\"width:24%;\"><b><font face=\"Trebuchet MS\" color:#3F4534 size=\"2px\">НАЗИВ ИГРЕ</font></b></td>";
-    echo "<td style=\"width:20%;\"><b><font face=\"Trebuchet MS\" color:#3F4534 size=\"2px\">ПРОИЗВОЂАЧ</font></b></td>";
-    echo "<td style=\"width:16%;\"><b><font face=\"Trebuchet MS\" color:#3F4534 size=\"2px\">КАТЕГОРИЈА</font></b></td>";
-    echo "<td style=\"width:7%;\"><b><font face=\"Trebuchet MS\" color:#3F4534 size=\"2px\">ИЗМЕНА</font></b></td>";
-    echo "<td style=\"width:7%;\"><b><font face=\"Trebuchet MS\" color:#3F4534 size=\"2px\">БРИСАЊЕ</font></b></td>";
+    echo "<td style=\"width:10%;\"><b><font face=\"Trebuchet MS\" color:#3F4534 size=\"2px\">SLIKA</font></b></td>";
+    echo "<td style=\"width:16%;\"><b><font face=\"Trebuchet MS\" color:#3F4534 size=\"2px\">SIFRA</font></b></td>";
+    echo "<td style=\"width:24%;\"><b><font face=\"Trebuchet MS\" color:#3F4534 size=\"2px\">NAZIV IGRE</font></b></td>";
+    echo "<td style=\"width:20%;\"><b><font face=\"Trebuchet MS\" color:#3F4534 size=\"2px\">PROIZVODJAC</font></b></td>";
+    echo "<td style=\"width:16%;\"><b><font face=\"Trebuchet MS\" color:#3F4534 size=\"2px\">KATEGORIJA</font></b></td>";
+    echo "<td style=\"width:7%;\"><b><font face=\"Trebuchet MS\" color:#3F4534 size=\"2px\">IZMENA</font></b></td>";
+    echo "<td style=\"width:7%;\"><b><font face=\"Trebuchet MS\" color:#3F4534 size=\"2px\">BRISANJE</font></b></td>";
     echo "</tr>";
 
     for ($RBZapisa = 0; $RBZapisa < $KnjigaViewObject->BrojZapisa; $RBZapisa++) 
@@ -61,7 +62,7 @@ else
         echo "<td align=\"center\">";
 
             if ($NazivFajlaSlike != "") {
-                echo "<img src=\"http://localhost/vp2025/SlikeKnjiga/$NazivFajlaSlike\" width=\"45\" height=\"60\">";
+                echo "<img src=\"SlikeKnjiga/$NazivFajlaSlike\" width=\"45\" height=\"60\">";
             } else {
                 echo "-";
             }
@@ -76,14 +77,14 @@ else
         echo "<td align=\"center\">";
         echo "<form action=\"Ruter.php?stranica=izmenaForm\" method=\"POST\">";
         echo "<input type=\"hidden\" name=\"sifraIgre\" value=\"$SifraIgre\">";
-        echo "<input type=\"submit\" name=\"izmeniIgru\" value=\"ИЗМЕНИ\" />";
+        echo "<input type=\"submit\" name=\"izmeniIgru\" value=\"IZMENI\" />";
         echo "</form>";
         echo "</td>";
 
         echo "<td align=\"center\">";
         echo "<form action=\"Ruter.php?stranica=obrisiKnjigu\" method=\"POST\">";
         echo "<input type=\"hidden\" name=\"sifraIgre\" value=\"$SifraIgre\">";
-        echo "<input type=\"submit\" name=\"obrisiIgru\" value=\"ОБРИШИ\" onclick=\"return confirm('Да ли сте сигурни да желите да обришете игру?')\"/>";
+        echo "<input type=\"submit\" name=\"obrisiIgru\" value=\"OBRISI\" onclick=\"return confirm('Da li ste sigurni da zelite da obrisete igru?')\"/>";
         echo "</form>";
         echo "</td>";
 
@@ -91,7 +92,7 @@ else
     }
 
     echo "<tr>";
-    echo "<td colspan=\"5\" align=\"right\"><b><font face=\"Trebuchet MS\" color:#3F4534 size=\"2px\">УКУПНО: ".$KnjigaViewObject->BrojZapisa."&nbsp;&nbsp;</font></b></td>";
+    echo "<td colspan=\"5\" align=\"right\"><b><font face=\"Trebuchet MS\" color:#3F4534 size=\"2px\">UKUPNO: ".$KnjigaViewObject->BrojZapisa."&nbsp;&nbsp;</font></b></td>";
     echo "<td></td>";
     echo "<td></td>";
     echo "</tr>";

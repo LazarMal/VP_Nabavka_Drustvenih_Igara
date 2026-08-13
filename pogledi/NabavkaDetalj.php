@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="sr-RS" xml:lang="sr-RS">
 <head>
 <meta charset="UTF-8">
-<title>Детаљи naloga za nabavku</title>
+<title>Detalji naloga za nabavku</title>
 <?php include 'css/stil.php';?>
 </head>
 

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="sr-RS" xml:lang="sr-RS">
 <head>
 <meta charset="UTF-8">
-<title>Унос нове књиге</title>
+<title>Unos nove drustvene igre</title>
 <?php include 'css/stil.php';?>
 </head>
 

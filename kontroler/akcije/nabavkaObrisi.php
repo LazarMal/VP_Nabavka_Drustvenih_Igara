@@ -11,7 +11,7 @@ if (!isset($korisnik)) {
 $povratakUrl = '../../Ruter.php?stranica=nabavke';
 
 if (!isset($_POST['IDNabavke']) || trim($_POST['IDNabavke']) === "") {
-    die("Грешка: Nije izabran nalog za brisanje.<br><br><a href='" . $povratakUrl . "'>ПОВРАТАК</a>");
+    die("Greska: Nije izabran nalog za brisanje.<br><br><a href='" . $povratakUrl . "'>POVRATAK</a>");
 }
 
 $IDNabavke = trim($_POST['IDNabavke']);
@@ -22,12 +22,12 @@ $NabavkeController = new NabavkeController();
 
 if (!$NabavkeController->DajKonekcijaObject()->konekcijaDB) {
     $NabavkeController->ZatvoriKonekciju();
-    die("Nije uspostavljena konekcija ka bazi podataka.<br><br><a href='" . $povratakUrl . "'>ПОВРАТАК</a>");
+    die("Nije uspostavljena konekcija ka bazi podataka.<br><br><a href='" . $povratakUrl . "'>POVRATAK</a>");
 }
 
 if ($NabavkeController->DajNabavkuPoID($IDNabavke) == null) {
     $NabavkeController->ZatvoriKonekciju();
-    die("Грешка: Nalog ne postoji.<br><br><a href='" . $povratakUrl . "'>ПОВРАТАК</a>");
+    die("Greska: Nalog ne postoji.<br><br><a href='" . $povratakUrl . "'>POVRATAK</a>");
 }
 
 $UtvrdjenaGreska = $NabavkeController->ObrisiNabavku($IDNabavke);
@@ -35,8 +35,8 @@ $UtvrdjenaGreska = $NabavkeController->ObrisiNabavku($IDNabavke);
 $NabavkeController->ZatvoriKonekciju();
 
 if ($UtvrdjenaGreska != "") {
-    echo "Грешка: " . $UtvrdjenaGreska;
-    echo "<br><br><a href='" . $povratakUrl . "'>ПОВРАТАК</a>";
+    echo "Greska: " . $UtvrdjenaGreska;
+    echo "<br><br><a href='" . $povratakUrl . "'>POVRATAK</a>";
 } else {
     header('Location:' . $povratakUrl);
     exit();

@@ -10,15 +10,15 @@
 <td>
 <br/>
 <font face="Trebuchet MS" color="darkblue" size="4px">
-<b>ПРЕГЛЕД НАЛОГА ЗА НАБАВКУ ДРУШТВЕНИХ ИГАРА</b><br/><br/>
+<b>PREGLED NALOGA ZA NABAVKU DRUSTVENIH IGAR</b><br/><br/>
 
 <form action="Ruter.php" method="GET">
 <input type="hidden" name="stranica" value="nabavke">
-Број naloga: <input type="text" name="filterBrojNaloga" value="<?php echo htmlspecialchars($filterBrojNaloga); ?>" maxlength="50" />
+Broj naloga: <input type="text" name="filterBrojNaloga" value="<?php echo htmlspecialchars($filterBrojNaloga); ?>" maxlength="50" />
 &nbsp;&nbsp;
-Датум nabavke: <input type="date" name="filterDatumNabavke" value="<?php echo htmlspecialchars($filterDatumNabavke); ?>" />
+Datum nabavke: <input type="date" name="filterDatumNabavke" value="<?php echo htmlspecialchars($filterDatumNabavke); ?>" />
 &nbsp;&nbsp;
-Добављач: <input type="text" name="filterDobavljac" value="<?php echo htmlspecialchars($filterDobavljac); ?>" maxlength="100" />
+Dobavljac: <input type="text" name="filterDobavljac" value="<?php echo htmlspecialchars($filterDobavljac); ?>" maxlength="100" />
 &nbsp;&nbsp;
 <input type="submit" name="filtriraj" value="FILTRIRAJ" />
 <input type="submit" name="svi" value="SVI" />
@@ -54,7 +54,7 @@ if ($filterDobavljac != "") {
 <?php
 
 if (mysqli_num_rows($rezultatNabavke) == 0) {
-    echo "<font face=\"Trebuchet MS\" color=\"darkblue\" size=\"3px\">Нема евидентираних naloga za nabavku.</font>";
+    echo "<font face=\"Trebuchet MS\" color=\"darkblue\" size=\"3px\">Nema evidentiranih naloga za nabavku.</font>";
 } else {
     while ($nabavka = mysqli_fetch_assoc($rezultatNabavke)) {
 
@@ -64,35 +64,35 @@ if (mysqli_num_rows($rezultatNabavke) == 0) {
         echo "<tr bgcolor=\"#B7F3FE\">";
         echo "<td colspan=\"5\">";
         echo "<font face=\"Trebuchet MS\" color=\"black\" size=\"3px\">";
-        echo "<b>Нalog za nabavku — ID: ".$nabavka['IDNabavke']."</b><br/>";
-        echo "Број naloga: ".htmlspecialchars($nabavka['BrojNaloga'])."<br/>";
-        echo "Датум nabavke: ".htmlspecialchars($nabavka['DatumNabavke'])."<br/>";
-        echo "Добављач: ".htmlspecialchars($nabavka['Dobavljac'])."<br/>";
+        echo "<b>Nalog za nabavku — ID: ".$nabavka['IDNabavke']."</b><br/>";
+        echo "Broj naloga: ".htmlspecialchars($nabavka['BrojNaloga'])."<br/>";
+        echo "Datum nabavke: ".htmlspecialchars($nabavka['DatumNabavke'])."<br/>";
+        echo "Dobavljac: ".htmlspecialchars($nabavka['Dobavljac'])."<br/>";
         echo "Nalog evidentirao: ".htmlspecialchars($nabavka['NalogEvidentirao'])."<br/>";
-        echo "Напомена: ".htmlspecialchars($nabavka['Napomena']);
+        echo "Napomena: ".htmlspecialchars($nabavka['Napomena']);
         echo "</font>";
         echo "</td>";
         echo "<td align=\"center\" valign=\"middle\">";
         echo "<a href=\"Ruter.php?stranica=nabavkaDetalj&amp;id=".$IDNabavke."\">";
-        echo "<input type=\"button\" value=\"ДЕТАЉ\" />";
+        echo "<input type=\"button\" value=\"DETALJ\" />";
         echo "</a><br/><br/>";
         echo "<form action=\"Ruter.php?stranica=nabavkaIzmeniForm\" method=\"POST\" style=\"margin-bottom:8px;\">";
         echo "<input type=\"hidden\" name=\"IDNabavke\" value=\"".$IDNabavke."\">";
-        echo "<input type=\"submit\" name=\"izmeniNalog\" value=\"ИЗМЕНИ\" />";
+        echo "<input type=\"submit\" name=\"izmeniNalog\" value=\"IZMENI\" />";
         echo "</form>";
         echo "<form action=\"Ruter.php?stranica=obrisiNabavku\" method=\"POST\">";
         echo "<input type=\"hidden\" name=\"IDNabavke\" value=\"".$IDNabavke."\">";
-        echo "<input type=\"submit\" name=\"obrisiNalog\" value=\"ОБРИШИ\" onclick=\"return confirm('Да ли сте сигурни da želite da obrišete nalog broj ".htmlspecialchars($nabavka['BrojNaloga'], ENT_QUOTES)."?')\" />";
+        echo "<input type=\"submit\" name=\"obrisiNalog\" value=\"OBRISI\" onclick=\"return confirm('Da li ste sigurni da zelite da obrisete nalog broj ".htmlspecialchars($nabavka['BrojNaloga'], ENT_QUOTES)."?')\" />";
         echo "</form>";
         echo "</td>";
         echo "</tr>";
 
         echo "<tr>";
-        echo "<td><b>Стavka</b></td>";
-        echo "<td><b>Друštvena igra</b></td>";
-        echo "<td><b>Цena po komadu</b></td>";
-        echo "<td><b>Количina</b></td>";
-        echo "<td><b>Укупno</b></td>";
+        echo "<td><b>Stavka</b></td>";
+        echo "<td><b>Drustvena igra</b></td>";
+        echo "<td><b>Cena po komadu</b></td>";
+        echo "<td><b>Kolicina</b></td>";
+        echo "<td><b>Ukupno</b></td>";
         echo "<td></td>";
         echo "</tr>";
 
@@ -115,7 +115,7 @@ if (mysqli_num_rows($rezultatNabavke) == 0) {
         }
 
         echo "<tr bgcolor=\"#E8F4FC\">";
-        echo "<td colspan=\"2\" align=\"right\"><b>Рекapitulacija:</b></td>";
+        echo "<td colspan=\"2\" align=\"right\"><b>Rekapitulacija:</b></td>";
         echo "<td colspan=\"2\"><b>Ukupan broj stavki: ".$brojStavki."</b></td>";
         echo "<td><b>".$ukupnoNabavka."</b></td>";
         echo "<td></td>";

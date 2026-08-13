@@ -3,7 +3,7 @@
 <meta charset="UTF-8">
 <head>
 <meta charset="UTF-8">
-<title>Измена књиге</title>
+<title>Izmena drustvene igre</title>
 <?php include 'css/stil.php';?>
 </head>
 

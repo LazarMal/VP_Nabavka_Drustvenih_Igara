@@ -38,7 +38,7 @@ if ($KonekcijaObject->konekcijaDB) {
     if ($red['broj'] > 0) {
         $KonekcijaObject->disconnect();
 
-        die("Грешка: Игра се не може обрисати јер постоји у евидентираним налозima.<br><br><a href=\"../../Ruter.php?stranica=knjige\">ПОВРАТАК</a>");
+        die("Greska: Igra se ne moze obrisati jer postoji u evidentiranim nalozima.<br><br><a href=\"../../Ruter.php?stranica=knjige\">POVRATAK</a>");
     }
 
     $TransakcijaObject = new Transakcija($KonekcijaObject);
@@ -60,9 +60,9 @@ if ($KonekcijaObject->konekcijaDB) {
 $KonekcijaObject->disconnect();
 
 if ($UtvrdjenaGreska) {
-    echo "Грешка: $UtvrdjenaGreska";
+    echo "Greska: $UtvrdjenaGreska";
     echo "<br><br>";
-    echo "<a href=\"../../Ruter.php?stranica=knjige\">ПОВРАТАК</a>";        
+    echo "<a href=\"../../Ruter.php?stranica=knjige\">POVRATAK</a>";        
 } else {
     header('Location:../../Ruter.php?stranica=knjige');
     exit();
