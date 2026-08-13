@@ -23,7 +23,7 @@ if(session_id() == '') {
 <td style="width:60%;">
 </td>
 <td align="right"> 
-<font face="Trebuchet MS" color="darkblue" size="2px"><a href="index.php">&nbsp;Одјава&nbsp;</a> </font>
+<font face="Trebuchet MS" color="darkblue" size="2px"><a href="Ruter.php?stranica=odjava">&nbsp;Одјава&nbsp;</a> </font>
 </td>
 <td style="width:1%;">
 </td>

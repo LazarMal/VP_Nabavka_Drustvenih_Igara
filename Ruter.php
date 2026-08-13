@@ -7,12 +7,30 @@ $stranica = isset($_GET['stranica']) ? $_GET['stranica'] : 'index';
 
 function proveriSesiju()
 {
-    $korisnik = isset($_SESSION["korisnik"]) ? $_SESSION["korisnik"] : null;
-
-    if (!isset($korisnik)) {
-        header('Location:ruter.php?stranica=index');
+    if (!isset($_SESSION["korisnik"])) {
+        header('Location:Ruter.php?stranica=index');
         exit();
     }
+}
+
+function odjaviKorisnika()
+{
+    $_SESSION = array();
+    if (ini_get("session.use_cookies")) {
+        $params = session_get_cookie_params();
+        setcookie(
+            session_name(),
+            '',
+            time() - 42000,
+            $params["path"],
+            $params["domain"],
+            $params["secure"],
+            $params["httponly"]
+        );
+    }
+    session_destroy();
+    header('Location:Ruter.php?stranica=prijava');
+    exit();
 }
 
 switch ($stranica) {
@@ -31,6 +49,10 @@ switch ($stranica) {
 
     case 'prijava':
         include 'pogledi/prijava.php';
+        break;
+
+    case 'odjava':
+        odjaviKorisnika();
         break;
 
     case 'welcome':

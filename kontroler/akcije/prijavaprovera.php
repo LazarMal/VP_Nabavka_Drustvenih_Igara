@@ -24,12 +24,14 @@ if ($objKonekcija->konekcijaDB)
 			$_SESSION["idkorisnika"] = $objKorisnik->DajIDPrijavljenogKorisnika($loginUserName,$loginPassword);
 			$_SESSION["korisnik"] = $objKorisnik->DajImePrezimePrijavljenogKorisnika($loginUserName,$loginPassword);
 			// ucitavanje pocetne personalizovane stranice
-			header ('Location:../../ruter.php?stranica=welcome');	
+			header('Location:../../Ruter.php?stranica=welcome');
+			exit();
 		}
 		else
 		{
 			// neuspeh izaziva ponovo ucitavanje stranice za prijavu
-			header ('Location:../../ruter.php?stranica=prijava');	
+			header('Location:../../Ruter.php?stranica=prijava');
+			exit();
 		}
 	}
 	else

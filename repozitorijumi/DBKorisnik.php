@@ -25,7 +25,7 @@ public function UcitajSveKorisnike()
 public function DaLiPostojiKorisnik($loginusername,$loginpassword)
 {
 	$postoji="";
-	$SQLKorisnik = "SELECT * FROM `".$this->OtvorenaKonekcija->KompletanNazivBazePodataka."`.`korisnik` WHERE KORISNICKOIME='".$loginusername."' AND SIFRA='".$loginpassword."'";
+	$SQLKorisnik = "SELECT * FROM `".$this->OtvorenaKonekcija->KompletanNazivBazePodataka."`.`KORISNIK` WHERE KORISNICKOIME='".$loginusername."' AND SIFRA='".$loginpassword."'";
     $this->UcitajSvePoUpitu($SQLKorisnik);
 	// raspolazemo sa kolekcijom i brojem zapisa nakon ucitaj sve po upitu
 	

@@ -94,7 +94,7 @@
 
 | ID | Requirement | Source | Interpretation | Template status | Required adaptation | Planned location | Verification | Status |
 |----|-------------|--------|----------------|-----------------|---------------------|------------------|--------------|--------|
-| FUN-01 | Login | Profesor PDF | — | Da (`prijavaprovera.php`, sesija) | KEEP; proveriti index.php sesiju | `kontroler/akcije/prijavaprovera.php` | Login/logout | NEEDS_ADAPTATION |
+| FUN-01 | Login | Profesor PDF | — | Da (`prijavaprovera.php`, sesija) | KEEP; proveriti index.php sesiju | `kontroler/akcije/prijavaprovera.php` | Login/logout | IMPLEMENTED |
 | FUN-02 | Unos MD jedna forma | Profesor PDF | Nalog | Da (`novaNabavka`) | +BrojNaloga, +evidentirao, igre | `NovaNabavka.php` | Form submit | NEEDS_ADAPTATION |
 | FUN-03 | Unos transakcija | Profesor PDF | — | Da | Fix merge (DEF-01) | `nabavkaSnimi.php` | DB rollback | NEEDS_ADAPTATION |
 | FUN-04 | Izmena master | Profesor PDF | — | **Nema** | Nova ruta, forma, akcija | `Ruter.php`, nova forma, `nabavkaIzmeni.php` | UPDATE nabavka | MISSING |
@@ -229,7 +229,7 @@
 | DEF-07 | Zabrana duplikata | NEEDS_ADAPTATION | Ukloniti (VAL-16) |
 | DEF-08 | Gornji limiti | NEEDS_ADAPTATION | Ukloniti (VAL-15) |
 | DEF-09 | Dead route brisanja | NEEDS_ADAPTATION | Fix ruta knjiga→igra |
-| DEF-10 | index.php session_destroy | NEEDS_ADAPTATION | Proveriti login tok |
+| DEF-10 | index.php session_destroy | IMPLEMENTED | Uklonjeno sa landing; odjava preko `Ruter.php?stranica=odjava` |
 
 ---
 
