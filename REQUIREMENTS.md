@@ -97,13 +97,13 @@
 | FUN-01 | Login | Profesor PDF | — | Da (`prijavaprovera.php`, sesija) | KEEP; proveriti index.php sesiju | `kontroler/akcije/prijavaprovera.php` | Login/logout | IMPLEMENTED |
 | FUN-02 | Unos MD jedna forma | Profesor PDF | Nalog | Da (`novaNabavka`) | +BrojNaloga, +evidentirao, igre | `NovaNabavka.php` | Form submit | IMPLEMENTED |
 | FUN-03 | Unos transakcija | Profesor PDF | — | Da | Fix merge (DEF-01) | `nabavkaSnimi.php` | DB rollback | IMPLEMENTED |
-| FUN-04 | Izmena master | Profesor PDF | — | **Nema** | Nova ruta, forma, akcija | `Ruter.php`, nova forma, `nabavkaIzmeni.php` | UPDATE nabavka | MISSING |
-| FUN-05 | Izmena stavki | Profesor PDF | — | **Nema** | U istoj izmeni MD | `nabavkaIzmeni.php`, repo | UPDATE/DELETE/INSERT stavki | MISSING |
+| FUN-04 | Izmena master | Profesor PDF | — | **Nema** | Nova ruta, forma, akcija | `Ruter.php`, nova forma, `nabavkaIzmeni.php` | UPDATE nabavka | IMPLEMENTED |
+| FUN-05 | Izmena stavki | Profesor PDF | — | **Nema** | U istoj izmeni MD | `nabavkaIzmeni.php`, repo | UPDATE/DELETE/INSERT stavki | IMPLEMENTED |
 | FUN-06 | Brisanje naloga | Profesor PDF | — | **Nema** | Akcija + CASCADE | `nabavkaObrisi.php`, ruta | DELETE + confirm | IMPLEMENTED |
 | FUN-07 | Tabelarni prikaz | Profesor PDF | — | Delimično (`nabavke`) | Tabular lista sa akcijama | `NabavkeLista.php` | Tabela naloga | IMPLEMENTED |
 | FUN-08 | Filter | Profesor PDF | — | **Nema** za nabavku | Filter forma (datum, broj, dobavljač…) | `desnoNabavkeLista.php`, controller | GET filter | IMPLEMENTED |
 | FUN-09 | Pojedinačni prikaz | Profesor PDF | Svi delovi | Delimično (u listi expanded) | Dedicated detail view ili jasna sekcija | `nabavkaDetalj` ruta | Svi stavke vidljive | IMPLEMENTED |
-| FUN-10 | CRUD ≠ katalog | Odluka 2A | Nabavka obavezno | Katalog pun CRUD; nabavka ne | Implementirati FUN-04–09 | Nabavka modul | Katalog ne zamenjuje | MISSING (za nabavku) |
+| FUN-10 | CRUD ≠ katalog | Odluka 2A | Nabavka obavezno | Katalog pun CRUD; nabavka ne | Implementirati FUN-04–09 | Nabavka modul | Katalog ne zamenjuje | IMPLEMENTED |
 
 ---
 
@@ -222,7 +222,7 @@
 |----|------|--------|---------------------|
 | DEF-01 | Merge po Datum+Dobavljac | IMPLEMENTED | Ukloniti PronadjiNabavku merge |
 | DEF-02 | Parametarska = knjiga | MISSING funkcionalnost | Nova štampa naloga |
-| DEF-03 | Nepun CRUD nabavka | MISSING | FUN-04–09 |
+| DEF-03 | Nepun CRUD nabavka | IMPLEMENTED | FUN-04–09 (bez štampe M9+) |
 | DEF-04 | Nedostaju polja | VERIFIED | DB-09, DB-14 (SQL kolone) |
 | DEF-05 | GROUP BY stavke | IMPLEMENTED | Pojedinačni redovi stavki |
 | DEF-06 | Zatvoreni dobavljači | IMPLEMENTED | 1A text |
@@ -239,9 +239,9 @@
 |--------|------|
 | VERIFIED | 18 |
 | SATISFIED_BY_TEMPLATE | 15 |
-| IMPLEMENTED | 43 |
+| IMPLEMENTED | 47 |
 | NEEDS_ADAPTATION | 18 |
-| MISSING | 15 |
+| MISSING | 13 |
 | BLOCKED | 0 |
 
 **Napomena:** Brojevi uključuju FUN-KAT, VAL, PRINT, TOP, TECH-SP/VIEW, MVC, REST, DEF kao zasebne stavke u matrici. DOC (15) svi MISSING.

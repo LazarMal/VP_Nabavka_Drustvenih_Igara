@@ -73,6 +73,11 @@ if ($nabavka == null) {
     echo "</table>";
 
     echo "<a href=\"Ruter.php?stranica=nabavke\"><input type=\"button\" value=\"ПОВРАТАК NA LISTU\" /></a>";
+    echo "&nbsp;&nbsp;";
+    echo "<form action=\"Ruter.php?stranica=nabavkaIzmeniForm\" method=\"POST\" style=\"display:inline;\">";
+    echo "<input type=\"hidden\" name=\"IDNabavke\" value=\"".htmlspecialchars($nabavka['IDNabavke'])."\">";
+    echo "<input type=\"submit\" name=\"izmeniNalog\" value=\"ИЗМЕНИ\" />";
+    echo "</form>";
 }
 ?>
 

@@ -14,6 +14,44 @@ class DBStavkaNabavke extends Tabela
         return $this->IzvrsiAktivanSQLUpit($SQL);
     }
 
+    public function IzmeniStavkuNabavke($IDStavke, $IDNabavke, $SifraIgre, $Kolicina, $Cena)
+    {
+        $SQL = "UPDATE `stavka_nabavke`
+                SET SifraIgre = '".$SifraIgre."',
+                    Kolicina = '".$Kolicina."',
+                    Cena = '".$Cena."'
+                WHERE IDStavke = '".$IDStavke."'
+                AND IDNabavke = '".$IDNabavke."'";
+
+        return $this->IzvrsiAktivanSQLUpit($SQL);
+    }
+
+    public function ObrisiStavkuNabavke($IDStavke, $IDNabavke)
+    {
+        $SQL = "DELETE FROM `stavka_nabavke`
+                WHERE IDStavke = '".$IDStavke."'
+                AND IDNabavke = '".$IDNabavke."'";
+
+        return $this->IzvrsiAktivanSQLUpit($SQL);
+    }
+
+    public function DajIDStavkiZaNabavku($IDNabavke)
+    {
+        $SQL = "SELECT IDStavke
+                FROM `stavka_nabavke`
+                WHERE IDNabavke = '".$IDNabavke."'";
+
+        $this->UcitajSvePoUpitu($SQL);
+
+        $ids = array();
+
+        for ($i = 0; $i < $this->BrojZapisa; $i++) {
+            $ids[] = $this->DajVrednostPoRednomBrojuZapisaPoRBPolja($this->Kolekcija, $i, 0);
+        }
+
+        return $ids;
+    }
+
     public function DajStavkeKaoModele($IDNabavke)
     {
         $SQL = "SELECT 

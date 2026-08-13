@@ -60,6 +60,10 @@ if (mysqli_num_rows($rezultatNabavke) == 0) {
         echo "<a href=\"Ruter.php?stranica=nabavkaDetalj&amp;id=".$IDNabavke."\">";
         echo "<input type=\"button\" value=\"ДЕТАЉ\" />";
         echo "</a><br/><br/>";
+        echo "<form action=\"Ruter.php?stranica=nabavkaIzmeniForm\" method=\"POST\" style=\"margin-bottom:8px;\">";
+        echo "<input type=\"hidden\" name=\"IDNabavke\" value=\"".$IDNabavke."\">";
+        echo "<input type=\"submit\" name=\"izmeniNalog\" value=\"ИЗМЕНИ\" />";
+        echo "</form>";
         echo "<form action=\"Ruter.php?stranica=obrisiNabavku\" method=\"POST\">";
         echo "<input type=\"hidden\" name=\"IDNabavke\" value=\"".$IDNabavke."\">";
         echo "<input type=\"submit\" name=\"obrisiNalog\" value=\"ОБРИШИ\" onclick=\"return confirm('Да ли сте сигурни da želite da obrišete nalog broj ".htmlspecialchars($nabavka['BrojNaloga'], ENT_QUOTES)."?')\" />";

@@ -17,6 +17,31 @@ class DBNabavka extends Tabela
         return $this->BrojZapisa > 0;
     }
 
+    public function PostojiBrojNalogaOsim($BrojNaloga, $IDNabavke)
+    {
+        $SQL = "SELECT IDNabavke 
+                FROM `nabavka`
+                WHERE BrojNaloga = '".$BrojNaloga."'
+                AND IDNabavke <> '".$IDNabavke."'
+                LIMIT 1";
+
+        $this->UcitajSvePoUpitu($SQL);
+
+        return $this->BrojZapisa > 0;
+    }
+
+    public function IzmeniNabavku($IDNabavke, $BrojNaloga, $DatumNabavke, $Dobavljac, $Napomena)
+    {
+        $SQL = "UPDATE `nabavka`
+                SET BrojNaloga = '".$BrojNaloga."',
+                    DatumNabavke = '".$DatumNabavke."',
+                    Dobavljac = '".$Dobavljac."',
+                    Napomena = '".$Napomena."'
+                WHERE IDNabavke = '".$IDNabavke."'";
+
+        return $this->IzvrsiAktivanSQLUpit($SQL);
+    }
+
     public function DodajNabavku($BrojNaloga, $DatumNabavke, $Dobavljac, $Napomena, $NalogEvidentirao)
     {
         $SQL = "INSERT INTO `nabavka`

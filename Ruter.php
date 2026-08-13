@@ -261,6 +261,37 @@ switch ($stranica) {
         require 'kontroler/akcije/nabavkaObrisi.php';
         break;
 
+    case 'nabavkaIzmeniForm':
+        proveriSesiju();
+
+        require_once 'kontroler/stranice/NabavkeController.php';
+
+        $NabavkeController = new NabavkeController();
+
+        $IDNabavke = isset($_POST['IDNabavke']) ? trim($_POST['IDNabavke']) : (isset($_GET['id']) ? trim($_GET['id']) : "");
+        $nabavka = $IDNabavke != "" ? $NabavkeController->DajNabavkuPoID($IDNabavke) : null;
+        $rezultatStavke = ($nabavka != null) ? $NabavkeController->DajStavkeNabavke($IDNabavke) : null;
+
+        $listaIgara = array();
+        $rezultatKnjige = $NabavkeController->DajKnjigeZaNabavku();
+
+        while ($igra = mysqli_fetch_assoc($rezultatKnjige)) {
+            $listaIgara[] = $igra;
+        }
+
+        $optionsKnjige = "<option value=\"\">izaberite igru...</option>";
+
+        foreach ($listaIgara as $igra) {
+            $optionsKnjige .= "<option value='" . htmlspecialchars($igra['SifraIgre']) . "' data-cena='" . htmlspecialchars($igra['Cena']) . "'>"
+                . htmlspecialchars($igra['Naziv']) . " - " . htmlspecialchars($igra['SifraIgre'])
+                . "</option>";
+        }
+
+        include 'pogledi/NabavkaIzmeniForm.php';
+
+        $NabavkeController->ZatvoriKonekciju();
+        break;
+
     default:
         require_once 'kontroler/stranice/KnjigeController.php';
 
