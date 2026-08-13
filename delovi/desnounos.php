@@ -177,6 +177,15 @@ function proveriUnosIgre() {
         return false;
     }
 
+    let slika = document.querySelector('input[name="nazivFajlaSlike"]');
+    if (slika && slika.value != "") {
+        let ext = slika.value.split(".").pop().toLowerCase();
+        if (["jpg", "jpeg", "png"].indexOf(ext) === -1) {
+            alert("Dozvoljene su samo JPG, JPEG i PNG slike.");
+            return false;
+        }
+    }
+
     return true;
 }
 </script>

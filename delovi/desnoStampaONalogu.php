@@ -11,6 +11,9 @@
 <font face="Trebuchet MS" color="darkblue" size="5px">
 <b>Nalog za nabavku društvenih igara</b><br/>
 </font>
+<div class="no-print" style="margin-top:10px;">
+<a href="Ruter.php?stranica=parametarskaStampaNabavke"><font face="Trebuchet MS" color="darkblue" size="2px">Nazad na parametarsku štampu</font></a>
+</div>
 </td>
 
 <td style="width:5%;"></td>

@@ -30,14 +30,14 @@
 <td align="center">
 
 <table style="width:70%;" bgcolor="#D8E7F4" align="center" cellspacing="0" cellpadding="0" border="0">
-<form name="FormaZaIzmenuIgre" action="kontroler/akcije/knjigaIzmeni.php" method="POST" enctype="multipart/form-data">
+<form name="FormaZaIzmenuIgre" action="kontroler/akcije/knjigaIzmeni.php" method="POST" enctype="multipart/form-data" onsubmit="return proveriIzmenuIgre();">
 
 <tr>
 <td align="right" valign="bottom">
 <b><font face="Trebuchet MS" color="black" size="2px">Шифра игре&nbsp;&nbsp;</font></b>
 </td>
 <td align="left" valign="bottom">
-<input name="sifraIgre" type="text" size="50" maxlength="13"
+<input name="sifraIgre" id="sifraIgre" type="text" size="50" maxlength="13"
 value="<?php echo $StariSifraIgre; ?>" required />
 <input type="hidden" name="StaraSifraIgre" value="<?php echo $StariSifraIgre; ?>">
 </td>
@@ -53,7 +53,7 @@ value="<?php echo $StariSifraIgre; ?>" required />
 <b><font face="Trebuchet MS" color="black" size="2px">Назив игре&nbsp;&nbsp;</font><br/></b>
 </td>
 <td align="left" valign="bottom">
-<input name="naziv" type="text" size="50" maxlength="100"
+<input name="naziv" id="naziv" type="text" size="50" maxlength="100"
 value="<?php echo $StariNaziv; ?>" required />
 </td>
 </tr>
@@ -68,7 +68,7 @@ value="<?php echo $StariNaziv; ?>" required />
 <b><font face="Trebuchet MS" color="black" size="2px">Произвођач&nbsp;&nbsp;</font><br/></b>
 </td>
 <td align="left" valign="bottom">
-<input name="proizvodjac" type="text" size="50" maxlength="100"
+<input name="proizvodjac" id="proizvodjac" type="text" size="50" maxlength="100"
 value="<?php echo $StariProizvodjac; ?>" required />
 </td>
 </tr>
@@ -83,7 +83,7 @@ value="<?php echo $StariProizvodjac; ?>" required />
 <b><font face="Trebuchet MS" color="black" size="2px">Категорија&nbsp;&nbsp;</font><br/></b>
 </td>
 <td align="left" valign="bottom">
-<select name="oznakaKategorije" required tabindex="7">
+<select name="oznakaKategorije" id="oznakaKategorije" required tabindex="7">
     <option value="">изаберите...</option>
     <?php
     if ($UkupanBrojZapisa > 0) 
@@ -157,3 +157,43 @@ value="<?php echo $StariProizvodjac; ?>" required />
 </table>
 
 <img src="images/sredinadole.jpg" width="100%" height="5" alt="" class="flt1" />
+
+<script>
+function proveriIzmenuIgre() {
+    let sifraIgre = document.getElementById("sifraIgre").value.trim();
+    let naziv = document.getElementById("naziv").value.trim();
+    let proizvodjac = document.getElementById("proizvodjac").value.trim();
+    let kategorija = document.getElementById("oznakaKategorije").value;
+
+    if (!/^[A-Za-z0-9]{1,13}$/.test(sifraIgre)) {
+        alert("Šifra igre mora biti alfanumerička i do 13 karaktera.");
+        return false;
+    }
+
+    if (naziv == "" || naziv.length > 100) {
+        alert("Naziv igre je obavezan i ne sme biti duži od 100 karaktera.");
+        return false;
+    }
+
+    if (proizvodjac == "" || proizvodjac.length > 100) {
+        alert("Proizvođač je obavezan i ne sme biti duži od 100 karaktera.");
+        return false;
+    }
+
+    if (kategorija == "") {
+        alert("Morate izabrati kategoriju.");
+        return false;
+    }
+
+    let slika = document.querySelector('input[name="nazivFajlaSlike"]');
+    if (slika && slika.value != "") {
+        let ext = slika.value.split(".").pop().toLowerCase();
+        if (["jpg", "jpeg", "png"].indexOf(ext) === -1) {
+            alert("Dozvoljene su samo JPG, JPEG i PNG slike.");
+            return false;
+        }
+    }
+
+    return true;
+}
+</script>

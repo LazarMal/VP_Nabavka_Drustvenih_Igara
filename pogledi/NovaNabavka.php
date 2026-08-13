@@ -282,25 +282,59 @@ function proveriNabavku() {
     let brojNaloga = document.getElementById("brojNaloga").value.trim();
     let datum = document.getElementById("datumNabavke").value;
     let dobavljac = document.getElementById("dobavljac").value.trim();
+    let napomenaEl = document.getElementById("napomena");
+    let napomena = napomenaEl ? napomenaEl.value.trim() : "";
     let redovi = document.querySelectorAll(".stavkaRed");
 
     if (brojNaloga == "" || datum == "" || dobavljac == "") {
-        alert("Морате попунити сва обавезна поља o nalogu.");
+        alert("Morate popuniti sva obavezna polja o nalogu.");
+        return false;
+    }
+
+    if (brojNaloga.length > 50) {
+        alert("Broj naloga ne sme biti duži od 50 karaktera.");
+        return false;
+    }
+
+    if (dobavljac.length > 100) {
+        alert("Dobavljač ne sme biti duži od 100 karaktera.");
+        return false;
+    }
+
+    if (napomena.length > 255) {
+        alert("Napomena ne sme biti duža od 255 karaktera.");
+        return false;
+    }
+
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(datum)) {
+        alert("Datum nabavke nije ispravan.");
         return false;
     }
 
     if (redovi.length == 0) {
-        alert("Нalog мора имати бар једну ставку.");
+        alert("Nalog mora imati bar jednu stavku.");
         return false;
     }
 
     for (let i = 0; i < redovi.length; i++) {
         let igra = redovi[i].querySelector(".igraSelect").value;
-        let kolicina = parseFloat(redovi[i].querySelector(".kolicinaInput").value);
-        let cena = parseFloat(redovi[i].querySelector(".cenaInput").value);
+        let kolicinaVal = redovi[i].querySelector(".kolicinaInput").value;
+        let cenaVal = redovi[i].querySelector(".cenaInput").value;
+        let kolicina = parseInt(kolicinaVal, 10);
+        let cena = parseFloat(cenaVal);
 
-        if (igra == "" || isNaN(kolicina) || kolicina <= 0 || isNaN(cena) || cena <= 0) {
-            alert("Морате исправно попунити све ставке naloga.");
+        if (igra == "") {
+            alert("Morate izabrati društvenu igru u svakoj stavci.");
+            return false;
+        }
+
+        if (kolicinaVal === "" || isNaN(kolicina) || String(kolicina) !== String(parseInt(kolicinaVal, 10)) || kolicina <= 0) {
+            alert("Količina mora biti pozitivan ceo broj veći od 0.");
+            return false;
+        }
+
+        if (cenaVal === "" || isNaN(cena) || cena <= 0) {
+            alert("Cena mora biti pozitivna decimalna vrednost veća od 0.");
             return false;
         }
     }

@@ -29,12 +29,6 @@ if (strlen($Proizvodjac) > 100) {
     die("Грешка: Произвођач не сме бити дужи од 100 карактера.<br><br><a href=\"../Ruter.php?stranica=unosSP\">ПОВРАТАК</a>");
 }
 
-$dozvoljeneKategorije = array("ST", "PA", "PO", "KO", "KA");
-
-if (!in_array($OznakaKategorije, $dozvoljeneKategorije)) {
-    die("Грешка: Изабрана категорија није у дозвољеном домену вредности.<br><br><a href=\"../Ruter.php?stranica=unosSP\">ПОВРАТАК</a>");
-}
-
 $name = "";
 
 if (isset($_FILES["nazivFajlaSlike"]) && $_FILES["nazivFajlaSlike"]["error"] == 0) {
@@ -73,6 +67,12 @@ $Naziv = mysqli_real_escape_string($konekcija, $Naziv);
 $Proizvodjac = mysqli_real_escape_string($konekcija, $Proizvodjac);
 $OznakaKategorije = mysqli_real_escape_string($konekcija, $OznakaKategorije);
 $NazivFajlaSlike = mysqli_real_escape_string($konekcija, $NazivFajlaSlike);
+
+$proveraKat = mysqli_query($konekcija, "SELECT Oznaka FROM `$baza`.`kategorija_igre` WHERE Oznaka='$OznakaKategorije' LIMIT 1");
+
+if (mysqli_num_rows($proveraKat) == 0) {
+    die("Грешка: Изабрана категорија није у дозвољеном домену вредности.<br><br><a href=\"../Ruter.php?stranica=unosSP\">ПОВРАТАК</a>");
+}
 
 $provera = mysqli_query($konekcija, "SELECT SifraIgre FROM `$baza`.`drustvena_igra` WHERE SifraIgre='$SifraIgre'");
 

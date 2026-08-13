@@ -101,6 +101,12 @@ a:hover {
 a:active {
     color: magenta;
     background-color: #B7F3FE;
+}
+
+@media print {
+    .no-print {
+        display: none !important;
+    }
 } ";
 
 echo "</style>";

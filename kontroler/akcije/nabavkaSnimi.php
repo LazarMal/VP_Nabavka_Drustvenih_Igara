@@ -82,12 +82,12 @@ for ($i = 0; $i < count($sifraIgreNiz); $i++) {
         prekiniSaGreskom("Грешка: Шифра игре мора бити алфанумеричка и до 13 карактера.", $povratakUrl);
     }
 
-    if (!is_numeric($kolicina) || (int)$kolicina != $kolicina || (int)$kolicina <= 0) {
+    if (!is_numeric($kolicina) || (string)(int)$kolicina !== $kolicina || (int)$kolicina <= 0) {
         prekiniSaGreskom("Грешка: Количина мора бити цео број већи од 0.", $povratakUrl);
     }
 
-    if (!is_numeric($cena) || $cena <= 0) {
-        prekiniSaGreskom("Грешка: Цена мора бити број већи од 0.", $povratakUrl);
+    if (filter_var($cena, FILTER_VALIDATE_FLOAT) === false || (float)$cena <= 0) {
+        prekiniSaGreskom("Грешка: Цена мора бити позитивна decimalna vrednost veća od 0.", $povratakUrl);
     }
 
     $KnjigaEntitet = new KnjigaEntitet($sifraIgre);

@@ -21,6 +21,9 @@
 <font face="Trebuchet MS" color="darkblue" size="5px">
 <b>SPISAK NALOGA ZA NABAVKU DRUŠTVENIH IGARA</b><br/>
 </font>
+<div class="no-print" style="margin-top:10px;">
+<a href="Ruter.php?stranica=nabavke"><font face="Trebuchet MS" color="darkblue" size="2px">Nazad na naloge</font></a>
+</div>
 </td>
 
 <td style="width:5%;"></td>

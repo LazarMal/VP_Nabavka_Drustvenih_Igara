@@ -117,14 +117,14 @@ for ($i = 0; $i < count($sifraIgreNiz); $i++) {
         prekiniSaGreskom("Грешка: Шифра igre mora biti alfanumerička i do 13 karaktera.", $povratakUrl);
     }
 
-    if (!is_numeric($kolicina) || (int)$kolicina != $kolicina || (int)$kolicina <= 0) {
+    if (!is_numeric($kolicina) || (string)(int)$kolicina !== $kolicina || (int)$kolicina <= 0) {
         $KonekcijaObject->disconnect();
         prekiniSaGreskom("Грешка: Količina mora biti ceo broj veći od 0.", $povratakUrl);
     }
 
-    if (!is_numeric($cena) || $cena <= 0) {
+    if (filter_var($cena, FILTER_VALIDATE_FLOAT) === false || (float)$cena <= 0) {
         $KonekcijaObject->disconnect();
-        prekiniSaGreskom("Грешка: Cena mora biti broj veći od 0.", $povratakUrl);
+        prekiniSaGreskom("Грешка: Cena mora biti pozitivna decimalna vrednost veća od 0.", $povratakUrl);
     }
 
     $sifraProvera = mysqli_real_escape_string($konekcija, $sifraIgre);

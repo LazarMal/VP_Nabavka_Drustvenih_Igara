@@ -81,22 +81,6 @@
 <tr>
 <td style="width:1px;"></td>
 <td>
-<a href="ruter.php?stranica=stampa"><font face="Trebuchet MS" color="black" size="2px">&nbsp;Штампа књига</font></a>
-</td>
-<td style="width:1px;"></td>
-</tr>
-
-<tr>
-<td style="width:1px;"></td>
-<td>
-<a href="ruter.php?stranica=parametarskaStampa"><font face="Trebuchet MS" color="black" size="2px">&nbsp;Параметарска штампа</font></a>
-</td>
-<td style="width:1px;"></td>
-</tr>
-
-<tr>
-<td style="width:1px;"></td>
-<td>
 <a href="ruter.php?stranica=novaNabavka">
 <font face="Trebuchet MS" color="black" size="2px">&nbsp;Нова набавка</font>
 </a>
