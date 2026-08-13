@@ -4,7 +4,7 @@ echo "<style>";
 echo "
 /* CSS Document */
 
-body{ vertical-align: middle;margin:0px; padding:0px; background:#FFFFFF url(../images/blue-background3.jpg) left top repeat;
+body{ vertical-align: middle;margin:0px; padding:0px; background:#FFFFFF;
 }
 p{margin:0px; padding:0px;
 }
@@ -35,7 +35,7 @@ table.no-spacing {
 .tp_home2{ font:bold 16px Trebuchet MS; color:#000000; margin:0px; text-decoration:none;}
 .tp_pipe{display:inline; margin:0px 10px 0px 10px;}	
 #cpblock{float:left; display:inline; margin:0px 0px 0px 50px; width:898px;}
-.cpinner{display:inline; margin:0px; width:882px; border-left:8px solid #000000; border-right:8px solid #000000; background:#448CCB url(../images/cp_bg.gif) repeat-x;}
+.cpinner{display:inline; margin:0px; width:882px; border-left:8px solid #000000; border-right:8px solid #000000; background:#448CCB;}
 .lp_block{ display:inline; width:260px; margin:0px 20px 0px 21px;}
 .lp_imgpair{ margin:50px 0px 0px 10px;}
 .lp_txtmem,.lp_txtour,.lp_txtclint{ font:bold 12px/14px Trebuchet MS; color:#000000; margin:80px 0px 0px 10px;}

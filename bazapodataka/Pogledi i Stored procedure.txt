@@ -1,4 +1,4 @@
-USE `Biblioteka_VP_2026`;
+USE `nabavka_drustvenih_igara_vp_2026`;
 
 DROP VIEW IF EXISTS `svipodacioidrutvenimigramasaslikom`;
 DROP VIEW IF EXISTS `svipodacioidrutvenimigrama`;
@@ -37,6 +37,14 @@ CREATE PROCEDURE `DodajDrustvenuIgru`
     IN NazivFajlaSlikeParametar VARCHAR(100)
 )
 BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
+
+    START TRANSACTION;
+
     INSERT INTO `drustvena_igra`
     (`SifraIgre`, `Naziv`, `Proizvodjac`, `OznakaKategorije`, `NazivFajlaSlike`)
     VALUES
@@ -45,6 +53,8 @@ BEGIN
     UPDATE `kategorija_igre`
     SET `UkupanBrojIgara` = `UkupanBrojIgara` + 1
     WHERE `Oznaka` = OznakaKategorijeParametar;
+
+    COMMIT;
 END $$
 
 DELIMITER ;

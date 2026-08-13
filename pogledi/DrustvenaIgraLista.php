@@ -47,7 +47,7 @@
 
 <td style="width:80%;padding:0" cellspacing="0" cellpadding="0" border="0" valign="top">
 <!------- GLAVNI SADRZAJ desno ----------->  
-<?php include 'delovi/desnoKnjigeLista.php';?>
+<?php include 'delovi/desnoDrustveneIgreLista.php';?>
 </td>
 
 <td style="width:1%;">

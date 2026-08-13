@@ -1,6 +1,4 @@
-<meta charset="UTF-8">
-
-<img src="images/sredinagore.jpg" width="100%" height="3" alt="" class="flt1 rp_topcornn" /> 
+﻿<meta charset="UTF-8">
 
 <table style="width:100%; padding:0" align="center" cellspacing="0" cellpadding="0" border="0" bgcolor="#D8E7F4">
 

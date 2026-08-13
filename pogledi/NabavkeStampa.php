@@ -23,7 +23,7 @@
 <td style="width:1%;"></td>
 
 <td style="width:80%;padding:0" cellspacing="0" cellpadding="0" border="0" valign="top">
-<?php include 'delovi/desnoStampaNabavke.php';?>
+<?php include __DIR__ . '/../delovi/desnoStampaNabavke.php';?>
 </td>
 
 <td style="width:1%;"></td>

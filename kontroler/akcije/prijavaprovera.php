@@ -1,42 +1,49 @@
 <?php
-session_start();
-       $loginUserName=$_POST['korisnickoIme'];
-       $loginPassword=$_POST['sifra'];
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
-	// zato sto se prilikom require uradi copy paste u ovaj fajl, 
-// onda se putanja do parametra gleda u odnosu na lokaciju ovog fajla 
+$povratakUrl = '../../Ruter.php?stranica=prijava';
+
+if (!isset($_POST['korisnickoIme']) || !isset($_POST['sifra'])) {
+    die("Greška: Korisničko ime i lozinka su obavezna.<br><br><a href=\"" . $povratakUrl . "\">POVRATAK</a>");
+}
+
+$loginUserName = trim($_POST['korisnickoIme']);
+$loginPassword = trim($_POST['sifra']);
+
+if ($loginUserName === "" || $loginPassword === "") {
+    die("Greška: Korisničko ime i lozinka moraju biti popunjeni.<br><br><a href=\"" . $povratakUrl . "\">POVRATAK</a>");
+}
+
+if (strlen($loginUserName) > 30 || strlen($loginPassword) > 30) {
+    die("Greška: Korisničko ime i lozinka ne smeju biti duži od 30 karaktera.<br><br><a href=\"" . $povratakUrl . "\">POVRATAK</a>");
+}
+
 require __DIR__ . '/../../tehnoloskeKlase/BaznaKonekcija.php';
 require __DIR__ . '/../../tehnoloskeKlase/BaznaTabela.php';
 require __DIR__ . '/../../repozitorijumi/DBKorisnik.php';
 
-$korisnik='NEPOZNAT KORISNIK';
-$objKonekcija = new Konekcija('../../tehnoloskeKlase/BaznaParametriKonekcije.xml');
+$objKonekcija = new Konekcija(__DIR__ . '/../../tehnoloskeKlase/BaznaParametriKonekcije.xml');
 $objKonekcija->connect();
-if ($objKonekcija->konekcijaDB)
-    {	
-		$objKorisnik = new DBKorisnik($objKonekcija, 'korisnik');
-		$postojiKorisnik=$objKorisnik->DaLiPostojiKorisnik($loginUserName,$loginPassword);
-		if ($postojiKorisnik=="DA")
-		{
-			// rad sa sesijama
-			$_SESSION["prez"] = $objKorisnik->DajPrezimePrijavljenogKorisnika($loginUserName,$loginPassword);
-			$_SESSION["ime"] = $objKorisnik->DajImePrijavljenogKorisnika($loginUserName,$loginPassword);
-			$_SESSION["idkorisnika"] = $objKorisnik->DajIDPrijavljenogKorisnika($loginUserName,$loginPassword);
-			$_SESSION["korisnik"] = $objKorisnik->DajImePrezimePrijavljenogKorisnika($loginUserName,$loginPassword);
-			// ucitavanje pocetne personalizovane stranice
-			header('Location:../../Ruter.php?stranica=welcome');
-			exit();
-		}
-		else
-		{
-			// neuspeh izaziva ponovo ucitavanje stranice za prijavu
-			header('Location:../../Ruter.php?stranica=prijava');
-			exit();
-		}
-	}
-	else
-	{
-		echo "Neuspeh konekcije na bazu podataka!";
-	}
-	
+
+if ($objKonekcija->konekcijaDB) {
+    $objKorisnik = new DBKorisnik($objKonekcija, 'korisnik');
+    $postojiKorisnik = $objKorisnik->DaLiPostojiKorisnik($loginUserName, $loginPassword);
+
+    if ($postojiKorisnik == "DA") {
+        $_SESSION["prez"] = $objKorisnik->DajPrezimePrijavljenogKorisnika($loginUserName, $loginPassword);
+        $_SESSION["ime"] = $objKorisnik->DajImePrijavljenogKorisnika($loginUserName, $loginPassword);
+        $_SESSION["idkorisnika"] = $objKorisnik->DajIDPrijavljenogKorisnika($loginUserName, $loginPassword);
+        $_SESSION["korisnik"] = $objKorisnik->DajImePrezimePrijavljenogKorisnika($loginUserName, $loginPassword);
+        header('Location:../../Ruter.php?stranica=welcome');
+        exit();
+    }
+
+    $_SESSION['login_greska'] = 'Pogrešno korisničko ime ili lozinka.';
+    header('Location:../../Ruter.php?stranica=prijava');
+    exit();
+}
+
+echo "Neuspeh konekcije na bazu podataka!";
 ?>

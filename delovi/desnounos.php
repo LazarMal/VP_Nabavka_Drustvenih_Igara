@@ -1,7 +1,5 @@
 <meta charset="UTF-8">
 
-<img src="images/sredinagore.jpg" width="100%" height="3" alt="" class="flt1 rp_topcornn" /> 
-
 <table style="width:100%; padding:0" align="center" cellspacing="0" cellpadding="0" border="0" bgcolor="#D8E7F4">
 <tr>
 <td style="width:5%;"></td>
@@ -14,7 +12,7 @@
 <tr>
 <td style="width:3%;"></td>
 <td align="left">
-<b><font face="Trebuchet MS" color="black" size="3px">UNOS NOVE DRUSTVENE IGRE</font></b><br/>
+<b><font face="Trebuchet MS" color="black" size="3px">UNOS NOVE DRUŠTVENE IGRE</font></b><br/>
 </td>
 <td style="width:3%;"></td>
 </tr>
@@ -32,15 +30,15 @@
 
 <table style="width:95%;" bgcolor="#D8E7F4" align="center" cellspacing="0" cellpadding="0" border="0">
 
-<form name="FormaZaUnosIgre" action="kontroler/akcije/knjigaSnimi.php" method="POST" enctype="multipart/form-data" onsubmit="return proveriUnosIgre();">
+<form name="FormaZaUnosIgre" action="kontroler/akcije/drustvenaIgraSnimi.php" method="POST" enctype="multipart/form-data" onsubmit="return proveriUnosIgre();">
 
 <tr>
 <td align="right" valign="bottom">
-<b><font face="Trebuchet MS" color="black" size="2px">Sifra igre&nbsp;&nbsp;</font></b>
+<b><font face="Trebuchet MS" color="black" size="2px">Šifra igre&nbsp;&nbsp;</font></b>
 </td>
 <td align="left" valign="bottom">
 <input name="sifraIgre" id="sifraIgre" type="text" size="50" maxlength="13"
-placeholder="Unesite sifru igre" required />
+placeholder="Unesite šifru igre" required />
 </td>
 </tr>
 
@@ -66,11 +64,11 @@ placeholder="Unesite naziv igre" required />
 
 <tr>
 <td align="right" valign="bottom">
-<b><font face="Trebuchet MS" color="black" size="2px">Proizvodjac&nbsp;&nbsp;</font><br/></b>
+<b><font face="Trebuchet MS" color="black" size="2px">Proizvođač&nbsp;&nbsp;</font><br/></b>
 </td>
 <td align="left" valign="bottom">
 <input name="proizvodjac" id="proizvodjac" type="text" size="50" maxlength="100"
-placeholder="Unesite proizvodjaca" required />
+placeholder="Unesite proizvođača" required />
 </td>
 </tr>
 
@@ -92,8 +90,8 @@ placeholder="Unesite proizvodjaca" required />
     {                   
         for ($brojacKategorija = 0; $brojacKategorija < $UkupanBrojZapisa; $brojacKategorija++) 
         {
-            $oznakaKategorije = $ZanrObject->DajVrednostPoRednomBrojuZapisaPoRBPolja($KolekcijaZapisa, $brojacKategorija, 0);               
-            $nazivKategorije = $ZanrObject->DajVrednostPoRednomBrojuZapisaPoRBPolja($KolekcijaZapisa, $brojacKategorija, 1);               
+            $oznakaKategorije = $KategorijaIgreObject->DajVrednostPoRednomBrojuZapisaPoRBPolja($KolekcijaZapisa, $brojacKategorija, 0);               
+            $nazivKategorije = $KategorijaIgreObject->DajVrednostPoRednomBrojuZapisaPoRBPolja($KolekcijaZapisa, $brojacKategorija, 1);               
             echo "<option value=\"$oznakaKategorije\">$nazivKategorije</option>";                     
         }
     }
@@ -148,9 +146,23 @@ placeholder="Unesite proizvodjaca" required />
 </tr>
 </table>
 
-<img src="images/sredinadole.jpg" width="100%" height="5" alt="" class="flt1" />
-
 <script>
+let sifraIgreZauzeta = false;
+
+document.getElementById("sifraIgre").addEventListener("blur", function() {
+    let sifraIgre = this.value.trim();
+    sifraIgreZauzeta = false;
+    if (sifraIgre === "") return;
+    fetch("api/router.php?akcija=proveraJedinstvenosti&tip=sifraIgre&vrednost=" + encodeURIComponent(sifraIgre))
+        .then(r => r.json())
+        .then(data => {
+            sifraIgreZauzeta = data.postoji === true;
+            if (sifraIgreZauzeta) {
+                alert("Šifra igre je već zauzeta.");
+            }
+        });
+});
+
 function proveriUnosIgre() {
     let sifraIgre = document.getElementById("sifraIgre").value.trim();
     let naziv = document.getElementById("naziv").value.trim();
@@ -158,17 +170,17 @@ function proveriUnosIgre() {
     let kategorija = document.getElementById("oznakaKategorije").value;
 
     if (!/^[A-Za-z0-9]{1,13}$/.test(sifraIgre)) {
-        alert("Sifra igre mora biti alfanumericka i do 13 karaktera.");
+        alert("Šifra igre mora biti alfanumerička i do 13 karaktera.");
         return false;
     }
 
     if (naziv == "" || naziv.length > 100) {
-        alert("Naziv igre je obavezan i ne sme biti duzi od 100 karaktera.");
+        alert("Naziv igre je obavezan i ne sme biti duži od 100 karaktera.");
         return false;
     }
 
     if (proizvodjac == "" || proizvodjac.length > 100) {
-        alert("Proizvodjac je obavezan i ne sme biti duzi od 100 karaktera.");
+        alert("Proizvođač je obavezan i ne sme biti duži od 100 karaktera.");
         return false;
     }
 
@@ -184,6 +196,11 @@ function proveriUnosIgre() {
             alert("Dozvoljene su samo JPG, JPEG i PNG slike.");
             return false;
         }
+    }
+
+    if (sifraIgreZauzeta) {
+        alert("Šifra igre je već zauzeta.");
+        return false;
     }
 
     return true;

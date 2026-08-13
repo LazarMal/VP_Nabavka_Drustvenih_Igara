@@ -3,7 +3,7 @@
 <meta charset="UTF-8">
 <head>
 <meta charset="UTF-8">
-<title>Izmena drustvene igre</title>
+<title>Izmena društvene igre</title>
 <?php include 'css/stil.php';?>
 </head>
 
@@ -29,7 +29,7 @@
 <td style="width:1%;"></td>
 
 <td style="width:80%;padding:0" valign="top">
-<?php include 'delovi/desnoKnjigaIzmeniForm.php';?>
+<?php include 'delovi/desnoDrustvenaIgraIzmeniForm.php';?>
 </td>
 
 <td style="width:1%;"></td>

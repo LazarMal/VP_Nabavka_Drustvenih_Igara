@@ -1,4 +1,4 @@
-﻿<meta charset="UTF-8">
+<meta charset="UTF-8">
 
 <table style="width:100%; padding:0" align="center" cellspacing="0" cellpadding="0" border="0">
 <tr>
@@ -41,7 +41,7 @@
 <tr>
 <td style="width:1px;"></td>
 <td>
-<a href="Ruter.php?stranica=welcome"><b><font face="Trebuchet MS" color="black" size="3px">&nbsp;POCETNA</font></b></a>
+<a href="Ruter.php?stranica=welcome"><b><font face="Trebuchet MS" color="black" size="3px">&nbsp;POČETNA</font></b></a>
 </td>
 <td style="width:1px;"></td>
 </tr>
@@ -49,7 +49,7 @@
 <tr>
 <td style="width:1px;"></td>
 <td>
-<b><font face="Trebuchet MS" color="black" size="3px">&nbsp;PODACI O DRUSTVENIM IGRAMA</font></b>
+<b><font face="Trebuchet MS" color="black" size="3px">&nbsp;PODACI O DRUŠTVENIM IGRAMA</font></b>
 </td>
 <td style="width:1px;"></td>
 </tr>
@@ -73,7 +73,7 @@
 <tr>
 <td style="width:1px;"></td>
 <td>
-<a href="Ruter.php?stranica=knjige"><font face="Trebuchet MS" color="black" size="2px">&nbsp;Lista i azuriranje</font></a>
+<a href="Ruter.php?stranica=drustveneIgre"><font face="Trebuchet MS" color="black" size="2px">&nbsp;Lista i ažuriranje</font></a>
 </td>
 <td style="width:1px;"></td>
 </tr>
@@ -104,7 +104,7 @@
 <tr>
 <td style="width:1px;"></td>
 <td>
-<a href="Ruter.php?stranica=stampaNabavke"><font face="Trebuchet MS" color="black" size="2px">&nbsp;Stampa naloga</font></a>
+<a href="Ruter.php?stranica=stampaNabavke"><font face="Trebuchet MS" color="black" size="2px">&nbsp;Štampa naloga</font></a>
 </td>
 <td style="width:1px;"></td>
 </tr>
@@ -112,7 +112,7 @@
 <tr>
 <td style="width:1px;"></td>
 <td>
-<a href="Ruter.php?stranica=parametarskaStampaNabavke"><font face="Trebuchet MS" color="black" size="2px">&nbsp;Parametarska stampa naloga</font></a>
+<a href="Ruter.php?stranica=parametarskaStampaNabavke"><font face="Trebuchet MS" color="black" size="2px">&nbsp;Parametarska štampa naloga</font></a>
 </td>
 <td style="width:1px;"></td>
 </tr>

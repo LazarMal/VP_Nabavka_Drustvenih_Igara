@@ -8,7 +8,7 @@ $stranica = isset($_GET['stranica']) ? $_GET['stranica'] : 'index';
 function proveriSesiju()
 {
     if (!isset($_SESSION["korisnik"])) {
-        header('Location:Ruter.php?stranica=index');
+        header('Location:Ruter.php?stranica=prijava');
         exit();
     }
 }
@@ -36,15 +36,12 @@ function odjaviKorisnika()
 switch ($stranica) {
 
     case 'index':
-        require_once 'kontroler/stranice/KnjigeController.php';
-
-        $KnjigeController = new KnjigeController();
-        $filter = isset($_GET['filtriraj']) ? $_GET['filter'] : null;
-        $KnjigaViewObject = $KnjigeController->DajSveKnjige($filter);
-
-        include 'index.php';
-
-        $KnjigeController->ZatvoriKonekciju();
+        if (!isset($_SESSION["korisnik"])) {
+            header('Location:Ruter.php?stranica=prijava');
+            exit();
+        }
+        header('Location:Ruter.php?stranica=welcome');
+        exit();
         break;
 
     case 'prijava':
@@ -60,76 +57,76 @@ switch ($stranica) {
         include 'pogledi/Welcome.php';
         break;
 
-    case 'knjige':
+    case 'drustveneIgre':
         proveriSesiju();
 
-        require_once 'kontroler/stranice/KnjigeController.php';
+        require_once 'kontroler/stranice/DrustveneIgreController.php';
 
-        $KnjigeController = new KnjigeController();
+        $DrustveneIgreController = new DrustveneIgreController();
         $filter = isset($_GET['filtriraj']) ? $_GET['filter'] : null;
-        $KnjigaViewObject = $KnjigeController->DajSveKnjige($filter);
+        $DrustvenaIgraViewObject = $DrustveneIgreController->DajSveDrustveneIgre($filter);
 
-        include 'pogledi/KnjigeLista.php';
+        include 'pogledi/DrustvenaIgraLista.php';
 
-        $KnjigeController->ZatvoriKonekciju();
+        $DrustveneIgreController->ZatvoriKonekciju();
         break;
 
     case 'unos':
         proveriSesiju();
 
-        require_once 'kontroler/stranice/KnjigeController.php';
+        require_once 'kontroler/stranice/DrustveneIgreController.php';
 
-        $KnjigeController = new KnjigeController();
+        $DrustveneIgreController = new DrustveneIgreController();
 
-        $ZanrObject = $KnjigeController->DajSveZanrove();
-        $KolekcijaZapisa = $ZanrObject->Kolekcija;
-        $UkupanBrojZapisa = $ZanrObject->BrojZapisa;
+        $KategorijaIgreObject = $DrustveneIgreController->DajSveKategorijeIgre();
+        $KolekcijaZapisa = $KategorijaIgreObject->Kolekcija;
+        $UkupanBrojZapisa = $KategorijaIgreObject->BrojZapisa;
 
         include 'pogledi/unos.php';
 
-        $KnjigeController->ZatvoriKonekciju();
+        $DrustveneIgreController->ZatvoriKonekciju();
         break;
 
     case 'unosSP':
         proveriSesiju();
 
-        require_once 'kontroler/stranice/KnjigeController.php';
+        require_once 'kontroler/stranice/DrustveneIgreController.php';
 
-        $KnjigeController = new KnjigeController();
+        $DrustveneIgreController = new DrustveneIgreController();
 
-        $ZanrObject = $KnjigeController->DajSveZanrove();
-        $KolekcijaZapisa = $ZanrObject->Kolekcija;
-        $UkupanBrojZapisa = $ZanrObject->BrojZapisa;
+        $KategorijaIgreObject = $DrustveneIgreController->DajSveKategorijeIgre();
+        $KolekcijaZapisa = $KategorijaIgreObject->Kolekcija;
+        $UkupanBrojZapisa = $KategorijaIgreObject->BrojZapisa;
 
         include 'pogledi/unosSP.php';
 
-        $KnjigeController->ZatvoriKonekciju();
+        $DrustveneIgreController->ZatvoriKonekciju();
         break;
     case 'izmenaForm':
         proveriSesiju();
 
         $StariSifraIgreZaIzmenu = isset($_POST['sifraIgre']) ? $_POST['sifraIgre'] : null;
 
-        require_once 'kontroler/stranice/KnjigeController.php';
+        require_once 'kontroler/stranice/DrustveneIgreController.php';
 
-        $KnjigeController = new KnjigeController();
+        $DrustveneIgreController = new DrustveneIgreController();
 
-        $ZanrObject = $KnjigeController->DajSveZanrove();
-        $KnjigaObject = $KnjigeController->DajKnjiguPoISBN($StariSifraIgreZaIzmenu);
+        $KategorijaIgreObject = $DrustveneIgreController->DajSveKategorijeIgre();
+        $DrustvenaIgraObject = $DrustveneIgreController->DajDrustvenuIgruPoSifri($StariSifraIgreZaIzmenu);
 
-        $KolekcijaZapisa = $ZanrObject->Kolekcija;
-        $UkupanBrojZapisa = $ZanrObject->BrojZapisa;
+        $KolekcijaZapisa = $KategorijaIgreObject->Kolekcija;
+        $UkupanBrojZapisa = $KategorijaIgreObject->BrojZapisa;
 
-        $KolekcijaZapisaStudenata = $KnjigaObject->Kolekcija;
-        $UkupanBrojZapisaStudenata = $KnjigaObject->BrojZapisa;
+        $KolekcijaZapisaStudenata = $DrustvenaIgraObject->Kolekcija;
+        $UkupanBrojZapisaStudenata = $DrustvenaIgraObject->BrojZapisa;
 
         if ($UkupanBrojZapisaStudenata > 0) {
             $row = 0;
-            $StariSifraIgre = $KnjigaObject->DajVrednostPoRednomBrojuZapisaPoRBPolja($KolekcijaZapisaStudenata, $row, 0);
-            $StariNaziv = $KnjigaObject->DajVrednostPoRednomBrojuZapisaPoRBPolja($KolekcijaZapisaStudenata, $row, 1);
-            $StariProizvodjac = $KnjigaObject->DajVrednostPoRednomBrojuZapisaPoRBPolja($KolekcijaZapisaStudenata, $row, 2);
-            $StaraOznakaKategorije = $KnjigaObject->DajVrednostPoRednomBrojuZapisaPoRBPolja($KolekcijaZapisaStudenata, $row, 3);
-            $StariNazivFajlaSlike = $KnjigaObject->DajVrednostPoRednomBrojuZapisaPoRBPolja($KolekcijaZapisaStudenata, $row, 4);
+            $StariSifraIgre = $DrustvenaIgraObject->DajVrednostPoRednomBrojuZapisaPoRBPolja($KolekcijaZapisaStudenata, $row, 0);
+            $StariNaziv = $DrustvenaIgraObject->DajVrednostPoRednomBrojuZapisaPoRBPolja($KolekcijaZapisaStudenata, $row, 1);
+            $StariProizvodjac = $DrustvenaIgraObject->DajVrednostPoRednomBrojuZapisaPoRBPolja($KolekcijaZapisaStudenata, $row, 2);
+            $StaraOznakaKategorije = $DrustvenaIgraObject->DajVrednostPoRednomBrojuZapisaPoRBPolja($KolekcijaZapisaStudenata, $row, 3);
+            $StariNazivFajlaSlike = $DrustvenaIgraObject->DajVrednostPoRednomBrojuZapisaPoRBPolja($KolekcijaZapisaStudenata, $row, 4);
         } else {
             $StariSifraIgre = "";
             $StariNaziv = "";
@@ -138,14 +135,14 @@ switch ($stranica) {
             $StariNazivFajlaSlike = "";
         }
 
-        include 'pogledi/KnjigaIzmeniForm.php';
+        include 'pogledi/DrustvenaIgraIzmeniForm.php';
 
-        $KnjigeController->ZatvoriKonekciju();
+        $DrustveneIgreController->ZatvoriKonekciju();
         break;
 
-    case 'obrisiKnjigu':
+    case 'obrisiDrustvenuIgru':
         proveriSesiju();
-        require 'kontroler/akcije/KnjigaObrisi.php';
+        require 'kontroler/akcije/DrustvenaIgraObrisi.php';
         break;
 
     case 'novaNabavka':
@@ -154,14 +151,14 @@ switch ($stranica) {
         require_once 'kontroler/stranice/NabavkeController.php';
 
         $NabavkeController = new NabavkeController();
-        $rezultatKnjige = $NabavkeController->DajKnjigeZaNabavku();
+        $rezultatDrustveneIgre = $NabavkeController->DajDrustveneIgreZaNabavku();
 
-        $optionsKnjige = "<option value=\"\">izaberite igru...</option>";
+        $optionsDrustveneIgre = "<option value=\"\">izaberite igru...</option>";
 
-        while ($igra = mysqli_fetch_assoc($rezultatKnjige)) {
-            $optionsKnjige .= "<option value='".$igra['SifraIgre']."' data-cena='".$igra['Cena']."'>
-                    ".$igra['Naziv']." - ".$igra['SifraIgre']."
-                  </option>";
+        while ($igra = mysqli_fetch_assoc($rezultatDrustveneIgre)) {
+            $optionsDrustveneIgre .= "<option value='" . htmlspecialchars($igra['SifraIgre'], ENT_QUOTES, 'UTF-8') . "'>"
+                . htmlspecialchars($igra['Naziv'] . " - " . $igra['SifraIgre'], ENT_QUOTES, 'UTF-8')
+                . "</option>";
         }
 
         include 'pogledi/NovaNabavka.php';
@@ -188,6 +185,8 @@ switch ($stranica) {
         } else {
             $rezultatNabavke = $NabavkeController->DajSveNabavke();
         }
+
+        $listaNabavaka = $NabavkeController->DajNabavkeSaStavkama($rezultatNabavke);
 
         include 'pogledi/NabavkeLista.php';
 
@@ -237,6 +236,8 @@ switch ($stranica) {
             $rezultatNabavke = $NabavkeController->DajSveNabavke();
         }
 
+        $listaNabavaka = $NabavkeController->DajNabavkeSaStavkama($rezultatNabavke);
+
         include 'pogledi/NabavkeStampa.php';
 
         $NabavkeController->ZatvoriKonekciju();
@@ -275,17 +276,16 @@ switch ($stranica) {
         $rezultatStavke = ($nabavka != null) ? $NabavkeController->DajStavkeNabavke($IDNabavke) : null;
 
         $listaIgara = array();
-        $rezultatKnjige = $NabavkeController->DajKnjigeZaNabavku();
-
-        while ($igra = mysqli_fetch_assoc($rezultatKnjige)) {
+        $rezultatDrustveneIgre = $NabavkeController->DajDrustveneIgreZaNabavku();
+        while ($igra = mysqli_fetch_assoc($rezultatDrustveneIgre)) {
             $listaIgara[] = $igra;
         }
 
-        $optionsKnjige = "<option value=\"\">izaberite igru...</option>";
+        $optionsDrustveneIgre = "<option value=\"\">izaberite igru...</option>";
 
         foreach ($listaIgara as $igra) {
-            $optionsKnjige .= "<option value='" . htmlspecialchars($igra['SifraIgre']) . "' data-cena='" . htmlspecialchars($igra['Cena']) . "'>"
-                . htmlspecialchars($igra['Naziv']) . " - " . htmlspecialchars($igra['SifraIgre'])
+            $optionsDrustveneIgre .= "<option value='" . htmlspecialchars($igra['SifraIgre'], ENT_QUOTES, 'UTF-8') . "'>"
+                . htmlspecialchars($igra['Naziv'] . " - " . $igra['SifraIgre'], ENT_QUOTES, 'UTF-8')
                 . "</option>";
         }
 
@@ -295,15 +295,12 @@ switch ($stranica) {
         break;
 
     default:
-        require_once 'kontroler/stranice/KnjigeController.php';
-
-        $KnjigeController = new KnjigeController();
-        $filter = null;
-        $KnjigaViewObject = $KnjigeController->DajSveKnjige($filter);
-
-        include 'index.php';
-
-        $KnjigeController->ZatvoriKonekciju();
+        if (!isset($_SESSION["korisnik"])) {
+            header('Location:Ruter.php?stranica=prijava');
+            exit();
+        }
+        header('Location:Ruter.php?stranica=welcome');
+        exit();
         break;
 }
 ?>

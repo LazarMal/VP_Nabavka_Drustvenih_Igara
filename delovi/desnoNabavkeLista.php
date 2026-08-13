@@ -1,6 +1,4 @@
-<meta charset="UTF-8">
-
-<img src="images/sredinagore.jpg" width="100%" height="3" alt="" class="flt1 rp_topcornn" /> 
+﻿<meta charset="UTF-8">
 
 <table style="width:100%; padding:0" align="center" cellspacing="0" cellpadding="0" border="0" bgcolor="#D8E7F4">
 
@@ -10,15 +8,15 @@
 <td>
 <br/>
 <font face="Trebuchet MS" color="darkblue" size="4px">
-<b>PREGLED NALOGA ZA NABAVKU DRUSTVENIH IGAR</b><br/><br/>
+<b>PREGLED NALOGA ZA NABAVKU DRUŠTVENIH IGARA</b><br/><br/>
 
 <form action="Ruter.php" method="GET">
 <input type="hidden" name="stranica" value="nabavke">
-Broj naloga: <input type="text" name="filterBrojNaloga" value="<?php echo htmlspecialchars($filterBrojNaloga); ?>" maxlength="50" />
+Broj naloga: <input type="text" name="filterBrojNaloga" value="<?php echo htmlspecialchars($filterBrojNaloga, ENT_QUOTES, 'UTF-8'); ?>" maxlength="50" />
 &nbsp;&nbsp;
-Datum nabavke: <input type="date" name="filterDatumNabavke" value="<?php echo htmlspecialchars($filterDatumNabavke); ?>" />
+Datum nabavke: <input type="date" name="filterDatumNabavke" value="<?php echo htmlspecialchars($filterDatumNabavke, ENT_QUOTES, 'UTF-8'); ?>" />
 &nbsp;&nbsp;
-Dobavljac: <input type="text" name="filterDobavljac" value="<?php echo htmlspecialchars($filterDobavljac); ?>" maxlength="100" />
+Dobavljač: <input type="text" name="filterDobavljac" value="<?php echo htmlspecialchars($filterDobavljac, ENT_QUOTES, 'UTF-8'); ?>" maxlength="100" />
 &nbsp;&nbsp;
 <input type="submit" name="filtriraj" value="FILTRIRAJ" />
 <input type="submit" name="svi" value="SVI" />
@@ -53,10 +51,10 @@ if ($filterDobavljac != "") {
 
 <?php
 
-if (mysqli_num_rows($rezultatNabavke) == 0) {
+if (count($listaNabavaka) == 0) {
     echo "<font face=\"Trebuchet MS\" color=\"darkblue\" size=\"3px\">Nema evidentiranih naloga za nabavku.</font>";
 } else {
-    while ($nabavka = mysqli_fetch_assoc($rezultatNabavke)) {
+    foreach ($listaNabavaka as $nabavka) {
 
         $IDNabavke = $nabavka['IDNabavke'];
 
@@ -67,7 +65,7 @@ if (mysqli_num_rows($rezultatNabavke) == 0) {
         echo "<b>Nalog za nabavku — ID: ".$nabavka['IDNabavke']."</b><br/>";
         echo "Broj naloga: ".htmlspecialchars($nabavka['BrojNaloga'])."<br/>";
         echo "Datum nabavke: ".htmlspecialchars($nabavka['DatumNabavke'])."<br/>";
-        echo "Dobavljac: ".htmlspecialchars($nabavka['Dobavljac'])."<br/>";
+        echo "Dobavljač: ".htmlspecialchars($nabavka['Dobavljac'])."<br/>";
         echo "Nalog evidentirao: ".htmlspecialchars($nabavka['NalogEvidentirao'])."<br/>";
         echo "Napomena: ".htmlspecialchars($nabavka['Napomena']);
         echo "</font>";
@@ -89,18 +87,17 @@ if (mysqli_num_rows($rezultatNabavke) == 0) {
 
         echo "<tr>";
         echo "<td><b>Stavka</b></td>";
-        echo "<td><b>Drustvena igra</b></td>";
+        echo "<td><b>Društvena igra</b></td>";
         echo "<td><b>Cena po komadu</b></td>";
-        echo "<td><b>Kolicina</b></td>";
+        echo "<td><b>Količina</b></td>";
         echo "<td><b>Ukupno</b></td>";
         echo "<td></td>";
         echo "</tr>";
 
-        $rezultatStavke = $NabavkeController->DajStavkeNabavke($IDNabavke);
         $ukupnoNabavka = 0;
         $brojStavki = 0;
 
-        while ($stavka = mysqli_fetch_assoc($rezultatStavke)) {
+        foreach ($nabavka['stavke'] as $stavka) {
             $brojStavki++;
             $ukupnoNabavka += $stavka['Ukupno'];
 

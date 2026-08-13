@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/../../tehnoloskeKlase/BaznaKonekcija.php';
 require_once __DIR__ . "/../../model/servisi/NabavkaModel.php";
-require_once __DIR__ . "/../../model/servisi/KnjigaModel.php";
+require_once __DIR__ . "/../../model/servisi/DrustvenaIgraModel.php";
 
 class NabavkeController
 {
@@ -10,7 +10,7 @@ class NabavkeController
     private $konekcija;
     private $baza;
     private $NabavkaModel;
-    private $KnjigaModel;
+    private $DrustvenaIgraModel;
 
     public function __construct()
     {
@@ -21,7 +21,7 @@ class NabavkeController
         $this->baza = $this->KonekcijaObject->KompletanNazivBazePodataka;
 
         $this->NabavkaModel = new NabavkaModel($this->konekcija, $this->baza);
-        $this->KnjigaModel = new KnjigaModel($this->konekcija, $this->baza);
+        $this->DrustvenaIgraModel = new DrustvenaIgraModel($this->konekcija, $this->baza);
     }
 
     public function DajSveNabavke()
@@ -49,9 +49,14 @@ class NabavkeController
         return $this->NabavkaModel->DajStavkeNabavke($IDNabavke);
     }
 
-    public function DajKnjigeZaNabavku()
+    public function DajDrustveneIgreZaNabavku()
     {
-        return $this->KnjigaModel->DajSveKnjigeZaNabavku();
+        return $this->DrustvenaIgraModel->DajSveDrustveneIgreZaNabavku();
+    }
+
+    public function DajNabavkeSaStavkama($rezultatNabavke)
+    {
+        return $this->NabavkaModel->DajNabavkeSaStavkama($rezultatNabavke);
     }
 
     public function DajNabavkaModel()

@@ -1,7 +1,5 @@
 <meta charset="UTF-8">
 
-<img src="images/sredinagore.jpg" width="100%" height="3" alt="" class="flt1 rp_topcornn" /> 
-
 <table style="width:100%; padding:0" align="center" cellspacing="0" cellpadding="0" border="0" bgcolor="#D8E7F4">
 <tr>
 <td style="width:5%;"></td>
@@ -14,7 +12,7 @@
 <tr>
 <td style="width:3%;"></td>
 <td align="left">
-<b><font face="Trebuchet MS" color="black" size="3px">UNOS NOVE DRUSTVENE IGRE primenom stored procedure</font></b><br/>
+<b><font face="Trebuchet MS" color="black" size="3px">UNOS NOVE DRUŠTVENE IGRE primenom stored procedure</font></b><br/>
 </td>
 <td style="width:3%;"></td>
 </tr>
@@ -30,15 +28,15 @@
 <td align="center">
 
 <table style="width:95%;" bgcolor="#D8E7F4" align="center" cellspacing="0" cellpadding="0" border="0">
-<form name="FormaZaUnosIgreSP" action="kontroler/akcije/knjigaSnimiSP.php" method="POST" enctype="multipart/form-data" onsubmit="return proveriUnosIgre();">
+<form name="FormaZaUnosIgreSP" action="kontroler/akcije/drustvenaIgraSnimiSP.php" method="POST" enctype="multipart/form-data" onsubmit="return proveriUnosIgre();">
 
 <tr>
 <td align="right" valign="bottom">
-<b><font face="Trebuchet MS" color="black" size="2px">Sifra igre&nbsp;&nbsp;</font></b>
+<b><font face="Trebuchet MS" color="black" size="2px">Šifra igre&nbsp;&nbsp;</font></b>
 </td>
 <td align="left" valign="bottom">
 <input name="sifraIgre" id="sifraIgre" type="text" size="50" maxlength="13"
-placeholder="Unesite sifru igre" required />
+placeholder="Unesite šifru igre" required />
 </td>
 </tr>
 
@@ -64,11 +62,11 @@ placeholder="Unesite naziv igre" required />
 
 <tr>
 <td align="right" valign="bottom">
-<b><font face="Trebuchet MS" color="black" size="2px">Proizvodjac&nbsp;&nbsp;</font><br/></b>
+<b><font face="Trebuchet MS" color="black" size="2px">Proizvođač&nbsp;&nbsp;</font><br/></b>
 </td>
 <td align="left" valign="bottom">
 <input name="proizvodjac" id="proizvodjac" type="text" size="50" maxlength="100"
-placeholder="Unesite proizvodjaca" required />
+placeholder="Unesite proizvođača" required />
 </td>
 </tr>
 
@@ -87,8 +85,8 @@ placeholder="Unesite proizvodjaca" required />
     <?php
     if ($UkupanBrojZapisa > 0) {                   
         for ($brojacKategorija = 0; $brojacKategorija < $UkupanBrojZapisa; $brojacKategorija++) {
-            $oznakaKategorije = $ZanrObject->DajVrednostPoRednomBrojuZapisaPoRBPolja($KolekcijaZapisa, $brojacKategorija, 0);               
-            $nazivKategorije = $ZanrObject->DajVrednostPoRednomBrojuZapisaPoRBPolja($KolekcijaZapisa, $brojacKategorija, 1);               
+            $oznakaKategorije = $KategorijaIgreObject->DajVrednostPoRednomBrojuZapisaPoRBPolja($KolekcijaZapisa, $brojacKategorija, 0);               
+            $nazivKategorije = $KategorijaIgreObject->DajVrednostPoRednomBrojuZapisaPoRBPolja($KolekcijaZapisa, $brojacKategorija, 1);               
             echo "<option value=\"$oznakaKategorije\">$nazivKategorije</option>";                     
         }
     }
@@ -133,8 +131,6 @@ placeholder="Unesite proizvodjaca" required />
 <td style="width:5%;"></td>
 </tr>
 </table>
-
-<img src="images/sredinadole.jpg" width="100%" height="5" alt="" class="flt1" />
 
 <script>
 function proveriUnosIgre() {

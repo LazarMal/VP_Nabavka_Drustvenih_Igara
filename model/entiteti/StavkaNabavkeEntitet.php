@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . "/KnjigaEntitet.php";
+require_once __DIR__ . "/DrustvenaIgraEntitet.php";
 
 class StavkaNabavkeEntitet
 {
@@ -26,7 +26,7 @@ class StavkaNabavkeEntitet
 
     public static function IzRedaBaze($red)
     {
-        $igra = new KnjigaEntitet(
+        $igra = new DrustvenaIgraEntitet(
             isset($red["SifraIgre"]) ? $red["SifraIgre"] : "",
             isset($red["Naziv"]) ? $red["Naziv"] : "",
             isset($red["Proizvodjac"]) ? $red["Proizvodjac"] : "",

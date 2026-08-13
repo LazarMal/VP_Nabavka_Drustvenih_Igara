@@ -1,8 +1,9 @@
 <?php
 
-require_once __DIR__ . "/../model/entiteti/KnjigaEntitet.php";
+require_once __DIR__ . '/../tehnoloskeKlase/BaznaTabela.php';
+require_once __DIR__ . "/../model/entiteti/DrustvenaIgraEntitet.php";
 
-class DBKnjiga extends Tabela 
+class DBDrustvenaIgra extends Tabela 
 {
     public $SifraIgre;
     public $Naziv;
@@ -10,27 +11,27 @@ class DBKnjiga extends Tabela
     public $OznakaKategorije;
     public $NazivFajlaSlike;
 
-    public function DajKolekcijuSvihKnjiga()
+    public function DajKolekcijuSvihDrustvenihIgara()
     {
         $SQL = "select * from `drustvena_igra` ORDER BY Naziv ASC";
         $this->UcitajSvePoUpitu($SQL);
         return $this->Kolekcija;
     }
 
-    public function UcitajKnjiguPoISBN($SifraIgreParametar)
+    public function UcitajDrustvenuIgruPoSifri($SifraIgreParametar)
     {
         $SQL = "select * from `drustvena_igra` where `SifraIgre`='".$SifraIgreParametar."'";
         $this->UcitajSvePoUpitu($SQL);
     }
 
-    public function DajOznakuZanraKnjige($SifraIgreParametar)
+    public function DajOznakuKategorijeIgre($SifraIgreParametar)
     {
         $SQL = "select `OznakaKategorije` from `drustvena_igra` where `SifraIgre`='".$SifraIgreParametar."'";
         $this->UcitajSvePoUpitu($SQL);
         return $this->DajVrednostPoRednomBrojuZapisaPoRBPolja($this->Kolekcija, 0, 0);
     }
 
-    public function DodajNovuKnjigu()
+    public function DodajNovuDrustvenuIgru()
     {
         $SQL = "INSERT INTO `drustvena_igra`
         (SifraIgre, Naziv, Proizvodjac, OznakaKategorije, NazivFajlaSlike)
@@ -41,14 +42,23 @@ class DBKnjiga extends Tabela
         return $greska;
     }
 
-    public function ObrisiKnjigu($IdZaBrisanje)
+    public function IgraPostoji($sifraIgre)
+    {
+        $konekcija = $this->OtvorenaKonekcija->konekcijaDB;
+        $sifraEsc = mysqli_real_escape_string($konekcija, $sifraIgre);
+        $SQL = "SELECT SifraIgre FROM `".$this->NazivBazePodataka."`.`drustvena_igra` WHERE SifraIgre='".$sifraEsc."' LIMIT 1";
+        $this->UcitajSvePoUpitu($SQL);
+        return $this->BrojZapisa > 0;
+    }
+
+    public function ObrisiDrustvenuIgru($IdZaBrisanje)
     {
         $SQL = "DELETE FROM `drustvena_igra` WHERE SifraIgre='".$IdZaBrisanje."'";
         $greska = $this->IzvrsiAktivanSQLUpit($SQL);
         return $greska;
     }
 
-    public function IzmeniKnjigu($StaraSifraIgre, $SifraIgre, $Naziv, $Proizvodjac, $OznakaKategorije, $NazivFajlaSlike)
+    public function IzmeniDrustvenuIgru($StaraSifraIgre, $SifraIgre, $Naziv, $Proizvodjac, $OznakaKategorije, $NazivFajlaSlike)
     {
         $SQL = "UPDATE `drustvena_igra`
         SET SifraIgre='".$SifraIgre."',
@@ -62,13 +72,13 @@ class DBKnjiga extends Tabela
         return $greska;
     }
 
-    public function DajSveKnjigeKaoModele()
+    public function DajSveDrustveneIgreKaoModele()
     {
         $SQL = "SELECT * FROM `".$this->NazivBazePodataka."`.`drustvena_igra` ORDER BY Naziv ASC";
 
         $this->UcitajSvePoUpitu($SQL);
 
-        $knjige = array();
+        $drustveneIgre = array();
 
         for ($i = 0; $i < $this->BrojZapisa; $i++) {
             $red = array(
@@ -79,10 +89,10 @@ class DBKnjiga extends Tabela
                 "NazivFajlaSlike" => $this->DajVrednostPoRednomBrojuZapisaPoRBPolja($this->Kolekcija, $i, 4)
             );
 
-            $knjige[] = KnjigaEntitet::IzRedaBaze($red);
+            $drustveneIgre[] = DrustvenaIgraEntitet::IzRedaBaze($red);
         }
 
-        return $knjige;
+        return $drustveneIgre;
     }
 }
 ?>

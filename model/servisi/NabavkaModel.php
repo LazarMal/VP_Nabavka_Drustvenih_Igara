@@ -286,6 +286,29 @@ class NabavkaModel
 
         return ($rezultat && mysqli_num_rows($rezultat) > 0);
     }
+
+    public function DajNabavkeSaStavkama($rezultatNabavke)
+    {
+        $lista = array();
+
+        if (!$rezultatNabavke) {
+            return $lista;
+        }
+
+        while ($nabavka = mysqli_fetch_assoc($rezultatNabavke)) {
+            $stavke = array();
+            $rezultatStavke = $this->DajStavkeNabavke($nabavka['IDNabavke']);
+            if ($rezultatStavke) {
+                while ($stavka = mysqli_fetch_assoc($rezultatStavke)) {
+                    $stavke[] = $stavka;
+                }
+            }
+            $nabavka['stavke'] = $stavke;
+            $lista[] = $nabavka;
+        }
+
+        return $lista;
+    }
 }
 
 ?>

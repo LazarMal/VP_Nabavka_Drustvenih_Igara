@@ -1,17 +1,19 @@
 <?php
-class DBZanr extends Tabela 
+require_once __DIR__ . '/../tehnoloskeKlase/BaznaTabela.php';
+
+class DBKategorijaIgre extends Tabela 
 {
     public $Oznaka;
     public $Naziv; 
     public $UkupanBrojIgara;
 
-    public function UcitajKolekcijuSvihZanrova()
+    public function UcitajKolekcijuSvihKategorijaIgre()
     {
         $SQL = "select * from `".$this->NazivBazePodataka."`.`kategorija_igre` ORDER BY Naziv ASC";
         $this->UcitajSvePoUpitu($SQL);
     }
 
-    public function InkrementirajBrojKnjiga($IDSmer)
+    public function InkrementirajBrojIgara($IDSmer)
     {
         $KriterijumFiltriranja = "Oznaka='".$IDSmer."'";
         $StaraVrednost = $this->DajVrednostJednogPoljaPrvogZapisa(
@@ -31,7 +33,7 @@ class DBZanr extends Tabela
         return $greska;
     }
 
-    public function DekrementirajBrojKnjiga($IDSmer)
+    public function DekrementirajBrojIgara($IDSmer)
     {
         $KriterijumFiltriranja = "Oznaka='".$IDSmer."'";
         $StaraVrednost = $this->DajVrednostJednogPoljaPrvogZapisa(
@@ -40,7 +42,7 @@ class DBZanr extends Tabela
             'UkupanBrojIgara'
         );
 
-        $NovaVrednost = $StaraVrednost - 1;
+        $NovaVrednost = max(0, (int)$StaraVrednost - 1);
 
         $SQL = "UPDATE `".$this->NazivBazePodataka."`.`kategorija_igre`
                 SET UkupanBrojIgara=".$NovaVrednost."

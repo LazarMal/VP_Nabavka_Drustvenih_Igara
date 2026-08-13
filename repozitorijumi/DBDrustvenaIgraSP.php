@@ -1,5 +1,7 @@
 <?php
-class DBKnjigaSP extends Tabela 
+require_once __DIR__ . '/../tehnoloskeKlase/BaznaTabela.php';
+
+class DBDrustvenaIgraSP extends Tabela 
 {
 private $bazapodataka;
 private $UspehKonekcijeNaDBMS;
@@ -9,7 +11,7 @@ public $Proizvodjac;
 public $OznakaKategorije;
 public $NazivFajlaSlike;
 
-public function DodajNovuKnjigu()
+public function DodajNovuDrustvenuIgru()
 {
     $GreskarezultatPar1 = $this->IzvrsiAktivanSQLUpit ("SET @SifraIgreParametar='".$this->SifraIgre."'");
     $GreskarezultatPar2 = $this->IzvrsiAktivanSQLUpit ("SET @NazivParametar='".$this->Naziv."'");

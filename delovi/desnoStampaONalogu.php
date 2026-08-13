@@ -1,7 +1,5 @@
 <meta charset="UTF-8">
 
-<img src="images/sredinagore.jpg" width="100%" height="3" alt="" class="flt1 rp_topcornn" /> 
-
 <table style="width:100%; padding:0" align="center" cellspacing="0" cellpadding="0" border="0" bgcolor="white">
 
 <tr>
@@ -9,7 +7,7 @@
 
 <td align="center">
 <font face="Trebuchet MS" color="darkblue" size="5px">
-<b>Nalog za nabavku društvenih igara</b><br/>
+<b>NALOG ZA NABAVKU DRUŠTVENIH IGARA</b><br/>
 </font>
 <div class="no-print" style="margin-top:10px;">
 <a href="Ruter.php?stranica=parametarskaStampaNabavke"><font face="Trebuchet MS" color="darkblue" size="2px">Nazad na parametarsku štampu</font></a>
@@ -38,7 +36,7 @@ if ($nabavka == null) {
     echo "<tr><td><b>Napomena</b></td><td>".htmlspecialchars($nabavka['Napomena'])."</td></tr>";
     echo "</table>";
 
-    echo "<b>SPISAK IGARA</b><br/><br/>";
+    echo "<b>SPISAK IGARA ZA NABAVKU</b><br/><br/>";
     echo "<table style=\"width:95%; padding:0; margin-bottom:15px;\" align=\"center\" cellspacing=\"0\" cellpadding=\"4\" border=\"1\" bgcolor=\"white\">";
     echo "<tr bgcolor=\"#E8F4FC\">";
     echo "<td style=\"width:10%;\"><b>Stavka</b></td>";

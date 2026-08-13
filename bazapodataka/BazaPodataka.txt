@@ -1,8 +1,8 @@
-CREATE DATABASE IF NOT EXISTS `Biblioteka_VP_2026`
+CREATE DATABASE IF NOT EXISTS `nabavka_drustvenih_igara_vp_2026`
 CHARACTER SET utf8mb4
 COLLATE utf8mb4_unicode_ci;
 
-USE `Biblioteka_VP_2026`;
+USE `nabavka_drustvenih_igara_vp_2026`;
 
 CREATE TABLE `kategorija_igre`
 (

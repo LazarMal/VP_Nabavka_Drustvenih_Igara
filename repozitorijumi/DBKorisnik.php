@@ -1,162 +1,131 @@
 <?php
 class DBKorisnik extends Tabela{
 
-// ATRIBUTI
-public $IDKorisnika; // auto increment u bazi podataka
+public $IDKorisnika;
 public $Prezime;
 public $Ime;
 public $Email;
 public $KorisnickoIme;
 public $Sifra;
-public $Stari_IDKorisnika; // potrebno zbog izmene
+public $Stari_IDKorisnika;
 
-// metode
+private function UcitajKorisnikaPoLoginu($loginusername, $loginpassword)
+{
+    $konekcija = $this->OtvorenaKonekcija->konekcijaDB;
+  $baza = $this->OtvorenaKonekcija->KompletanNazivBazePodataka;
+    $stmt = mysqli_prepare($konekcija, "SELECT * FROM `".$baza."`.`KORISNIK` WHERE KORISNICKOIME=? AND SIFRA=? LIMIT 1");
 
-// ------- konstruktor - uzima se iz klase roditelja - Tabela
+    if (!$stmt) {
+        $this->BrojZapisa = 0;
+        $this->Kolekcija = array();
+        return;
+    }
 
-// ------- preostale metode
+    mysqli_stmt_bind_param($stmt, "ss", $loginusername, $loginpassword);
+    mysqli_stmt_execute($stmt);
+    $rezultat = mysqli_stmt_get_result($stmt);
+
+    if ($rezultat) {
+        $this->Kolekcija = $rezultat;
+        $this->BrojZapisa = mysqli_num_rows($rezultat);
+    } else {
+        $this->Kolekcija = null;
+        $this->BrojZapisa = 0;
+    }
+
+    mysqli_stmt_close($stmt);
+}
 
 public function UcitajSveKorisnike()
 {
-		$SQL = "select * from korisnik";
-		$this->UcitajSvePoUpitu($SQL);
-} // kraj metode
+    $SQL = "select * from korisnik";
+    $this->UcitajSvePoUpitu($SQL);
+}
 
 public function DaLiPostojiKorisnik($loginusername,$loginpassword)
 {
-	$postoji="";
-	$SQLKorisnik = "SELECT * FROM `".$this->OtvorenaKonekcija->KompletanNazivBazePodataka."`.`KORISNIK` WHERE KORISNICKOIME='".$loginusername."' AND SIFRA='".$loginpassword."'";
-    $this->UcitajSvePoUpitu($SQLKorisnik);
-	// raspolazemo sa kolekcijom i brojem zapisa nakon ucitaj sve po upitu
-	
-	// NEPOTREBNO - $this->PrebaciKolekcijuUListu($this->Kolekcija);
-	if ($this->BrojZapisa>0)
-	{
-		$postoji="DA";
-	}  			
-	else 
-	{
-		$postoji="NE";
-	}
-	return $postoji;
+    $this->UcitajKorisnikaPoLoginu($loginusername, $loginpassword);
+    return $this->BrojZapisa > 0 ? "DA" : "NE";
 }
 
 public function DajImePrijavljenogKorisnika($loginusername,$loginpassword)
 {
-	$korisnik="";
-	$SQLKorisnik = "SELECT * FROM `".$this->OtvorenaKonekcija->KompletanNazivBazePodataka."`.`KORISNIK` WHERE KORISNICKOIME='".$loginusername."' AND SIFRA='".$loginpassword."'";
-    $this->UcitajSvePoUpitu($SQLKorisnik);
-	$this->PrebaciKolekcijuUListu($this->Kolekcija);
-	if ($this->BrojZapisa>0)
-	{
-		// postoji zapis
-		foreach ($this->ListaZapisa as $VrednostCvoraListe)
-		{
-			$ime=$VrednostCvoraListe[2];
-			
-		}
-	}  			
-	else 
-	{
-		$ime='NEPOZNAT KORISNIK';
-	}
-	return $ime;
+    $this->UcitajKorisnikaPoLoginu($loginusername, $loginpassword);
+    $this->PrebaciKolekcijuUListu($this->Kolekcija);
+    if ($this->BrojZapisa>0) {
+        foreach ($this->ListaZapisa as $VrednostCvoraListe) {
+            $ime=$VrednostCvoraListe[2];
+        }
+    } else {
+        $ime='NEPOZNAT KORISNIK';
+    }
+    return $ime;
 }
 
 public function DajPrezimePrijavljenogKorisnika($loginusername,$loginpassword)
 {
-	$korisnik="";
-	$SQLKorisnik = "SELECT * FROM `".$this->OtvorenaKonekcija->KompletanNazivBazePodataka."`.`KORISNIK` WHERE KORISNICKOIME='".$loginusername."' AND SIFRA='".$loginpassword."'";
-    $this->UcitajSvePoUpitu($SQLKorisnik);
-	$this->PrebaciKolekcijuUListu($this->Kolekcija);
-	if ($this->BrojZapisa>0)
-	{
-		// postoji zapis
-		foreach ($this->ListaZapisa as $VrednostCvoraListe)
-		{
-			$prez=$VrednostCvoraListe[1];
-			
-		}
-	}  			
-	else 
-	{
-		$prez='NEPOZNAT KORISNIK';
-	}
-	return $prez;
+    $this->UcitajKorisnikaPoLoginu($loginusername, $loginpassword);
+    $this->PrebaciKolekcijuUListu($this->Kolekcija);
+    if ($this->BrojZapisa>0) {
+        foreach ($this->ListaZapisa as $VrednostCvoraListe) {
+            $prez=$VrednostCvoraListe[1];
+        }
+    } else {
+        $prez='NEPOZNAT KORISNIK';
+    }
+    return $prez;
 }
 
 public function DajImePrezimePrijavljenogKorisnika($loginusername,$loginpassword)
 {
-	$korisnik="";
-	$SQLKorisnik = "SELECT * FROM `".$this->OtvorenaKonekcija->KompletanNazivBazePodataka."`.`KORISNIK` WHERE KORISNICKOIME='".$loginusername."' AND SIFRA='".$loginpassword."'";
-    $this->UcitajSvePoUpitu($SQLKorisnik);
-	$this->PrebaciKolekcijuUListu($this->Kolekcija);
-	if ($this->BrojZapisa>0)
-	{
-		// postoji zapis
-		foreach ($this->ListaZapisa as $VrednostCvoraListe)
-		{
-			$prez=$VrednostCvoraListe[1];
-			$ime=$VrednostCvoraListe[2];
-			$korisnik=$prez.' '.$ime;
-		}
-	}  			
-	else 
-	{
-		$korisnik='NEPOZNAT KORISNIK';
-	}
-	return $korisnik;
+    $this->UcitajKorisnikaPoLoginu($loginusername, $loginpassword);
+    $this->PrebaciKolekcijuUListu($this->Kolekcija);
+    $korisnik='NEPOZNAT KORISNIK';
+    if ($this->BrojZapisa>0) {
+        foreach ($this->ListaZapisa as $VrednostCvoraListe) {
+            $prez=$VrednostCvoraListe[1];
+            $ime=$VrednostCvoraListe[2];
+            $korisnik=$prez.' '.$ime;
+        }
+    }
+    return $korisnik;
 }
 
 public function DajIDPrijavljenogKorisnika($loginusername,$loginpassword)
 {
-	$id=0;
-	$SQLKorisnik = "SELECT * FROM `".$this->OtvorenaKonekcija->KompletanNazivBazePodataka."`.`KORISNIK` WHERE KORISNICKOIME='".$loginusername."' AND SIFRA='".$loginpassword."'";
-    $this->UcitajSvePoUpitu($SQLKorisnik);
-	$this->PrebaciKolekcijuUListu($this->Kolekcija);
-	if ($this->BrojZapisa>0)
-	{
-		// postoji zapis
-		foreach ($this->ListaZapisa as $VrednostCvoraListe)
-		{
-			$id=$VrednostCvoraListe[0];
-		}
-	} 
-	// else - ostaje 0
-
-	return $id;
+    $id=0;
+    $this->UcitajKorisnikaPoLoginu($loginusername, $loginpassword);
+    $this->PrebaciKolekcijuUListu($this->Kolekcija);
+    if ($this->BrojZapisa>0) {
+        foreach ($this->ListaZapisa as $VrednostCvoraListe) {
+            $id=$VrednostCvoraListe[0];
+        }
+    }
+    return $id;
 }
-
 
 public function SnimiNovo()
 {
-	$AktivanSQLUpit = "";
-	$this->IzvrsiAktivanSQLUpit($AktivanSQLUpit);
+    $AktivanSQLUpit = "";
+    $this->IzvrsiAktivanSQLUpit($AktivanSQLUpit);
 }
 
-// brisanje 
 public function Obrisi()
 {
-	$AktivanSQLUpit = "DELETE from ";
-	$this->IzvrsiAktivanSQLUpit($AktivanSQLUpit);
+    $AktivanSQLUpit = "DELETE from ";
+    $this->IzvrsiAktivanSQLUpit($AktivanSQLUpit);
 }
 
 public function ObrisiSve()
 {
-	$AktivanSQLUpit = "DELETE from ";
-	$this->IzvrsiAktivanSQLUpit($AktivanSQLUpit);
+    $AktivanSQLUpit = "DELETE from ";
+    $this->IzvrsiAktivanSQLUpit($AktivanSQLUpit);
 }
 
 public function IzmeniVrednostPolja()
-{	
-
-	// transformisemo datum u formu pogodnu za insert into 
-    //	$DatumskaVrednost=date_create($this->Datum_PoslednjePromene);
-    //	$DatumUnosa=date_format($DatumskaVrednost,"Y-m-d");  
-
-	// konacan upit
-	$AktivanSQLUpit = "UPDATE  SET " ;
-	$this->IzvrsiAktivanSQLUpit($AktivanSQLUpit);
-} // kraj metode
-} // kraj klase
+{
+    $AktivanSQLUpit = "UPDATE  SET " ;
+    $this->IzvrsiAktivanSQLUpit($AktivanSQLUpit);
+}
+}
 ?>

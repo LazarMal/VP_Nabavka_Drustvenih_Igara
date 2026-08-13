@@ -1,7 +1,5 @@
 <meta charset="UTF-8">
 
-<img src="images/sredinagore.jpg" width="100%" height="3" alt="" class="flt1 rp_topcornn" /> 
-
 <table style="width:100%; padding:0" align="center" cellspacing="0" cellpadding="0" border="0" bgcolor="#D8E7F4">
 <tr>
 <td style="width:5%;"></td>
@@ -14,7 +12,7 @@
 <tr>
 <td style="width:3%;"></td>
 <td align="center">
-<b><font face="Trebuchet MS" color="black" size="3px">IZMENA PODATAKA DRUSTVENE IGRE</font></b><br/>
+<b><font face="Trebuchet MS" color="black" size="3px">IZMENA PODATAKA DRUŠTVENE IGRE</font></b><br/>
 </td>
 <td style="width:3%;"></td>
 </tr>
@@ -30,11 +28,11 @@
 <td align="center">
 
 <table style="width:70%;" bgcolor="#D8E7F4" align="center" cellspacing="0" cellpadding="0" border="0">
-<form name="FormaZaIzmenuIgre" action="kontroler/akcije/knjigaIzmeni.php" method="POST" enctype="multipart/form-data" onsubmit="return proveriIzmenuIgre();">
+<form name="FormaZaIzmenuIgre" action="kontroler/akcije/drustvenaIgraIzmeni.php" method="POST" enctype="multipart/form-data" onsubmit="return proveriIzmenuIgre();">
 
 <tr>
 <td align="right" valign="bottom">
-<b><font face="Trebuchet MS" color="black" size="2px">Sifra igre&nbsp;&nbsp;</font></b>
+<b><font face="Trebuchet MS" color="black" size="2px">Šifra igre&nbsp;&nbsp;</font></b>
 </td>
 <td align="left" valign="bottom">
 <input name="sifraIgre" id="sifraIgre" type="text" size="50" maxlength="13"
@@ -65,7 +63,7 @@ value="<?php echo $StariNaziv; ?>" required />
 
 <tr>
 <td align="right" valign="bottom">
-<b><font face="Trebuchet MS" color="black" size="2px">Proizvodjac&nbsp;&nbsp;</font><br/></b>
+<b><font face="Trebuchet MS" color="black" size="2px">Proizvođač&nbsp;&nbsp;</font><br/></b>
 </td>
 <td align="left" valign="bottom">
 <input name="proizvodjac" id="proizvodjac" type="text" size="50" maxlength="100"
@@ -90,8 +88,8 @@ value="<?php echo $StariProizvodjac; ?>" required />
     {                   
         for ($brojacKategorija = 0; $brojacKategorija < $UkupanBrojZapisa; $brojacKategorija++) 
         {
-            $oznakaKategorije = $ZanrObject->DajVrednostPoRednomBrojuZapisaPoRBPolja($KolekcijaZapisa, $brojacKategorija, 0);               
-            $nazivKategorije = $ZanrObject->DajVrednostPoRednomBrojuZapisaPoRBPolja($KolekcijaZapisa, $brojacKategorija, 1);
+            $oznakaKategorije = $KategorijaIgreObject->DajVrednostPoRednomBrojuZapisaPoRBPolja($KolekcijaZapisa, $brojacKategorija, 0);               
+            $nazivKategorije = $KategorijaIgreObject->DajVrednostPoRednomBrojuZapisaPoRBPolja($KolekcijaZapisa, $brojacKategorija, 1);
 
                 if ($oznakaKategorije == $StaraOznakaKategorije) {
                 echo "<option value=\"$oznakaKategorije\" selected>$nazivKategorije</option>";
@@ -155,8 +153,6 @@ value="<?php echo $StariProizvodjac; ?>" required />
 <td style="width:5%;"></td>
 </tr>
 </table>
-
-<img src="images/sredinadole.jpg" width="100%" height="5" alt="" class="flt1" />
 
 <script>
 function proveriIzmenuIgre() {

@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="sr-RS" xml:lang="sr-RS">
 <head>
 <meta charset="UTF-8">
-<title>Novi nalog za nabavku drustvenih igara</title>
+<title>Novi nalog za nabavku društvenih igara</title>
 <?php include 'css/stil.php';?>
 </head>
 
@@ -36,8 +36,6 @@ $nalogEvidentirao = isset($_SESSION["korisnik"]) ? $_SESSION["korisnik"] : "";
 
 <td style="width:80%;padding:0" valign="top">
 
-<img src="images/sredinagore.jpg" width="100%" height="3" alt="" class="flt1 rp_topcornn" /> 
-
 <table style="width:100%; padding:0" align="center" cellspacing="0" cellpadding="0" border="0" bgcolor="#D8E7F4">
 <tr>
 <td style="width:5%;"></td>
@@ -50,7 +48,7 @@ $nalogEvidentirao = isset($_SESSION["korisnik"]) ? $_SESSION["korisnik"] : "";
 <tr>
 <td style="width:3%;"></td>
 <td align="left">
-<b><font face="Trebuchet MS" color="black" size="3px">NOVI NALOG ZA NABAVKU DRUSTVENIH IGAR</font></b><br/><br/>
+<b><font face="Trebuchet MS" color="black" size="3px">NOVI NALOG ZA NABAVKU DRUŠTVENIH IGARA</font></b><br/><br/>
 </td>
 <td style="width:3%;"></td>
 </tr>
@@ -79,9 +77,9 @@ $nalogEvidentirao = isset($_SESSION["korisnik"]) ? $_SESSION["korisnik"] : "";
 </tr>
 
 <tr>
-<td align="right"><b>Dobavljac&nbsp;&nbsp;</b></td>
+<td align="right"><b>Dobavljač&nbsp;&nbsp;</b></td>
 <td align="left">
-<input type="text" name="dobavljac" id="dobavljac" maxlength="100" required placeholder="Unesite dobavljaca">
+<input type="text" name="dobavljac" id="dobavljac" maxlength="100" required placeholder="Unesite dobavljača">
 </td>
 </tr>
 
@@ -111,8 +109,8 @@ $nalogEvidentirao = isset($_SESSION["korisnik"]) ? $_SESSION["korisnik"] : "";
 </tr>
 
 <tr>
-<td><b>Drustvena igra</b></td>
-<td><b>Kolicina</b></td>
+<td><b>Društvena igra</b></td>
+<td><b>Količina</b></td>
 <td><b>Cena</b></td>
 <td><b>Ukupno</b></td>
 <td><b>Akcija</b></td>
@@ -121,7 +119,7 @@ $nalogEvidentirao = isset($_SESSION["korisnik"]) ? $_SESSION["korisnik"] : "";
 <tr class="stavkaRed">
 <td>
 <select name="sifraIgre[]" class="igraSelect" required style="width:280px;">
-<?php echo $optionsKnjige; ?>
+<?php echo $optionsDrustveneIgre; ?>
 </select>
 </td>
 
@@ -181,8 +179,6 @@ $nalogEvidentirao = isset($_SESSION["korisnik"]) ? $_SESSION["korisnik"] : "";
 </tr>
 </table>
 
-<img src="images/sredinadole.jpg" width="100%" height="5" alt="" class="flt1" />
-
 </td>
 
 <td style="width:1%;"></td>
@@ -199,7 +195,9 @@ $nalogEvidentirao = isset($_SESSION["korisnik"]) ? $_SESSION["korisnik"] : "";
 </table>
 
 <script>
-let optionsIgre = `<?php echo str_replace("`", "\`", $optionsKnjige); ?>`;
+let optionsIgre = `<?php echo str_replace("`", "\`", $optionsDrustveneIgre); ?>`;
+let brojNalogaZauzet = false;
+let sifraIgreZauzeta = false;
 
 function postaviDogadjajeZaRed(red) {
     let igraSelect = red.querySelector(".igraSelect");
@@ -207,12 +205,6 @@ function postaviDogadjajeZaRed(red) {
     let cenaInput = red.querySelector(".cenaInput");
 
     igraSelect.addEventListener("change", function() {
-        let selectedOption = this.options[this.selectedIndex];
-        let cena = selectedOption.getAttribute("data-cena");
-
-        if (cena !== null && cena !== "") {
-            cenaInput.value = cena;
-        }
         izracunajUkupno(red);
     });
 
@@ -339,8 +331,30 @@ function proveriNabavku() {
         }
     }
 
+    if (brojNalogaZauzet) {
+        alert("Broj naloga je već zauzet.");
+        return false;
+    }
+
     return true;
 }
+
+function proveriBrojNaloga() {
+    let brojNaloga = document.getElementById("brojNaloga").value.trim();
+    brojNalogaZauzet = false;
+    if (brojNaloga === "") return;
+
+    fetch("api/router.php?akcija=proveraJedinstvenosti&tip=brojNaloga&vrednost=" + encodeURIComponent(brojNaloga))
+        .then(r => r.json())
+        .then(data => {
+            brojNalogaZauzet = data.postoji === true;
+            if (brojNalogaZauzet) {
+                alert("Broj naloga je već zauzet.");
+            }
+        });
+}
+
+document.getElementById("brojNaloga").addEventListener("blur", proveriBrojNaloga);
 
 let prviRed = document.querySelector(".stavkaRed");
 postaviDogadjajeZaRed(prviRed);

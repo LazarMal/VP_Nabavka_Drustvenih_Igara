@@ -23,7 +23,7 @@
 <td style="width:1%;"></td>
 
 <td align="right" valign="middle">
-<?php include 'delovi/desnoStampaONalogu.php';?>
+<?php include __DIR__ . '/../delovi/desnoStampaONalogu.php';?>
 </td>
 
 <td style="width:1%;"></td>

@@ -1,6 +1,4 @@
-<meta charset="UTF-8">
-
-<img src="images/sredinagore.jpg" width="100%" height="3" alt="" class="flt1 rp_topcornn" /> 
+﻿<meta charset="UTF-8">
 
 <table style="width:100%; padding:0" align="center" cellspacing="0" cellpadding="0" border="0" bgcolor="#D8E7F4">
 <tr>
@@ -14,7 +12,7 @@
 <tr>
 <td style="width:3%;"></td>
 <td align="left">
-<b><font face="Trebuchet MS" color="black" size="3px">IZMENA NALOGA ZA NABAVKU DRUSTVENIH IGAR</font></b><br/><br/>
+<b><font face="Trebuchet MS" color="black" size="3px">IZMENA NALOGA ZA NABAVKU DRUŠTVENIH IGARA</font></b><br/><br/>
 </td>
 <td style="width:3%;"></td>
 </tr>
@@ -25,7 +23,7 @@
 
 <?php
 if ($nabavka == null) {
-    echo "<font face=\"Trebuchet MS\" color=\"darkblue\" size=\"3px\">Nalog nije pronadjen.</font>";
+    echo "<font face=\"Trebuchet MS\" color=\"darkblue\" size=\"3px\">Nalog nije pronađen.</font>";
     echo "<br/><br/><a href=\"Ruter.php?stranica=nabavke\"><input type=\"button\" value=\"POVRATAK NA LISTU\" /></a>";
 } else {
 
@@ -35,7 +33,7 @@ function napraviOpcijeIgara($listaIgara, $selectedSifra = "")
 
     foreach ($listaIgara as $igra) {
         $sel = ($igra['SifraIgre'] == $selectedSifra) ? " selected" : "";
-        $options .= "<option value='" . htmlspecialchars($igra['SifraIgre']) . "' data-cena='" . htmlspecialchars($igra['Cena']) . "'" . $sel . ">"
+        $options .= "<option value='" . htmlspecialchars($igra['SifraIgre'], ENT_QUOTES, 'UTF-8') . "'" . $sel . ">"
             . htmlspecialchars($igra['Naziv']) . " - " . htmlspecialchars($igra['SifraIgre'])
             . "</option>";
     }
@@ -50,7 +48,7 @@ function napraviOpcijeIgara($listaIgara, $selectedSifra = "")
 <table style="width:90%;" bgcolor="#B7F0F7" align="center" cellspacing="0" cellpadding="5" border="1">
 <tr>
 <td colspan="2" align="left">
-<b>PODACI O NALOGU</b>
+<b>PODACI O NABAVCI</b>
 </td>
 </tr>
 
@@ -65,7 +63,7 @@ function napraviOpcijeIgara($listaIgara, $selectedSifra = "")
 </tr>
 
 <tr>
-<td align="right"><b>Dobavljac&nbsp;&nbsp;</b></td>
+<td align="right"><b>Dobavljač&nbsp;&nbsp;</b></td>
 <td align="left"><input type="text" name="dobavljac" id="dobavljac" maxlength="100" required value="<?php echo htmlspecialchars($nabavka['Dobavljac']); ?>"></td>
 </tr>
 
@@ -84,11 +82,11 @@ function napraviOpcijeIgara($listaIgara, $selectedSifra = "")
 
 <table id="stavkeTabela" style="width:90%; margin-left:auto; margin-right:auto;" bgcolor="#B7F0F7" align="center" cellspacing="0" cellpadding="5" border="1">
 <tr>
-<td colspan="6" align="left"><b>STAVKE NALOGA</b></td>
+<td colspan="6" align="left"><b>SPISAK IGARA ZA NABAVKU</b></td>
 </tr>
 <tr>
-<td><b>Drustvena igra</b></td>
-<td><b>Kolicina</b></td>
+<td><b>Društvena igra</b></td>
+<td><b>Količina</b></td>
 <td><b>Cena</b></td>
 <td><b>Ukupno</b></td>
 <td><b>Akcija</b></td>
@@ -145,22 +143,12 @@ if ($rezultatStavke != null && mysqli_num_rows($rezultatStavke) > 0) {
 </form>
 
 <script>
-let optionsIgre = `<?php echo str_replace("`", "\`", $optionsKnjige); ?>`;
+let optionsIgre = `<?php echo str_replace("`", "\`", $optionsDrustveneIgre); ?>`;
 
 function postaviDogadjajeZaRed(red) {
     let igraSelect = red.querySelector(".igraSelect");
     let kolicinaInput = red.querySelector(".kolicinaInput");
     let cenaInput = red.querySelector(".cenaInput");
-
-    igraSelect.addEventListener("change", function() {
-        let selectedOption = this.options[this.selectedIndex];
-        let cena = selectedOption.getAttribute("data-cena");
-
-        if (cena !== null && cena !== "") {
-            cenaInput.value = cena;
-        }
-        izracunajUkupno(red);
-    });
 
     kolicinaInput.addEventListener("input", function() {
         izracunajUkupno(red);
@@ -241,17 +229,17 @@ function proveriNabavku() {
     }
 
     if (brojNaloga.length > 50) {
-        alert("Broj naloga ne sme biti duzi od 50 karaktera.");
+        alert("Broj naloga ne sme biti duži od 50 karaktera.");
         return false;
     }
 
     if (dobavljac.length > 100) {
-        alert("Dobavljac ne sme biti duzi od 100 karaktera.");
+        alert("Dobavljač ne sme biti duži od 100 karaktera.");
         return false;
     }
 
     if (napomena.length > 255) {
-        alert("Napomena ne sme biti duza od 255 karaktera.");
+        alert("Napomena ne sme biti duža od 255 karaktera.");
         return false;
     }
 
@@ -273,17 +261,17 @@ function proveriNabavku() {
         let cena = parseFloat(cenaVal);
 
         if (igra == "") {
-            alert("Morate izabrati drustvenu igru u svakoj stavci.");
+            alert("Morate izabrati društvenu igru u svakoj stavci.");
             return false;
         }
 
         if (kolicinaVal === "" || isNaN(kolicina) || String(kolicina) !== String(parseInt(kolicinaVal, 10)) || kolicina <= 0) {
-            alert("Kolicina mora biti pozitivan ceo broj veci od 0.");
+            alert("Količina mora biti pozitivan ceo broj veći od 0.");
             return false;
         }
 
         if (cenaVal === "" || isNaN(cena) || cena <= 0) {
-            alert("Cena mora biti pozitivna decimalna vrednost veca od 0.");
+            alert("Cena mora biti pozitivna decimalna vrednost veća od 0.");
             return false;
         }
     }
@@ -303,8 +291,6 @@ document.querySelectorAll(".stavkaRed").forEach(function(red) {
 </tr>
 
 </table>
-
-<img src="images/sredinadole.jpg" width="100%" height="5" alt="" class="flt1" />
 
 </td>
 <td style="width:5%;"></td>

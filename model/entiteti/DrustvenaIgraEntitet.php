@@ -1,6 +1,6 @@
 <?php
 
-class KnjigaEntitet
+class DrustvenaIgraEntitet
 {
     public $SifraIgre;
     public $Naziv;
@@ -19,7 +19,7 @@ class KnjigaEntitet
 
     public static function IzRedaBaze($red)
     {
-        return new KnjigaEntitet(
+        return new DrustvenaIgraEntitet(
             isset($red["SifraIgre"]) ? $red["SifraIgre"] : "",
             isset($red["Naziv"]) ? $red["Naziv"] : "",
             isset($red["Proizvodjac"]) ? $red["Proizvodjac"] : "",

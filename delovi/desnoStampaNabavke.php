@@ -1,6 +1,4 @@
-<meta charset="UTF-8">
-
-<img src="images/sredinagore.jpg" width="100%" height="3" alt="" class="flt1 rp_topcornn" /> 
+﻿<meta charset="UTF-8">
 
 <table style="width:100%; padding:0" align="center" cellspacing="0" cellpadding="0" border="0" bgcolor="white">
 
@@ -46,7 +44,7 @@ if ($filtrirano) {
         echo "Datum nabavke: ".htmlspecialchars($filterDatumNabavke)."<br/>";
     }
     if ($filterDobavljac != "") {
-        echo "Dobavljač: ".htmlspecialchars($filterDobavljac)."<br/>";
+        echo "Dobavljač: ".htmlspecialchars($filterDobavljac, ENT_QUOTES, 'UTF-8')."<br/>";
     }
     if ($filterBrojNaloga == "" && $filterDatumNabavke == "" && $filterDobavljac == "") {
         echo "Nema unetih vrednosti filtera.<br/>";
@@ -54,12 +52,12 @@ if ($filtrirano) {
     echo "<br/>";
 }
 
-if (mysqli_num_rows($rezultatNabavke) == 0) {
+if (count($listaNabavaka) == 0) {
     echo "NEMA EVIDENTIRANIH NALOGA ZA NABAVKU!";
 } else {
     $ukupanBrojNaloga = 0;
 
-    while ($nabavka = mysqli_fetch_assoc($rezultatNabavke)) {
+    foreach ($listaNabavaka as $nabavka) {
         $ukupanBrojNaloga++;
         $IDNabavke = $nabavka['IDNabavke'];
 
@@ -83,11 +81,10 @@ if (mysqli_num_rows($rezultatNabavke) == 0) {
         echo "<td style=\"width:20%;\"><b>Ukupno</b></td>";
         echo "</tr>";
 
-        $rezultatStavke = $NabavkeController->DajStavkeNabavke($IDNabavke);
         $ukupnoNabavka = 0;
         $brojStavki = 0;
 
-        while ($stavka = mysqli_fetch_assoc($rezultatStavke)) {
+        foreach ($nabavka['stavke'] as $stavka) {
             $brojStavki++;
             $ukupnoNabavka += $stavka['Ukupno'];
 

@@ -1,0 +1,62 @@
+warning: in the working copy of 'delovi/desnopocetna.php', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'delovi/desnowelcome.php', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'index.php', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'repozitorijumi/DBKorisnik.php', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tehnoloskeKlase/BaznaParametriKonekcije.xml', LF will be replaced by CRLF the next time Git touches it
+ Ruter.php                                   | 129 [32m+++++++++[m[31m---------[m
+ SlikeKnjiga/IstorijaSrba.jpg                | Bin [31m46368[m -> [32m0[m bytes
+ SlikeKnjiga/NaDriniCuprija.png              | Bin [31m131218[m -> [32m0[m bytes
+ SlikeKnjiga/PHP-i-MySQL.jpg                 | Bin [31m143992[m -> [32m0[m bytes
+ SlikeKnjiga/ProkletaAvlija.jpg              | Bin [31m9001[m -> [32m0[m bytes
+ api/igra.php                                |  10 [32m+[m[31m-[m
+ api/igre.php                                |  10 [32m+[m[31m-[m
+ api/router.php                              |  12 [32m+[m[31m-[m
+ bazapodataka/BazaPodataka.txt               |   4 [32m+[m[31m-[m
+ bazapodataka/Pogledi i Stored procedure.txt |  12 [32m+[m[31m-[m
+ css/stil.php                                |   4 [32m+[m[31m-[m
+ css/style.css                               |  98 [31m--------------[m
+ delovi/desnoKnjigaIzmeniForm.php            | 199 [31m---------------------------[m
+ delovi/desnoKnjigeLista.php                 | 111 [31m---------------[m
+ delovi/desnoNabavkaDetalj.php               |  16 [32m+[m[31m--[m
+ delovi/desnoNabavkaIzmeniForm.php           |  46 [32m+++[m[31m----[m
+ delovi/desnoNabavkeLista.php                |  25 [32m++[m[31m--[m
+ delovi/desnoParametarskaStampaNabavka.php   |   4 [32m+[m[31m-[m
+ delovi/desnoStampaNabavke.php               |  13 [32m+[m[31m-[m
+ delovi/desnoStampaONalogu.php               |   6 [32m+[m[31m-[m
+ delovi/desnopocetna.php                     |  37 [32m+++[m[31m--[m
+ delovi/desnoprijava.php                     |  16 [32m++[m[31m-[m
+ delovi/desnounos.php                        |  47 [32m++++[m[31m---[m
+ delovi/desnounosSP.php                      |  20 [32m++[m[31m-[m
+ delovi/desnowelcome.php                     |   5 [32m+[m[31m-[m
+ delovi/menilevoadmin.php                    |  12 [32m+[m[31m-[m
+ delovi/menilevofinal.php                    | 202 [31m----------------------------[m
+ index.php                                   |  98 [32m+[m[31m-------------[m
+ kontroler/akcije/KnjigaObrisi.php           |  70 [31m----------[m
+ kontroler/akcije/knjigaIzmeni.php           | 122 [31m-----------------[m
+ kontroler/akcije/knjigaSnimi.php            | 112 [31m---------------[m
+ kontroler/akcije/knjigaSnimiSP.php          | 106 [31m---------------[m
+ kontroler/akcije/nabavkaIzmeni.php          |  42 [32m+++[m[31m---[m
+ kontroler/akcije/nabavkaObrisi.php          |  12 [32m+[m[31m-[m
+ kontroler/akcije/nabavkaSnimi.php           |  44 [32m+++[m[31m---[m
+ kontroler/akcije/prijavaprovera.php         |  75 [32m++++++[m[31m-----[m
+ kontroler/stranice/KnjigeController.php     |  66 [31m---------[m
+ kontroler/stranice/NabavkeController.php    |  15 [32m++[m[31m-[m
+ model/entiteti/KnjigaEntitet.php            |  32 [31m-----[m
+ model/entiteti/StavkaNabavkeEntitet.php     |   4 [32m+[m[31m-[m
+ model/servisi/KnjigaModel.php               |  24 [31m----[m
+ model/servisi/NabavkaModel.php              |  23 [32m++++[m
+ pogledi/KnjigaIzmeniForm.php                |  55 [31m--------[m
+ pogledi/KnjigeLista.php                     |  82 [31m-----------[m
+ pogledi/NabavkaParametarskaStampa.php       |   2 [32m+[m[31m-[m
+ pogledi/NabavkeLista.php                    |   2 [32m+[m[31m-[m
+ pogledi/NabavkeStampa.php                   |   2 [32m+[m[31m-[m
+ pogledi/NovaNabavka.php                     |  52 [32m++++[m[31m---[m
+ pogledi/StampaPodatakaONalogu.php           |   2 [32m+[m[31m-[m
+ pogledi/unos.php                            |   2 [32m+[m[31m-[m
+ repozitorijumi/DBKnjiga.php                 |  88 [31m------------[m
+ repozitorijumi/DBKnjigaSP.php               |  28 [31m----[m
+ repozitorijumi/DBKnjigaV.php                |  21 [31m---[m
+ repozitorijumi/DBKorisnik.php               | 201 [32m++++++++++++[m[31m---------------[m
+ repozitorijumi/DBZanr.php                   |  54 [31m--------[m
+ tehnoloskeKlase/BaznaParametriKonekcije.xml |   2 [32m+[m[31m-[m
+ 56 files changed, 475 insertions(+), 2001 deletions(-)
