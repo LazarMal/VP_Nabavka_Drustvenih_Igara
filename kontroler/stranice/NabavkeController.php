@@ -29,6 +29,16 @@ class NabavkeController
         return $this->NabavkaModel->DajSveNabavke();
     }
 
+    public function DajNabavkePoFilteru($brojNaloga, $datumNabavke, $dobavljac)
+    {
+        return $this->NabavkaModel->DajNabavkePoFilteru($brojNaloga, $datumNabavke, $dobavljac);
+    }
+
+    public function DajNabavkuPoID($IDNabavke)
+    {
+        return $this->NabavkaModel->DajNabavkuPoID($IDNabavke);
+    }
+
     public function DajStavkeNabavke($IDNabavke)
     {
         return $this->NabavkaModel->DajStavkeNabavke($IDNabavke);

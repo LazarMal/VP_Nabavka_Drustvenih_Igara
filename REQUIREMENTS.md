@@ -46,7 +46,7 @@
 | TECH-07 | Multipage | Profesor PDF | Ruter + više stranica | Da (`Ruter.php`, `pogledi/`) | Proširiti rute za nabavku | `Ruter.php` | Više URL stranica | SATISFIED_BY_TEMPLATE |
 | TECH-08 | MD unos jedna forma | Profesor PDF | Nova nabavka forma | Da (`NovaNabavka.php`) | Polja dokumenta + igre | `pogledi/NovaNabavka.php` | Jedna forma master+detail | IMPLEMENTED |
 | TECH-09 | Transakcija pri unosu | Profesor PDF | nabavkaSnimi | Da (`BaznaTransakcija`, `nabavkaSnimi.php`) | Ukloniti merge; adapt polja | `kontroler/akcije/nabavkaSnimi.php` | Rollback test | IMPLEMENTED |
-| TECH-10 | MD tabelarni prikaz | Profesor PDF | Lista naloga sa stavkama | Delimično (lista bez filter/CRUD) | Filter, izmena, brisanje | `NabavkeLista.php`, `desnoNabavkeLista.php` | Tabela master+detail | NEEDS_ADAPTATION |
+| TECH-10 | MD tabelarni prikaz | Profesor PDF | Lista naloga sa stavkama | Delimično (lista bez filter/CRUD) | Filter, izmena, brisanje | `NabavkeLista.php`, `desnoNabavkeLista.php` | Tabela master+detail | IMPLEMENTED |
 | TECH-11 | Client-side validacija | Profesor PDF | JS/HTML | Delimično (`proveriNabavku`) | Adapt pravila (1A, VAL) | `NovaNabavka.php`, forme | DevTools + prazna forma | NEEDS_ADAPTATION |
 | TECH-12 | Server-side validacija | Profesor PDF | PHP u akcijama | Delimično (pogrešan domen dobavljača) | Adapt `nabavkaSnimi.php` | `kontroler/akcije/*.php` | POST sa nevalidnim podacima | NEEDS_ADAPTATION |
 
@@ -99,10 +99,10 @@
 | FUN-03 | Unos transakcija | Profesor PDF | — | Da | Fix merge (DEF-01) | `nabavkaSnimi.php` | DB rollback | IMPLEMENTED |
 | FUN-04 | Izmena master | Profesor PDF | — | **Nema** | Nova ruta, forma, akcija | `Ruter.php`, nova forma, `nabavkaIzmeni.php` | UPDATE nabavka | MISSING |
 | FUN-05 | Izmena stavki | Profesor PDF | — | **Nema** | U istoj izmeni MD | `nabavkaIzmeni.php`, repo | UPDATE/DELETE/INSERT stavki | MISSING |
-| FUN-06 | Brisanje naloga | Profesor PDF | — | **Nema** | Akcija + CASCADE | `nabavkaObrisi.php`, ruta | DELETE + confirm | MISSING |
-| FUN-07 | Tabelarni prikaz | Profesor PDF | — | Delimično (`nabavke`) | Tabular lista sa akcijama | `NabavkeLista.php` | Tabela naloga | NEEDS_ADAPTATION |
-| FUN-08 | Filter | Profesor PDF | — | **Nema** za nabavku | Filter forma (datum, broj, dobavljač…) | `desnoNabavkeLista.php`, controller | GET filter | MISSING |
-| FUN-09 | Pojedinačni prikaz | Profesor PDF | Svi delovi | Delimično (u listi expanded) | Dedicated detail view ili jasna sekcija | `nabavkaDetalj` ruta | Svi stavke vidljive | NEEDS_ADAPTATION |
+| FUN-06 | Brisanje naloga | Profesor PDF | — | **Nema** | Akcija + CASCADE | `nabavkaObrisi.php`, ruta | DELETE + confirm | IMPLEMENTED |
+| FUN-07 | Tabelarni prikaz | Profesor PDF | — | Delimično (`nabavke`) | Tabular lista sa akcijama | `NabavkeLista.php` | Tabela naloga | IMPLEMENTED |
+| FUN-08 | Filter | Profesor PDF | — | **Nema** za nabavku | Filter forma (datum, broj, dobavljač…) | `desnoNabavkeLista.php`, controller | GET filter | IMPLEMENTED |
+| FUN-09 | Pojedinačni prikaz | Profesor PDF | Svi delovi | Delimično (u listi expanded) | Dedicated detail view ili jasna sekcija | `nabavkaDetalj` ruta | Svi stavke vidljive | IMPLEMENTED |
 | FUN-10 | CRUD ≠ katalog | Odluka 2A | Nabavka obavezno | Katalog pun CRUD; nabavka ne | Implementirati FUN-04–09 | Nabavka modul | Katalog ne zamenjuje | MISSING (za nabavku) |
 
 ---
@@ -160,11 +160,11 @@
 | ID | Requirement | Source | Interpretation | Template status | Required adaptation | Planned location | Verification | Status |
 |----|-------------|--------|----------------|-----------------|---------------------|------------------|--------------|--------|
 | TOP-01 | Naziv procesa | Prijava DOCX | — | N/A u app | UI tekst, docs | Welcome, docs | Tekst match | NEEDS_ADAPTATION |
-| TOP-02 | Naziv dokumenta | Prijava DOCX | — | „Nabavka knjiga“ | Preimenovati | UI, print | Tekst match | NEEDS_ADAPTATION |
-| TOP-03 | Master polja | Prijava DOCX | — | Delimično | +BrojNaloga | Forme, DB | Sva 4 polja | NEEDS_ADAPTATION |
-| TOP-04 | Detail kolone | Prijava DOCX | — | Knjiga kolone | Adapt headers | Forme, print | 5 kolona | NEEDS_ADAPTATION |
-| TOP-05 | Rekapitulacija | Prijava DOCX | — | Delimično u listi | U sve prikaze | Views | Match | NEEDS_ADAPTATION |
-| TOP-06 | Nalog evidentirao | Prijava DOCX | — | **Nema** | ADD | DB, form, print | Polje vidljivo | NEEDS_ADAPTATION |
+| TOP-02 | Naziv dokumenta | Prijava DOCX | — | „Nabavka knjiga“ | Preimenovati | UI, print | Tekst match | IMPLEMENTED |
+| TOP-03 | Master polja | Prijava DOCX | — | Delimično | +BrojNaloga | Forme, DB | Sva 4 polja | IMPLEMENTED |
+| TOP-04 | Detail kolone | Prijava DOCX | — | Knjiga kolone | Adapt headers | Forme, print | 5 kolona | IMPLEMENTED |
+| TOP-05 | Rekapitulacija | Prijava DOCX | — | Delimično u listi | U sve prikaze | Views | Match | IMPLEMENTED |
+| TOP-06 | Nalog evidentirao | Prijava DOCX | — | **Nema** | ADD | DB, form, print | Polje vidljivo | IMPLEMENTED |
 
 ---
 
@@ -224,7 +224,7 @@
 | DEF-02 | Parametarska = knjiga | MISSING funkcionalnost | Nova štampa naloga |
 | DEF-03 | Nepun CRUD nabavka | MISSING | FUN-04–09 |
 | DEF-04 | Nedostaju polja | VERIFIED | DB-09, DB-14 (SQL kolone) |
-| DEF-05 | GROUP BY stavke | NEEDS_ADAPTATION | Pojedinačni redovi stavki |
+| DEF-05 | GROUP BY stavke | IMPLEMENTED | Pojedinačni redovi stavki |
 | DEF-06 | Zatvoreni dobavljači | IMPLEMENTED | 1A text |
 | DEF-07 | Zabrana duplikata | IMPLEMENTED | Ukloniti (VAL-16) |
 | DEF-08 | Gornji limiti | IMPLEMENTED | Ukloniti (VAL-15) |
@@ -239,9 +239,9 @@
 |--------|------|
 | VERIFIED | 18 |
 | SATISFIED_BY_TEMPLATE | 15 |
-| IMPLEMENTED | 32 |
-| NEEDS_ADAPTATION | 27 |
-| MISSING | 17 |
+| IMPLEMENTED | 43 |
+| NEEDS_ADAPTATION | 18 |
+| MISSING | 15 |
 | BLOCKED | 0 |
 
 **Napomena:** Brojevi uključuju FUN-KAT, VAL, PRINT, TOP, TECH-SP/VIEW, MVC, REST, DEF kao zasebne stavke u matrici. DOC (15) svi MISSING.

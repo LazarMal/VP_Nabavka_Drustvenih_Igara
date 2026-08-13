@@ -221,11 +221,44 @@ switch ($stranica) {
         require_once 'kontroler/stranice/NabavkeController.php';
 
         $NabavkeController = new NabavkeController();
-        $rezultatNabavke = $NabavkeController->DajSveNabavke();
+
+        $filterBrojNaloga = "";
+        $filterDatumNabavke = "";
+        $filterDobavljac = "";
+
+        if (isset($_GET['filtriraj']) && !isset($_GET['svi'])) {
+            $filterBrojNaloga = isset($_GET['filterBrojNaloga']) ? trim($_GET['filterBrojNaloga']) : "";
+            $filterDatumNabavke = isset($_GET['filterDatumNabavke']) ? trim($_GET['filterDatumNabavke']) : "";
+            $filterDobavljac = isset($_GET['filterDobavljac']) ? trim($_GET['filterDobavljac']) : "";
+            $rezultatNabavke = $NabavkeController->DajNabavkePoFilteru($filterBrojNaloga, $filterDatumNabavke, $filterDobavljac);
+        } else {
+            $rezultatNabavke = $NabavkeController->DajSveNabavke();
+        }
 
         include 'pogledi/NabavkeLista.php';
 
         $NabavkeController->ZatvoriKonekciju();
+        break;
+
+    case 'nabavkaDetalj':
+        proveriSesiju();
+
+        require_once 'kontroler/stranice/NabavkeController.php';
+
+        $NabavkeController = new NabavkeController();
+
+        $IDNabavke = isset($_GET['id']) ? trim($_GET['id']) : "";
+        $nabavka = $IDNabavke != "" ? $NabavkeController->DajNabavkuPoID($IDNabavke) : null;
+        $rezultatStavke = ($nabavka != null) ? $NabavkeController->DajStavkeNabavke($IDNabavke) : null;
+
+        include 'pogledi/NabavkaDetalj.php';
+
+        $NabavkeController->ZatvoriKonekciju();
+        break;
+
+    case 'obrisiNabavku':
+        proveriSesiju();
+        require 'kontroler/akcije/nabavkaObrisi.php';
         break;
 
     default:

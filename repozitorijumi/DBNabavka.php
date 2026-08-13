@@ -68,6 +68,13 @@ class DBNabavka extends Tabela
 
         return $nabavka;
     }
+
+    public function ObrisiNabavku($IDNabavke)
+    {
+        $SQL = "DELETE FROM `nabavka` WHERE IDNabavke = '".$IDNabavke."'";
+
+        return $this->IzvrsiAktivanSQLUpit($SQL);
+    }
 }
 
 ?>

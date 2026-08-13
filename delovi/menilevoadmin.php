@@ -109,7 +109,7 @@
 <td style="align:center">
 <a href="ruter.php?stranica=nabavke">
 <font face="Trebuchet MS" color="black" size="2px">
-&nbsp;Набавке књига
+&nbsp;Налozi za nabavku
 </font>
 </a>
 </td>
