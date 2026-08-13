@@ -47,25 +47,21 @@ if (strlen($napomena) > 255) {
 }
 
 if ($nalogEvidentirao == "") {
-    prekiniSaGreskom("Грешка: Налог evidentirao није доступан из сесије.", $povratakUrl);
+    prekiniSaGreskom("Грешка: Нalog evidentirao nije dostupan iz sesije.", $povratakUrl);
 }
 
 if (!is_array($sifraIgreNiz) || count($sifraIgreNiz) == 0) {
-    prekiniSaGreskom("Грешка: Налог мора имати најмање једну ставку.", $povratakUrl);
+    prekiniSaGreskom("Грешка: Nalog mora imati najmanje jednu stavku.", $povratakUrl);
 }
 
 if (count($sifraIgreNiz) != count($kolicinaNiz) || count($sifraIgreNiz) != count($cenaNiz)) {
-    prekiniSaGreskom("Грешка: Подаци о ставкама налога нису исправно прослеђени.", $povratakUrl);
+    prekiniSaGreskom("Грешка: Podaci o stavkama naloga nisu ispravno prosleđeni.", $povratakUrl);
 }
 
-require_once __DIR__ . '/../../tehnoloskeKlase/BaznaKonekcija.php';
-require_once __DIR__ . '/../../tehnoloskeKlase/BaznaTabela.php';
-require_once __DIR__ . '/../../tehnoloskeKlase/BaznaTransakcija.php';
 require_once __DIR__ . '/../../model/entiteti/KnjigaEntitet.php';
 require_once __DIR__ . '/../../model/entiteti/StavkaNabavkeEntitet.php';
 require_once __DIR__ . '/../../model/entiteti/NabavkaEntitet.php';
-require_once __DIR__ . "/../../repozitorijumi/DBNabavka.php";
-require_once __DIR__ . "/../../repozitorijumi/DBStavkaNabavke.php";
+require_once __DIR__ . '/../../kontroler/stranice/NabavkeController.php';
 
 $NabavkaEntitet = new NabavkaEntitet($brojNaloga, $datumNabavke, $dobavljac, $napomena, $nalogEvidentirao);
 
@@ -75,19 +71,19 @@ for ($i = 0; $i < count($sifraIgreNiz); $i++) {
     $cena = trim($cenaNiz[$i]);
 
     if ($sifraIgre == "" || $kolicina === "" || $cena === "") {
-        prekiniSaGreskom("Грешка: Сва поља у ставкама налога морају бити попуњена.", $povratakUrl);
+        prekiniSaGreskom("Грешка: Sva polja u stavkama naloga moraju biti popunjena.", $povratakUrl);
     }
 
     if (strlen($sifraIgre) > 13 || !preg_match('/^[A-Za-z0-9]+$/', $sifraIgre)) {
-        prekiniSaGreskom("Грешка: Шифра игре мора бити алфанумеричка и до 13 карактера.", $povratakUrl);
+        prekiniSaGreskom("Грешка: Šifra igre mora biti alfanumerička i do 13 karaktera.", $povratakUrl);
     }
 
     if (!is_numeric($kolicina) || (string)(int)$kolicina !== $kolicina || (int)$kolicina <= 0) {
-        prekiniSaGreskom("Грешка: Количина мора бити цео број већи од 0.", $povratakUrl);
+        prekiniSaGreskom("Грешка: Količina mora biti ceo broj veći od 0.", $povratakUrl);
     }
 
     if (filter_var($cena, FILTER_VALIDATE_FLOAT) === false || (float)$cena <= 0) {
-        prekiniSaGreskom("Грешка: Цена мора бити позитивна decimalna vrednost veća od 0.", $povratakUrl);
+        prekiniSaGreskom("Грешка: Cena mora biti pozitivna decimalna vrednost veća od 0.", $povratakUrl);
     }
 
     $KnjigaEntitet = new KnjigaEntitet($sifraIgre);
@@ -95,83 +91,36 @@ for ($i = 0; $i < count($sifraIgreNiz); $i++) {
     $NabavkaEntitet->DodajStavku($StavkaEntitet);
 }
 
-$KonekcijaObject = new Konekcija(__DIR__ . "/../../tehnoloskeKlase/BaznaParametriKonekcije.xml");
-$KonekcijaObject->connect();
+$NabavkeController = new NabavkeController();
 
-if (!$KonekcijaObject->konekcijaDB) {
-    prekiniSaGreskom("Није успостављена конекција ка бази података.", $povratakUrl);
+if (!$NabavkeController->DajKonekcijaObject()->konekcijaDB) {
+    $NabavkeController->ZatvoriKonekciju();
+    prekiniSaGreskom("Nije uspostavljena konekcija ka bazi podataka.", $povratakUrl);
 }
 
-$konekcija = $KonekcijaObject->konekcijaDB;
-$baza = $KonekcijaObject->KompletanNazivBazePodataka;
-
-$brojNalogaEsc = mysqli_real_escape_string($konekcija, $brojNaloga);
-$datumNabavkeEsc = mysqli_real_escape_string($konekcija, $datumNabavke);
-$dobavljacEsc = mysqli_real_escape_string($konekcija, $dobavljac);
-$napomenaEsc = mysqli_real_escape_string($konekcija, $napomena);
-$nalogEvidentiraoEsc = mysqli_real_escape_string($konekcija, $nalogEvidentirao);
-
-$NabavkaObject = new DBNabavka($KonekcijaObject, "nabavka");
-
-if ($NabavkaObject->PostojiBrojNaloga($brojNalogaEsc)) {
-    $KonekcijaObject->disconnect();
-    prekiniSaGreskom("Грешка: Налог са тим бројем већ постоји.", $povratakUrl);
+if ($NabavkeController->PostojiBrojNaloga($brojNaloga)) {
+    $NabavkeController->ZatvoriKonekciju();
+    prekiniSaGreskom("Грешка: Nalog sa tim brojem već postoji.", $povratakUrl);
 }
 
 foreach ($NabavkaEntitet->ListaStavki as $stavka) {
-    $sifraProvera = mysqli_real_escape_string($konekcija, $stavka->DrustvenaIgra->SifraIgre);
-    $rezultatIgre = mysqli_query(
-        $konekcija,
-        "SELECT SifraIgre FROM `$baza`.`drustvena_igra` WHERE SifraIgre='$sifraProvera' LIMIT 1"
-    );
-
-    if (!$rezultatIgre || mysqli_num_rows($rezultatIgre) == 0) {
-        $KonekcijaObject->disconnect();
-        prekiniSaGreskom("Грешка: Шифра игре '" . htmlspecialchars($stavka->DrustvenaIgra->SifraIgre) . "' не постоји у katalogu.", $povratakUrl);
+    if (!$NabavkeController->IgraPostojiUKatalogu($stavka->DrustvenaIgra->SifraIgre)) {
+        $NabavkeController->ZatvoriKonekciju();
+        prekiniSaGreskom("Грешка: Šifra igre '" . htmlspecialchars($stavka->DrustvenaIgra->SifraIgre) . "' ne postoji u katalogu.", $povratakUrl);
     }
 }
 
-$TransakcijaObject = new Transakcija($KonekcijaObject);
-$TransakcijaObject->ZapocniTransakciju();
+$rezultatSnimanja = $NabavkeController->SnimiNovuNabavku($NabavkaEntitet);
 
-$StavkaObject = new DBStavkaNabavke($KonekcijaObject, "stavka_nabavke");
-$utvrdjenaGreska = "";
-
-$utvrdjenaGreska .= $NabavkaObject->DodajNabavku(
-    $brojNalogaEsc,
-    $datumNabavkeEsc,
-    $dobavljacEsc,
-    $napomenaEsc,
-    $nalogEvidentiraoEsc
-);
-
-$idNabavke = $NabavkaObject->DajPoslednjiID();
-
-if ($utvrdjenaGreska != "" || $idNabavke == null || $idNabavke == "") {
-    $TransakcijaObject->ZavrsiTransakciju("Грешка при snimanju glavnog dela naloga.");
-    $KonekcijaObject->disconnect();
-    prekiniSaGreskom("Грешка приликом снимања glavnog dela naloga.", $povratakUrl);
-}
-
-foreach ($NabavkaEntitet->ListaStavki as $stavka) {
-    $sifraIgreEsc = mysqli_real_escape_string($konekcija, $stavka->DrustvenaIgra->SifraIgre);
-    $kolicinaEsc = mysqli_real_escape_string($konekcija, $stavka->Kolicina);
-    $cenaEsc = mysqli_real_escape_string($konekcija, $stavka->Cena);
-
-    $utvrdjenaGreska .= $StavkaObject->DodajStavkuNabavke($idNabavke, $sifraIgreEsc, $kolicinaEsc, $cenaEsc);
-}
-
-$TransakcijaObject->ZavrsiTransakciju($utvrdjenaGreska);
-
-if ($utvrdjenaGreska != "") {
-    echo "Грешка приликом снимања naloga.";
+if (!$rezultatSnimanja['uspeh']) {
+    echo "Грешка pri snimanju naloga.";
     echo "<br>";
-    echo $utvrdjenaGreska;
+    echo $rezultatSnimanja['greska'];
     echo "<br><br><a href='" . $povratakUrl . "'>ПОВРАТАК</a>";
+    $NabavkeController->ZatvoriKonekciju();
 } else {
+    $NabavkeController->ZatvoriKonekciju();
     header("Location:../../Ruter.php?stranica=nabavke");
     exit();
 }
-
-$KonekcijaObject->disconnect();
 ?>

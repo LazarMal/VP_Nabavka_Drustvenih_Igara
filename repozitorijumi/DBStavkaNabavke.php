@@ -1,5 +1,6 @@
 <?php
 
+require_once __DIR__ . '/../tehnoloskeKlase/BaznaTabela.php';
 require_once __DIR__ . "/../model/entiteti/StavkaNabavkeEntitet.php";
 
 class DBStavkaNabavke extends Tabela

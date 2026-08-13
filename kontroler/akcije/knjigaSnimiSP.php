@@ -51,6 +51,8 @@ if (isset($_FILES["nazivFajlaSlike"]) && $_FILES["nazivFajlaSlike"]["error"] == 
 $NazivFajlaSlike = $name;
 
 require __DIR__ . '/../../tehnoloskeKlase/BaznaKonekcija.php';
+require __DIR__ . '/../../tehnoloskeKlase/BaznaTabela.php';
+require __DIR__ . '/../../repozitorijumi/DBKnjigaSP.php';
 
 $KonekcijaObject = new Konekcija(__DIR__ . '/../../tehnoloskeKlase/BaznaParametriKonekcije.xml');
 $KonekcijaObject->connect();
@@ -80,16 +82,22 @@ if (mysqli_num_rows($provera) > 0) {
     die("Грешка: Игра са том шифром већ постоји.<br><br><a href=\"../Ruter.php?stranica=unosSP\">ПОВРАТАК</a>");
 }
 
-$upit = "CALL DodajDrustvenuIgru('$SifraIgre', '$Naziv', '$Proizvodjac', '$OznakaKategorije', '$NazivFajlaSlike')";
-$rezultat = mysqli_query($konekcija, $upit);
+$KnjigaSPObject = new DBKnjigaSP($KonekcijaObject, 'drustvena_igra');
+$KnjigaSPObject->SifraIgre = $SifraIgre;
+$KnjigaSPObject->Naziv = $Naziv;
+$KnjigaSPObject->Proizvodjac = $Proizvodjac;
+$KnjigaSPObject->OznakaKategorije = $OznakaKategorije;
+$KnjigaSPObject->NazivFajlaSlike = $NazivFajlaSlike;
 
-if ($rezultat) {
+$greska = $KnjigaSPObject->DodajNovuKnjigu();
+
+if ($greska == "") {
     header('Location:../../Ruter.php?stranica=knjige');
     exit();
 } else {
     echo "Грешка приликом снимања игре преко stored procedure!";
     echo "<br>";
-    echo mysqli_error($konekcija);
+    echo $greska;
     echo "<br><br>";
     echo "<a href=\"../../Ruter.php?stranica=knjige\">ПОВРАТАК</a>";
 }

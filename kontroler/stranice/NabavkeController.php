@@ -59,6 +59,54 @@ class NabavkeController
         return $this->NabavkaModel;
     }
 
+    public function IgraPostojiUKatalogu($sifraIgre)
+    {
+        return $this->NabavkaModel->IgraPostojiUKatalogu($sifraIgre);
+    }
+
+    public function PostojiBrojNaloga($brojNaloga)
+    {
+        return $this->NabavkaModel->PostojiBrojNaloga($this->KonekcijaObject, $brojNaloga);
+    }
+
+    public function PostojiBrojNalogaOsim($brojNaloga, $IDNabavke)
+    {
+        return $this->NabavkaModel->PostojiBrojNalogaOsim($this->KonekcijaObject, $brojNaloga, $IDNabavke);
+    }
+
+    public function SnimiNovuNabavku($nabavkaEntitet)
+    {
+        return $this->NabavkaModel->SnimiNovuNabavku($this->KonekcijaObject, $nabavkaEntitet);
+    }
+
+    public function IzmeniNabavku($IDNabavke, $brojNaloga, $datumNabavke, $dobavljac, $napomena, $stavkeZaSnimanje)
+    {
+        return $this->NabavkaModel->IzmeniNabavku(
+            $this->KonekcijaObject,
+            $IDNabavke,
+            $brojNaloga,
+            $datumNabavke,
+            $dobavljac,
+            $napomena,
+            $stavkeZaSnimanje
+        );
+    }
+
+    public function ObrisiNabavku($IDNabavke)
+    {
+        return $this->NabavkaModel->ObrisiNabavku($this->KonekcijaObject, $IDNabavke);
+    }
+
+    public function StavkaPripadaNalogu($IDStavke, $IDNabavke)
+    {
+        return $this->NabavkaModel->StavkaPripadaNalogu($IDStavke, $IDNabavke);
+    }
+
+    public function DajKonekcijaObject()
+    {
+        return $this->KonekcijaObject;
+    }
+
     public function ZatvoriKonekciju()
     {
         $this->KonekcijaObject->disconnect();

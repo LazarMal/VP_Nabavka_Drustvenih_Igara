@@ -11,41 +11,28 @@ if (!isset($korisnik)) {
 $povratakUrl = '../../Ruter.php?stranica=nabavke';
 
 if (!isset($_POST['IDNabavke']) || trim($_POST['IDNabavke']) === "") {
-    die("Грешка: Није изабран nalog za brisanje.<br><br><a href='" . $povratakUrl . "'>ПОВРАТАК</a>");
+    die("Грешка: Nije izabran nalog za brisanje.<br><br><a href='" . $povratakUrl . "'>ПОВРАТАК</a>");
 }
 
 $IDNabavke = trim($_POST['IDNabavke']);
 
-require __DIR__ . '/../../tehnoloskeKlase/BaznaKonekcija.php';
-require __DIR__ . '/../../tehnoloskeKlase/BaznaTabela.php';
-require __DIR__ . '/../../repozitorijumi/DBNabavka.php';
+require_once __DIR__ . '/../../kontroler/stranice/NabavkeController.php';
 
-$KonekcijaObject = new Konekcija(__DIR__ . '/../../tehnoloskeKlase/BaznaParametriKonekcije.xml');
-$KonekcijaObject->connect();
+$NabavkeController = new NabavkeController();
 
-$UtvrdjenaGreska = "";
-
-if ($KonekcijaObject->konekcijaDB) {
-    $konekcija = $KonekcijaObject->konekcijaDB;
-    $baza = $KonekcijaObject->KompletanNazivBazePodataka;
-
-    $IDNabavkeEsc = mysqli_real_escape_string($konekcija, $IDNabavke);
-
-    $provera = mysqli_query(
-        $konekcija,
-        "SELECT IDNabavke, BrojNaloga FROM `$baza`.`nabavka` WHERE IDNabavke='$IDNabavkeEsc' LIMIT 1"
-    );
-
-    if (!$provera || mysqli_num_rows($provera) == 0) {
-        $KonekcijaObject->disconnect();
-        die("Грешка: Nalog ne postoji.<br><br><a href='" . $povratakUrl . "'>ПОВРАТАК</a>");
-    }
-
-    $NabavkaObject = new DBNabavka($KonekcijaObject, 'nabavka');
-    $UtvrdjenaGreska = $NabavkaObject->ObrisiNabavku($IDNabavkeEsc);
+if (!$NabavkeController->DajKonekcijaObject()->konekcijaDB) {
+    $NabavkeController->ZatvoriKonekciju();
+    die("Nije uspostavljena konekcija ka bazi podataka.<br><br><a href='" . $povratakUrl . "'>ПОВРАТАК</a>");
 }
 
-$KonekcijaObject->disconnect();
+if ($NabavkeController->DajNabavkuPoID($IDNabavke) == null) {
+    $NabavkeController->ZatvoriKonekciju();
+    die("Грешка: Nalog ne postoji.<br><br><a href='" . $povratakUrl . "'>ПОВРАТАК</a>");
+}
+
+$UtvrdjenaGreska = $NabavkeController->ObrisiNabavku($IDNabavke);
+
+$NabavkeController->ZatvoriKonekciju();
 
 if ($UtvrdjenaGreska != "") {
     echo "Грешка: " . $UtvrdjenaGreska;

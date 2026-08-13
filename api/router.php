@@ -5,20 +5,20 @@ $akcija = isset($_GET['akcija']) ? $_GET['akcija'] : "";
 
 switch ($akcija) {
 
-    case "knjige":
-        require "knjige.php";
+    case "igre":
+        require "igre.php";
         break;
 
-    case "knjiga":
-        require "knjiga.php";
+    case "igra":
+        require "igra.php";
         break;
 
     default:
         echo json_encode(array(
             "poruka" => "Nepoznata REST akcija",
             "dozvoljene_akcije" => array(
-                "knjige",
-                "knjiga"
+                "igre",
+                "igra"
             )
         ), JSON_UNESCAPED_UNICODE);
         break;
