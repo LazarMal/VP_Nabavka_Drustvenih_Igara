@@ -8,33 +8,33 @@ if (!isset($korisnik)) {
     exit();
 }
 
-$ISBN = isset($_POST['isbn']) ? trim($_POST['isbn']) : "";
-$StariISBN = isset($_POST['StariISBN']) ? trim($_POST['StariISBN']) : "";
+$SifraIgre = isset($_POST['sifraIgre']) ? trim($_POST['sifraIgre']) : "";
+$StaraSifraIgre = isset($_POST['StaraSifraIgre']) ? trim($_POST['StaraSifraIgre']) : "";
 $Naziv = isset($_POST['naziv']) ? trim($_POST['naziv']) : "";
-$Autor = isset($_POST['autor']) ? trim($_POST['autor']) : "";
-$OznakaZanra = isset($_POST['oznakaZanra']) ? trim($_POST['oznakaZanra']) : "";
+$Proizvodjac = isset($_POST['proizvodjac']) ? trim($_POST['proizvodjac']) : "";
+$OznakaKategorije = isset($_POST['oznakaKategorije']) ? trim($_POST['oznakaKategorije']) : "";
 $StariNazivFajlaSlike = isset($_POST['StariNazivFajlaSlike']) ? trim($_POST['StariNazivFajlaSlike']) : "";
 
-if ($ISBN == "" || $StariISBN == "" || $Naziv == "" || $Autor == "" || $OznakaZanra == "") {
-    die("Грешка: Сва обавезна поља морају бити попуњена.<br><br><a href=\"../../ruter.php?stranica=knjige\">ПОВРАТАК</a>");
+if ($SifraIgre == "" || $StaraSifraIgre == "" || $Naziv == "" || $Proizvodjac == "" || $OznakaKategorije == "") {
+    die("Грешка: Сва обавезна поља морају бити попуњена.<br><br><a href=\"../../Ruter.php?stranica=knjige\">ПОВРАТАК</a>");
 }
 
-if (!preg_match('/^[0-9]{13}$/', $ISBN)) {
-    die("Грешка: ISBN мора имати тачно 13 цифара.<br><br><a href=\"../../ruter.php?stranica=knjige\">ПОВРАТАК</a>");
+if (strlen($SifraIgre) > 13 || !preg_match('/^[A-Za-z0-9]+$/', $SifraIgre)) {
+    die("Грешка: Шифра игре мора бити алфанумеричка и до 13 карактера.<br><br><a href=\"../../Ruter.php?stranica=knjige\">ПОВРАТАК</a>");
 }
 
 if (strlen($Naziv) > 100) {
-    die("Грешка: Назив књиге не сме бити дужи од 100 карактера.<br><br><a href=\"../../ruter.php?stranica=knjige\">ПОВРАТАК</a>");
+    die("Грешка: Назив игре не сме бити дужи од 100 карактера.<br><br><a href=\"../../Ruter.php?stranica=knjige\">ПОВРАТАК</a>");
 }
 
-if (strlen($Autor) > 100) {
-    die("Грешка: Аутор не сме бити дужи од 100 карактера.<br><br><a href=\"../../ruter.php?stranica=knjige\">ПОВРАТАК</a>");
+if (strlen($Proizvodjac) > 100) {
+    die("Грешка: Произвођач не сме бити дужи од 100 карактера.<br><br><a href=\"../../Ruter.php?stranica=knjige\">ПОВРАТАК</a>");
 }
 
-$dozvoljeniZanrovi = array("RM", "DR", "IS", "NA", "PR");
+$dozvoljeneKategorije = array("ST", "PA", "PO", "KO", "KA");
 
-if (!in_array($OznakaZanra, $dozvoljeniZanrovi)) {
-    die("Грешка: Изабрани жанр није у дозвољеном домену вредности.<br><br><a href=\"../../ruter.php?stranica=knjige\">ПОВРАТАК</a>");
+if (!in_array($OznakaKategorije, $dozvoljeneKategorije)) {
+    die("Грешка: Изабрана категорија није у дозвољеном домену вредности.<br><br><a href=\"../../Ruter.php?stranica=knjige\">ПОВРАТАК</a>");
 }
 
 $NazivFajlaSlike = "";
@@ -47,7 +47,7 @@ if (isset($_FILES["nazivFajlaSlike"]) && $_FILES["nazivFajlaSlike"]["error"] == 
     $dozvoljeneEkstenzije = array("jpg", "jpeg", "png");
 
     if (!in_array($ekstenzija, $dozvoljeneEkstenzije)) {
-        die("Грешка: Дозвољене су само JPG, JPEG и PNG слике.<br><br><a href=\"../../ruter.php?stranica=knjige\">ПОВРАТАК</a>");
+        die("Грешка: Дозвољене су само JPG, JPEG и PNG слике.<br><br><a href=\"../../Ruter.php?stranica=knjige\">ПОВРАТАК</a>");
     }
 
     if (!empty($name)) {
@@ -75,29 +75,29 @@ if (!$KonekcijaObject->konekcijaDB) {
 $konekcija = $KonekcijaObject->konekcijaDB;
 $baza = $KonekcijaObject->KompletanNazivBazePodataka;
 
-$ISBN = mysqli_real_escape_string($konekcija, $ISBN);
-$StariISBN = mysqli_real_escape_string($konekcija, $StariISBN);
+$SifraIgre = mysqli_real_escape_string($konekcija, $SifraIgre);
+$StaraSifraIgre = mysqli_real_escape_string($konekcija, $StaraSifraIgre);
 $Naziv = mysqli_real_escape_string($konekcija, $Naziv);
-$Autor = mysqli_real_escape_string($konekcija, $Autor);
-$OznakaZanra = mysqli_real_escape_string($konekcija, $OznakaZanra);
+$Proizvodjac = mysqli_real_escape_string($konekcija, $Proizvodjac);
+$OznakaKategorije = mysqli_real_escape_string($konekcija, $OznakaKategorije);
 $NazivFajlaSlike = mysqli_real_escape_string($konekcija, $NazivFajlaSlike);
 
-if ($ISBN != $StariISBN) {
-    $provera = mysqli_query($konekcija, "SELECT ISBN FROM `$baza`.`knjiga` WHERE ISBN='$ISBN'");
+if ($SifraIgre != $StaraSifraIgre) {
+    $provera = mysqli_query($konekcija, "SELECT SifraIgre FROM `$baza`.`drustvena_igra` WHERE SifraIgre='$SifraIgre'");
 
     if (mysqli_num_rows($provera) > 0) {
-        die("Грешка: Књига са тим ISBN бројем већ постоји.<br><br><a href=\"../../ruter.php?stranica=knjige\">ПОВРАТАК</a>");
+        die("Грешка: Игра са том шифром већ постоји.<br><br><a href=\"../../Ruter.php?stranica=knjige\">ПОВРАТАК</a>");
     }
 }
 
-$KnjigaObject = new DBKnjiga($KonekcijaObject, 'knjiga');
+$KnjigaObject = new DBKnjiga($KonekcijaObject, 'drustvena_igra');
 
 $greska = $KnjigaObject->IzmeniKnjigu(
-    $StariISBN,
-    $ISBN,
+    $StaraSifraIgre,
+    $SifraIgre,
     $Naziv,
-    $Autor,
-    $OznakaZanra,
+    $Proizvodjac,
+    $OznakaKategorije,
     $NazivFajlaSlike
 );
 
@@ -108,9 +108,9 @@ if (isset($greska) && !empty($greska)) {
     echo "<br><br>"; 
     echo $greska;
     echo "<br><br>";
-    echo "<a href=\"../../ruter.php?stranica=knjige\">ПОВРАТАК</a>";    
+    echo "<a href=\"../../Ruter.php?stranica=knjige\">ПОВРАТАК</a>";    
 } else {
-    header('Location:../../ruter.php?stranica=knjige');
+    header('Location:../../Ruter.php?stranica=knjige');
     exit();
 }
 ?>

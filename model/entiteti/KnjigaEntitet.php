@@ -2,28 +2,28 @@
 
 class KnjigaEntitet
 {
-    public $ISBN;
+    public $SifraIgre;
     public $Naziv;
-    public $Autor;
-    public $OznakaZanra;
+    public $Proizvodjac;
+    public $OznakaKategorije;
     public $NazivFajlaSlike;
 
-    public function __construct($ISBN = "", $Naziv = "", $Autor = "", $OznakaZanra = "", $NazivFajlaSlike = "")
+    public function __construct($SifraIgre = "", $Naziv = "", $Proizvodjac = "", $OznakaKategorije = "", $NazivFajlaSlike = "")
     {
-        $this->ISBN = $ISBN;
+        $this->SifraIgre = $SifraIgre;
         $this->Naziv = $Naziv;
-        $this->Autor = $Autor;
-        $this->OznakaZanra = $OznakaZanra;
+        $this->Proizvodjac = $Proizvodjac;
+        $this->OznakaKategorije = $OznakaKategorije;
         $this->NazivFajlaSlike = $NazivFajlaSlike;
     }
 
     public static function IzRedaBaze($red)
     {
         return new KnjigaEntitet(
-            isset($red["ISBN"]) ? $red["ISBN"] : "",
+            isset($red["SifraIgre"]) ? $red["SifraIgre"] : "",
             isset($red["Naziv"]) ? $red["Naziv"] : "",
-            isset($red["Autor"]) ? $red["Autor"] : "",
-            isset($red["OznakaZanra"]) ? $red["OznakaZanra"] : "",
+            isset($red["Proizvodjac"]) ? $red["Proizvodjac"] : "",
+            isset($red["OznakaKategorije"]) ? $red["OznakaKategorije"] : "",
             isset($red["NazivFajlaSlike"]) ? $red["NazivFajlaSlike"] : ""
         );
     }

@@ -134,7 +134,7 @@ if ($idNabavke == null) {
 
 // snimanje svih stavki nabavke u istoj transakciji
 foreach ($NabavkaEntitet->ListaStavki as $stavka) {
-    $isbn = mysqli_real_escape_string($konekcija, $stavka->Knjiga->ISBN);
+    $isbn = mysqli_real_escape_string($konekcija, $stavka->DrustvenaIgra->SifraIgre);
     $kolicina = mysqli_real_escape_string($konekcija, $stavka->Kolicina);
     $cena = mysqli_real_escape_string($konekcija, $stavka->Cena);
 

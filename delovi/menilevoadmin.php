@@ -49,7 +49,7 @@
 <tr>
 <td style="width:1px;"></td>
 <td>
-<b><font face="Trebuchet MS" color="black" size="3px">&nbsp;ПОДАЦИ О КЊИГАМА</font></b>
+<b><font face="Trebuchet MS" color="black" size="3px">&nbsp;ПОДАЦИ О ДРУШТВЕНИМ ИГРАМА</font></b>
 </td>
 <td style="width:1px;"></td>
 </tr>
@@ -57,7 +57,7 @@
 <tr>
 <td style="width:1px;"></td>
 <td>
-<a href="ruter.php?stranica=unos"><font face="Trebuchet MS" color="black" size="2px">&nbsp;Унос књиге</font></a>
+<a href="Ruter.php?stranica=unos"><font face="Trebuchet MS" color="black" size="2px">&nbsp;Унос игре</font></a>
 </td>
 <td style="width:1px;"></td>
 </tr>
@@ -65,7 +65,7 @@
 <tr>
 <td style="width:1px;"></td>
 <td>
-<a href="ruter.php?stranica=unosSP"><font face="Trebuchet MS" color="black" size="2px">&nbsp;Унос књиге (SP)</font></a>
+<a href="Ruter.php?stranica=unosSP"><font face="Trebuchet MS" color="black" size="2px">&nbsp;Унос игре (SP)</font></a>
 </td>
 <td style="width:1px;"></td>
 </tr>
@@ -73,7 +73,7 @@
 <tr>
 <td style="width:1px;"></td>
 <td>
-<a href="ruter.php?stranica=knjige"><font face="Trebuchet MS" color="black" size="2px">&nbsp;Листа и ажурирање</font></a>
+<a href="Ruter.php?stranica=knjige"><font face="Trebuchet MS" color="black" size="2px">&nbsp;Листа и ажурирање</font></a>
 </td>
 <td style="width:1px;"></td>
 </tr>

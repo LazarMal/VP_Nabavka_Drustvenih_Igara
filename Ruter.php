@@ -108,14 +108,14 @@ switch ($stranica) {
     case 'izmenaForm':
         proveriSesiju();
 
-        $StariISBNZaIzmenu = isset($_POST['isbn']) ? $_POST['isbn'] : null;
+        $StariSifraIgreZaIzmenu = isset($_POST['sifraIgre']) ? $_POST['sifraIgre'] : null;
 
         require_once 'kontroler/stranice/KnjigeController.php';
 
         $KnjigeController = new KnjigeController();
 
         $ZanrObject = $KnjigeController->DajSveZanrove();
-        $KnjigaObject = $KnjigeController->DajKnjiguPoISBN($StariISBNZaIzmenu);
+        $KnjigaObject = $KnjigeController->DajKnjiguPoISBN($StariSifraIgreZaIzmenu);
 
         $KolekcijaZapisa = $ZanrObject->Kolekcija;
         $UkupanBrojZapisa = $ZanrObject->BrojZapisa;
@@ -125,22 +125,27 @@ switch ($stranica) {
 
         if ($UkupanBrojZapisaStudenata > 0) {
             $row = 0;
-            $StariISBN = $KnjigaObject->DajVrednostPoRednomBrojuZapisaPoRBPolja($KolekcijaZapisaStudenata, $row, 0);
+            $StariSifraIgre = $KnjigaObject->DajVrednostPoRednomBrojuZapisaPoRBPolja($KolekcijaZapisaStudenata, $row, 0);
             $StariNaziv = $KnjigaObject->DajVrednostPoRednomBrojuZapisaPoRBPolja($KolekcijaZapisaStudenata, $row, 1);
-            $StariAutor = $KnjigaObject->DajVrednostPoRednomBrojuZapisaPoRBPolja($KolekcijaZapisaStudenata, $row, 2);
-            $StaraOznakaZanra = $KnjigaObject->DajVrednostPoRednomBrojuZapisaPoRBPolja($KolekcijaZapisaStudenata, $row, 3);
+            $StariProizvodjac = $KnjigaObject->DajVrednostPoRednomBrojuZapisaPoRBPolja($KolekcijaZapisaStudenata, $row, 2);
+            $StaraOznakaKategorije = $KnjigaObject->DajVrednostPoRednomBrojuZapisaPoRBPolja($KolekcijaZapisaStudenata, $row, 3);
             $StariNazivFajlaSlike = $KnjigaObject->DajVrednostPoRednomBrojuZapisaPoRBPolja($KolekcijaZapisaStudenata, $row, 4);
         } else {
-            $StariISBN = "";
+            $StariSifraIgre = "";
             $StariNaziv = "";
-            $StariAutor = "";
-            $StaraOznakaZanra = "";
+            $StariProizvodjac = "";
+            $StaraOznakaKategorije = "";
             $StariNazivFajlaSlike = "";
         }
 
         include 'pogledi/KnjigaIzmeniForm.php';
 
         $KnjigeController->ZatvoriKonekciju();
+        break;
+
+    case 'obrisiKnjigu':
+        proveriSesiju();
+        require 'kontroler/akcije/KnjigaObrisi.php';
         break;
 
     case 'stampa':
@@ -197,11 +202,11 @@ switch ($stranica) {
         $NabavkeController = new NabavkeController();
         $rezultatKnjige = $NabavkeController->DajKnjigeZaNabavku();
 
-        $optionsKnjige = "<option value=\"\">изаберите књигу...</option>";
+        $optionsKnjige = "<option value=\"\">изаберите игру...</option>";
 
-        while ($knjiga = mysqli_fetch_assoc($rezultatKnjige)) {
-            $optionsKnjige .= "<option value='".$knjiga['ISBN']."' data-cena='".$knjiga['Cena']."'>
-                    ".$knjiga['Naziv']." - ".$knjiga['ISBN']."
+        while ($igra = mysqli_fetch_assoc($rezultatKnjige)) {
+            $optionsKnjige .= "<option value='".$igra['SifraIgre']."' data-cena='".$igra['Cena']."'>
+                    ".$igra['Naziv']." - ".$igra['SifraIgre']."
                   </option>";
         }
 

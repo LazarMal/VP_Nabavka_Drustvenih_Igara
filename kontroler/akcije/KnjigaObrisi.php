@@ -8,7 +8,7 @@ if (!isset($korisnik)) {
     exit();
 }
 
-$IdZaBrisanje = $_POST['isbn'];
+$IdZaBrisanje = $_POST['sifraIgre'];
 
 require __DIR__ . '/../../tehnoloskeKlase/BaznaKonekcija.php';
 require __DIR__ . '/../../tehnoloskeKlase/BaznaTabela.php';
@@ -30,7 +30,7 @@ if ($KonekcijaObject->konekcijaDB) {
 
     $provera = mysqli_query(
         $konekcija,
-        "SELECT COUNT(*) AS broj FROM `$baza`.`stavka_nabavke` WHERE ISBN='$IdZaBrisanje'"
+        "SELECT COUNT(*) AS broj FROM `$baza`.`stavka_nabavke` WHERE SifraIgre='$IdZaBrisanje'"
     );
 
     $red = mysqli_fetch_assoc($provera);
@@ -38,19 +38,19 @@ if ($KonekcijaObject->konekcijaDB) {
     if ($red['broj'] > 0) {
         $KonekcijaObject->disconnect();
 
-        die("Грешка: Књига се не може обрисати јер постоји у евидентираним набавкама.<br><br><a href=\"../../ruter.php?stranica=knjige\">ПОВРАТАК</a>");
+        die("Грешка: Игра се не може обрисати јер постоји у евидентираним налозima.<br><br><a href=\"../../Ruter.php?stranica=knjige\">ПОВРАТАК</a>");
     }
 
     $TransakcijaObject = new Transakcija($KonekcijaObject);
     $TransakcijaObject->ZapocniTransakciju();
 
-    $KnjigaObject = new DBKnjiga($KonekcijaObject, 'knjiga');
+    $KnjigaObject = new DBKnjiga($KonekcijaObject, 'drustvena_igra');
 
-    $OznakaZanra = $KnjigaObject->DajOznakuZanraKnjige($IdZaBrisanje);
+    $OznakaKategorije = $KnjigaObject->DajOznakuZanraKnjige($IdZaBrisanje);
     $greska1 = $KnjigaObject->ObrisiKnjigu($IdZaBrisanje);
 
-    $ZanrObject = new DBZanr($KonekcijaObject, 'zanr');
-    $greska2 = $ZanrObject->DekrementirajBrojKnjiga($OznakaZanra);
+    $ZanrObject = new DBZanr($KonekcijaObject, 'kategorija_igre');
+    $greska2 = $ZanrObject->DekrementirajBrojKnjiga($OznakaKategorije);
 
     $UtvrdjenaGreska = $greska1 . $greska2;
 
@@ -62,9 +62,9 @@ $KonekcijaObject->disconnect();
 if ($UtvrdjenaGreska) {
     echo "Грешка: $UtvrdjenaGreska";
     echo "<br><br>";
-    echo "<a href=\"../../ruter.php?stranica=knjige\">ПОВРАТАК</a>";        
+    echo "<a href=\"../../Ruter.php?stranica=knjige\">ПОВРАТАК</a>";        
 } else {
-    header('Location:../../ruter.php?stranica=knjige');
+    header('Location:../../Ruter.php?stranica=knjige');
     exit();
 }
 ?>

@@ -1,25 +1,23 @@
 <?php
 class DBKnjigaSP extends Tabela 
 {
-// rad sa stored procedurom za snimanje novog zapisa (knjige)
-// ATRIBUTI
 private $bazapodataka;
 private $UspehKonekcijeNaDBMS;
-public $ISBN;
+public $SifraIgre;
 public $Naziv;
-public $Autor;
-public $OznakaZanra;
+public $Proizvodjac;
+public $OznakaKategorije;
 public $NazivFajlaSlike;
 
 public function DodajNovuKnjigu()
 {
-    $GreskarezultatPar1 = $this->IzvrsiAktivanSQLUpit ("SET @ISBNParametar='".$this->ISBN."'");
+    $GreskarezultatPar1 = $this->IzvrsiAktivanSQLUpit ("SET @SifraIgreParametar='".$this->SifraIgre."'");
     $GreskarezultatPar2 = $this->IzvrsiAktivanSQLUpit ("SET @NazivParametar='".$this->Naziv."'");
-    $GreskarezultatPar3 = $this->IzvrsiAktivanSQLUpit ("SET @AutorParametar='".$this->Autor."'");
-    $GreskarezultatPar4 = $this->IzvrsiAktivanSQLUpit ("SET @OznakaZanraParametar='".$this->OznakaZanra."'");
+    $GreskarezultatPar3 = $this->IzvrsiAktivanSQLUpit ("SET @ProizvodjacParametar='".$this->Proizvodjac."'");
+    $GreskarezultatPar4 = $this->IzvrsiAktivanSQLUpit ("SET @OznakaKategorijeParametar='".$this->OznakaKategorije."'");
     $GreskarezultatPar5 = $this->IzvrsiAktivanSQLUpit ("SET @NazivFajlaSlikeParametar='".$this->NazivFajlaSlike."'");
 
-    $GreskarezultatCall = $this->IzvrsiAktivanSQLUpit ("CALL `DodajKnjigu`(@ISBNParametar,@NazivParametar,@AutorParametar,@OznakaZanraParametar,@NazivFajlaSlikeParametar);");
+    $GreskarezultatCall = $this->IzvrsiAktivanSQLUpit ("CALL `DodajDrustvenuIgru`(@SifraIgreParametar,@NazivParametar,@ProizvodjacParametar,@OznakaKategorijeParametar,@NazivFajlaSlikeParametar);");
 
     $greska=$GreskarezultatPar1.$GreskarezultatPar2.$GreskarezultatPar3.$GreskarezultatPar4.$GreskarezultatPar5.$GreskarezultatCall;
     return $greska;

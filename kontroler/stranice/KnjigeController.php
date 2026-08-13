@@ -17,7 +17,7 @@ class KnjigeController
 
     public function DajZanrove()
     {
-        $zanrObject = new DBZanr($this->KonekcijaObject, 'zanr');
+        $zanrObject = new DBZanr($this->KonekcijaObject, 'kategorija_igre');
         $zanrObject->UcitajKolekcijuSvihZanrova();
 
         return $zanrObject;
@@ -30,14 +30,14 @@ class KnjigeController
 
     public function DajSveKnjige($filter = null)
     {
-        $knjigaViewObject = new DBKnjigaV($this->KonekcijaObject, 'svipodacioknjigamasaslikom');
+        $knjigaViewObject = new DBKnjigaV($this->KonekcijaObject, 'svipodacioidrutvenimigramasaslikom');
         $knjigaViewObject->DajSvePodatkeOKnjigama($filter);
         return $knjigaViewObject;
     }
 
     public function DajKnjiguPoISBN($isbn)
     {
-        $knjigaObject = new DBKnjiga($this->KonekcijaObject, 'knjiga');
+        $knjigaObject = new DBKnjiga($this->KonekcijaObject, 'drustvena_igra');
         $knjigaObject->UcitajKnjiguPoISBN($isbn);
         return $knjigaObject;
     }
@@ -55,7 +55,7 @@ class KnjigeController
     {
         $knjigaObject = new DBKnjigaV(
             $this->KonekcijaObject,
-            'svipodacioknjigamasaslikom'
+            'svipodacioidrutvenimigramasaslikom'
         );
 
         $knjigaObject->DajSvePodatkeOKnjigama($filter);

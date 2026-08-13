@@ -14,7 +14,7 @@
 <tr>
 <td style="width:3%;"></td>
 <td align="left">
-<b><font face="Trebuchet MS" color="black" size="3px">УНОС НОВЕ КЊИГЕ применом stored procedure</font></b><br/>
+<b><font face="Trebuchet MS" color="black" size="3px">УНОС НОВЕ ДРУШТВЕНЕ ИГРЕ применом stored procedure</font></b><br/>
 </td>
 <td style="width:3%;"></td>
 </tr>
@@ -30,17 +30,15 @@
 <td align="center">
 
 <table style="width:95%;" bgcolor="#D8E7F4" align="center" cellspacing="0" cellpadding="0" border="0">
-<form name="FormaZaUnosKnjigeSP" action="kontroler/akcije/knjigaSnimiSP.php" method="POST" enctype="multipart/form-data">
+<form name="FormaZaUnosIgreSP" action="kontroler/akcije/knjigaSnimiSP.php" method="POST" enctype="multipart/form-data">
 
 <tr>
 <td align="right" valign="bottom">
-<b><font face="Trebuchet MS" color="black" size="2px">ISBN&nbsp;&nbsp;</font></b>
+<b><font face="Trebuchet MS" color="black" size="2px">Шифра игре&nbsp;&nbsp;</font></b>
 </td>
 <td align="left" valign="bottom">
-<input name="isbn" type="text" size="50" maxlength="13" minlength="13"
-pattern="[0-9]{13}"
-title="ISBN мора имати тачно 13 цифара"
-placeholder="Унесите ISBN књиге" required />
+<input name="sifraIgre" type="text" size="50" maxlength="13"
+placeholder="Унесите шифру игре" required />
 </td>
 </tr>
 
@@ -51,11 +49,11 @@ placeholder="Унесите ISBN књиге" required />
 
 <tr>
 <td align="right" valign="bottom">
-<b><font face="Trebuchet MS" color="black" size="2px">Назив књиге&nbsp;&nbsp;</font><br/></b>
+<b><font face="Trebuchet MS" color="black" size="2px">Назив игре&nbsp;&nbsp;</font><br/></b>
 </td>
 <td align="left" valign="bottom">
 <input name="naziv" type="text" size="50" maxlength="100"
-placeholder="Унесите назив књиге" required />
+placeholder="Унесите назив игре" required />
 </td>
 </tr>
 
@@ -66,11 +64,11 @@ placeholder="Унесите назив књиге" required />
 
 <tr>
 <td align="right" valign="bottom">
-<b><font face="Trebuchet MS" color="black" size="2px">Аутор&nbsp;&nbsp;</font><br/></b>
+<b><font face="Trebuchet MS" color="black" size="2px">Произвођач&nbsp;&nbsp;</font><br/></b>
 </td>
 <td align="left" valign="bottom">
-<input name="autor" type="text" size="50" maxlength="100"
-placeholder="Унесите аутора" required />
+<input name="proizvodjac" type="text" size="50" maxlength="100"
+placeholder="Унесите произвођача" required />
 </td>
 </tr>
 
@@ -81,17 +79,17 @@ placeholder="Унесите аутора" required />
 
 <tr>
 <td align="right" valign="bottom">
-<b><font face="Trebuchet MS" color="black" size="2px">Жанр&nbsp;&nbsp;</font><br/></b>
+<b><font face="Trebuchet MS" color="black" size="2px">Категорија&nbsp;&nbsp;</font><br/></b>
 </td>
 <td align="left" valign="bottom">
-<select name="oznakaZanra" required tabindex="7">
+<select name="oznakaKategorije" required tabindex="7">
     <option value="">изаберите...</option>
     <?php
     if ($UkupanBrojZapisa > 0) {                   
-        for ($brojacZanrova = 0; $brojacZanrova < $UkupanBrojZapisa; $brojacZanrova++) {
-            $oznakaZanra = $ZanrObject->DajVrednostPoRednomBrojuZapisaPoRBPolja($KolekcijaZapisa, $brojacZanrova, 0);               
-            $nazivZanra = $ZanrObject->DajVrednostPoRednomBrojuZapisaPoRBPolja($KolekcijaZapisa, $brojacZanrova, 1);               
-            echo "<option value=\"$oznakaZanra\">$nazivZanra</option>";                     
+        for ($brojacKategorija = 0; $brojacKategorija < $UkupanBrojZapisa; $brojacKategorija++) {
+            $oznakaKategorije = $ZanrObject->DajVrednostPoRednomBrojuZapisaPoRBPolja($KolekcijaZapisa, $brojacKategorija, 0);               
+            $nazivKategorije = $ZanrObject->DajVrednostPoRednomBrojuZapisaPoRBPolja($KolekcijaZapisa, $brojacKategorija, 1);               
+            echo "<option value=\"$oznakaKategorije\">$nazivKategorije</option>";                     
         }
     }
     ?>
@@ -106,10 +104,10 @@ placeholder="Унесите аутора" required />
 
 <tr>
 <td align="right" valign="bottom">
-<b><font face="Trebuchet MS" color="black" size="2px">Слика књиге&nbsp;&nbsp;</font><br/></b>
+<b><font face="Trebuchet MS" color="black" size="2px">Слика игре&nbsp;&nbsp;</font><br/></b>
 </td>
 <td align="left" valign="bottom">
-<input name="nazivFajlaSlike" type="file" size="50" />
+<input name="nazivFajlaSlike" type="file" size="50" accept=".jpg,.jpeg,.png" />
 </td>
 </tr>
 

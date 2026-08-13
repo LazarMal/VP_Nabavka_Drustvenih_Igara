@@ -3,11 +3,11 @@ class DBZanr extends Tabela
 {
     public $Oznaka;
     public $Naziv; 
-    public $UkupanBrojKnjiga;
+    public $UkupanBrojIgara;
 
     public function UcitajKolekcijuSvihZanrova()
     {
-        $SQL = "select * from `".$this->NazivBazePodataka."`.`zanr` ORDER BY Naziv ASC";
+        $SQL = "select * from `".$this->NazivBazePodataka."`.`kategorija_igre` ORDER BY Naziv ASC";
         $this->UcitajSvePoUpitu($SQL);
     }
 
@@ -15,15 +15,15 @@ class DBZanr extends Tabela
     {
         $KriterijumFiltriranja = "Oznaka='".$IDSmer."'";
         $StaraVrednost = $this->DajVrednostJednogPoljaPrvogZapisa(
-            'UkupanBrojKnjiga',
+            'UkupanBrojIgara',
             $KriterijumFiltriranja,
-            'UkupanBrojKnjiga'
+            'UkupanBrojIgara'
         );
 
         $NovaVrednost = $StaraVrednost + 1;
 
-        $SQL = "UPDATE `".$this->NazivBazePodataka."`.`zanr`
-                SET UkupanBrojKnjiga=".$NovaVrednost."
+        $SQL = "UPDATE `".$this->NazivBazePodataka."`.`kategorija_igre`
+                SET UkupanBrojIgara=".$NovaVrednost."
                 WHERE Oznaka='".$IDSmer."'";
 
         $greska = $this->IzvrsiAktivanSQLUpit($SQL);
@@ -35,15 +35,15 @@ class DBZanr extends Tabela
     {
         $KriterijumFiltriranja = "Oznaka='".$IDSmer."'";
         $StaraVrednost = $this->DajVrednostJednogPoljaPrvogZapisa(
-            'UkupanBrojKnjiga',
+            'UkupanBrojIgara',
             $KriterijumFiltriranja,
-            'UkupanBrojKnjiga'
+            'UkupanBrojIgara'
         );
 
         $NovaVrednost = $StaraVrednost - 1;
 
-        $SQL = "UPDATE `".$this->NazivBazePodataka."`.`zanr`
-                SET UkupanBrojKnjiga=".$NovaVrednost."
+        $SQL = "UPDATE `".$this->NazivBazePodataka."`.`kategorija_igre`
+                SET UkupanBrojIgara=".$NovaVrednost."
                 WHERE Oznaka='".$IDSmer."'";
 
         $greska = $this->IzvrsiAktivanSQLUpit($SQL);

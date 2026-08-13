@@ -13,8 +13,8 @@ class KnjigaModel
 
     public function DajSveKnjigeZaNabavku()
     {
-        $upit = "SELECT ISBN, Naziv, Cena 
-                 FROM `".$this->baza."`.`knjiga` 
+        $upit = "SELECT SifraIgre, Naziv, Cena 
+                 FROM `".$this->baza."`.`drustvena_igra` 
                  ORDER BY Naziv ASC";
 
         return mysqli_query($this->konekcija, $upit);

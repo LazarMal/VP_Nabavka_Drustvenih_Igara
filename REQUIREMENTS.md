@@ -25,8 +25,8 @@
 | ID | Requirement | Source | Interpretation | Template status | Required adaptation | Planned location | Verification | Status |
 |----|-------------|--------|----------------|-----------------|---------------------|------------------|--------------|--------|
 | NF-01 | Baza na srpskom | Profesor PDF | Nazivi tabela/kolona na srpskom | Delimično (`nabavka`, `knjiga` latinica) | Preimenovanje/adaptacija na domen igara | `bazapodataka/*.txt` | Pregled SQL skripte | VERIFIED |
-| NF-02 | Kod na srpskom | Profesor PDF | Poruke/UI na srpskom | Da (ćirilica u UI) | Adaptacija preostalih knjižnih tekstova | `pogledi/`, `delovi/`, akcije | Pregled UI tekstova | NEEDS_ADAPTATION |
-| NF-03 | UI na srpskom | Profesor PDF | Svi ekrani na srpskom | Da | Tekstovi „knjiga“→„igra“, „nabavka knjiga“→„nalog“ | `pogledi/`, `delovi/` | Pregled ekrana | NEEDS_ADAPTATION |
+| NF-02 | Kod na srpskom | Profesor PDF | Poruke/UI na srpskom | Da (ćirilica u UI) | Adaptacija preostalih knjižnih tekstova | `pogledi/`, `delovi/`, akcije | Pregled UI tekstova | IMPLEMENTED |
+| NF-03 | UI na srpskom | Profesor PDF | Svi ekrani na srpskom | Da | Tekstovi „knjiga“→„igra“, „nabavka knjiga“→„nalog“ | `pogledi/`, `delovi/` | Pregled ekrana | IMPLEMENTED |
 | NF-04 | Poslovna veb aplikacija | Profesor PDF | Nabavka igara za klub | Da (biblioteka/nabavka) | Domain adapt | Cela aplikacija | Pregled namene | NEEDS_ADAPTATION |
 | NF-05 | Programski kod isporuka | Profesor PDF | GitHub + učionica | Da (šablon postoji) | Nastavak na adaptiranom kodu | Repo root | Repo nije prazan | SATISFIED_BY_TEMPLATE |
 | NF-06 | Dokumentacija isporuka | Profesor PDF | Seminarski PDF/DOC | Nema u repo | Kreirati pri milestone 16 | `docs/` (finalno) | Fajl postoji | MISSING |
@@ -57,8 +57,8 @@
 | ID | Requirement | Source | Interpretation | Template status | Required adaptation | Planned location | Verification | Status |
 |----|-------------|--------|----------------|-----------------|---------------------|------------------|--------------|--------|
 | DB-01 | Tabela korisnik | Profesor PDF | Login | Da | KEEP | SQL, `DBKorisnik.php` | SELECT login | SATISFIED_BY_TEMPLATE |
-| DB-02 | kategorija_igre | Mapiranje | zanr→kategorija | `zanr` postoji | RENAME/adapt | SQL | Tabela postoji | VERIFIED |
-| DB-03 | drustvena_igra | Mapiranje | knjiga→igra | `knjiga` postoji | RENAME/adapt kolona | SQL, entiteti | Tabela postoji | VERIFIED |
+| DB-02 | kategorija_igre | Mapiranje | zanr→kategorija | `zanr` postoji | RENAME/adapt | SQL | Tabela postoji | IMPLEMENTED |
+| DB-03 | drustvena_igra | Mapiranje | knjiga→igra | `knjiga` postoji | RENAME/adapt kolona | SQL, entiteti | Tabela postoji | IMPLEMENTED |
 | DB-04 | nabavka celina | Profesor PDF + prijava | Nalog master | Da, nepotpuna | +BrojNaloga, +NalogEvidentirao | SQL, `NabavkaEntitet` | Kolone postoje | VERIFIED |
 | DB-05 | stavka_nabavke deo | Profesor PDF + prijava | Detail | Da | ISBN→SifraIgre | SQL, `StavkaNabavkeEntitet` | FK na igru | VERIFIED |
 | DB-06 | nabavka 1:N stavka | Profesor PDF | — | Da | KEEP | SQL FK | ER | SATISFIED_BY_TEMPLATE |
@@ -74,7 +74,7 @@
 | DB-16 | Ukupno izračunato | Odluka | Kolicina*Cena | JS + SQL calc | KEEP calculated | JS, prikaz, štampa | Nema kolone Ukupno u DB | SATISFIED_BY_TEMPLATE |
 | DB-17 | Rekapitulacija izračunata | Prijava | Broj stavki, suma | Delimično u listi | U prikaz, filter, štampu | Views, print | Sum matches | NEEDS_ADAPTATION |
 | DB-18 | Surrogate PK | D | IDNabavke, IDStavke | Da | KEEP | SQL | AUTO_INCREMENT | SATISFIED_BY_TEMPLATE |
-| DB-19 | Mapiranje kolona šifarnika | Mapiranje | SifraIgre, Proizvodjac… | knjiga kolone | Rename u SQL i PHP | Entiteti, repozitorijumi | Imena kolona | VERIFIED |
+| DB-19 | Mapiranje kolona šifarnika | Mapiranje | SifraIgre, Proizvodjac… | knjiga kolone | Rename u SQL i PHP | Entiteti, repozitorijumi | Imena kolona | IMPLEMENTED |
 
 ---
 
@@ -84,7 +84,7 @@
 |----|-------------|--------|----------------|-----------------|---------------------|------------------|--------------|--------|
 | OOP-01 | Nasleđivanje DB→Tabela | Profesor PDF | — | Da (`DBKnjiga extends Tabela`) | Adapt imena klasa | `repozitorijumi/`, `tehnoloskeKlase/` | extends Tabela | SATISFIED_BY_TEMPLATE |
 | OOP-02 | Kompozicija Nabavka→stavke | Profesor PDF | ListaStavki | Da (`NabavkaEntitet`) | KEEP | `model/entiteti/NabavkaEntitet.php` | Lista u entitetu | SATISFIED_BY_TEMPLATE |
-| OOP-03 | Asocijacija stavka→šifarnik | Profesor PDF | Knjiga→DrustvenaIgra | Da (`StavkaNabavkeEntitet::$Knjiga`) | Rename entitet | `StavkaNabavkeEntitet.php` | FK objekat | NEEDS_ADAPTATION |
+| OOP-03 | Asocijacija stavka→šifarnik | Profesor PDF | Knjiga→DrustvenaIgra | Da (`StavkaNabavkeEntitet::$Knjiga`) | Rename entitet | `StavkaNabavkeEntitet.php` | FK objekat | IMPLEMENTED |
 | OOP-04 | Repozitorijumi nasleđuju Tabela | Profesor PDF | — | Da | Adapt imena | `repozitorijumi/` | class extends Tabela | SATISFIED_BY_TEMPLATE |
 | OOP-05 | Konekcija, Transakcija | Profesor PDF | — | Da | KEEP | `tehnoloskeKlase/` | Transakcija u unosu | SATISFIED_BY_TEMPLATE |
 
@@ -111,7 +111,7 @@
 
 | ID | Requirement | Source | Interpretation | Template status | Required adaptation | Planned location | Verification | Status |
 |----|-------------|--------|----------------|-----------------|---------------------|------------------|--------------|--------|
-| FUN-KAT-01 | Pun CRUD kataloga | Odluka 2A | drustvena_igra | Pun CRUD knjiga | Domain adapt svih knjiga ekrana | `KnjigeController`→`IgreController`, itd. | CRUD igara | NEEDS_ADAPTATION |
+| FUN-KAT-01 | Pun CRUD kataloga | Odluka 2A | drustvena_igra | Pun CRUD knjiga | Domain adapt svih knjiga ekrana | `KnjigeController`→`IgreController`, itd. | CRUD igara | IMPLEMENTED |
 | FUN-KAT-02 | Ne zamenjuje FUN glavnog | Odluka 2A | — | Šablon fokus na knjizi | Eksplicitno odvojiti u docs | Dokumentacija | Matrica | SATISFIED_BY_TEMPLATE (razumevanje) |
 
 ---
@@ -173,9 +173,9 @@
 | ID | Requirement | Source | Interpretation | Template status | Required adaptation | Planned location | Verification | Status |
 |----|-------------|--------|----------------|-----------------|---------------------|------------------|--------------|--------|
 | TECH-SP-01 | SP u upotrebi | Profesor PDF | — | Da (`DodajKnjigu`, `unosSP`) | Adapt | SQL, `DBKnjigaSP.php` | CALL radi | NEEDS_ADAPTATION |
-| TECH-SP-02 | SP domen igara | Mapiranje | — | Knjiga SP | Rename SP + params | SQL | Insert igra | VERIFIED |
+| TECH-SP-02 | SP domen igara | Mapiranje | — | Knjiga SP | Rename SP + params | SQL | Insert igra | IMPLEMENTED |
 | TECH-VIEW-01 | VIEW u upotrebi | Profesor PDF | — | Da (`DBKnjigaV`) | Adapt | SQL, repo | SELECT view | NEEDS_ADAPTATION |
-| TECH-VIEW-02 | VIEW domen igara | Mapiranje | — | Knjiga views | Rename columns | SQL | Join kategorija | VERIFIED |
+| TECH-VIEW-02 | VIEW domen igara | Mapiranje | — | Knjiga views | Rename columns | SQL | Join kategorija | IMPLEMENTED |
 | TECH-SP-VIEW-03 | Ne auto SP/VIEW nabavka | Odluka | — | N/A | Out of scope | — | Katalog dokazuje | SATISFIED_BY_TEMPLATE (plan) |
 
 ---
@@ -228,7 +228,7 @@
 | DEF-06 | Zatvoreni dobavljači | NEEDS_ADAPTATION | 1A text |
 | DEF-07 | Zabrana duplikata | NEEDS_ADAPTATION | Ukloniti (VAL-16) |
 | DEF-08 | Gornji limiti | NEEDS_ADAPTATION | Ukloniti (VAL-15) |
-| DEF-09 | Dead route brisanja | NEEDS_ADAPTATION | Fix ruta knjiga→igra |
+| DEF-09 | Dead route brisanja | IMPLEMENTED | Ruta `obrisiKnjigu` u `Ruter.php` |
 | DEF-10 | index.php session_destroy | IMPLEMENTED | Uklonjeno sa landing; odjava preko `Ruter.php?stranica=odjava` |
 
 ---

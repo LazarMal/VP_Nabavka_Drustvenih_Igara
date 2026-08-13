@@ -6,15 +6,15 @@ class StavkaNabavkeEntitet
 {
     public $IDStavke;
     public $IDNabavke;
-    public $Knjiga;
+    public $DrustvenaIgra;
     public $Kolicina;
     public $Cena;
 
-    public function __construct($Knjiga = null, $Kolicina = 0, $Cena = 0, $IDStavke = null, $IDNabavke = null)
+    public function __construct($DrustvenaIgra = null, $Kolicina = 0, $Cena = 0, $IDStavke = null, $IDNabavke = null)
     {
         $this->IDStavke = $IDStavke;
         $this->IDNabavke = $IDNabavke;
-        $this->Knjiga = $Knjiga;
+        $this->DrustvenaIgra = $DrustvenaIgra;
         $this->Kolicina = $Kolicina;
         $this->Cena = $Cena;
     }
@@ -26,16 +26,16 @@ class StavkaNabavkeEntitet
 
     public static function IzRedaBaze($red)
     {
-        $knjiga = new KnjigaEntitet(
-            isset($red["ISBN"]) ? $red["ISBN"] : "",
+        $igra = new KnjigaEntitet(
+            isset($red["SifraIgre"]) ? $red["SifraIgre"] : "",
             isset($red["Naziv"]) ? $red["Naziv"] : "",
-            isset($red["Autor"]) ? $red["Autor"] : "",
-            isset($red["OznakaZanra"]) ? $red["OznakaZanra"] : "",
+            isset($red["Proizvodjac"]) ? $red["Proizvodjac"] : "",
+            isset($red["OznakaKategorije"]) ? $red["OznakaKategorije"] : "",
             isset($red["NazivFajlaSlike"]) ? $red["NazivFajlaSlike"] : ""
         );
 
         return new StavkaNabavkeEntitet(
-            $knjiga,
+            $igra,
             isset($red["Kolicina"]) ? $red["Kolicina"] : 0,
             isset($red["Cena"]) ? $red["Cena"] : 0,
             isset($red["IDStavke"]) ? $red["IDStavke"] : null,

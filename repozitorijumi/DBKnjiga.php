@@ -4,38 +4,38 @@ require_once __DIR__ . "/../model/entiteti/KnjigaEntitet.php";
 
 class DBKnjiga extends Tabela 
 {
-    public $ISBN;
+    public $SifraIgre;
     public $Naziv;
-    public $Autor;
-    public $OznakaZanra;
+    public $Proizvodjac;
+    public $OznakaKategorije;
     public $NazivFajlaSlike;
 
     public function DajKolekcijuSvihKnjiga()
     {
-        $SQL = "select * from `knjiga` ORDER BY Naziv ASC";
+        $SQL = "select * from `drustvena_igra` ORDER BY Naziv ASC";
         $this->UcitajSvePoUpitu($SQL);
         return $this->Kolekcija;
     }
 
-    public function UcitajKnjiguPoISBN($ISBNParametar)
+    public function UcitajKnjiguPoISBN($SifraIgreParametar)
     {
-        $SQL = "select * from `knjiga` where `ISBN`='".$ISBNParametar."'";
+        $SQL = "select * from `drustvena_igra` where `SifraIgre`='".$SifraIgreParametar."'";
         $this->UcitajSvePoUpitu($SQL);
     }
 
-    public function DajOznakuZanraKnjige($ISBNParametar)
+    public function DajOznakuZanraKnjige($SifraIgreParametar)
     {
-        $SQL = "select `OznakaZanra` from `knjiga` where `ISBN`='".$ISBNParametar."'";
+        $SQL = "select `OznakaKategorije` from `drustvena_igra` where `SifraIgre`='".$SifraIgreParametar."'";
         $this->UcitajSvePoUpitu($SQL);
         return $this->DajVrednostPoRednomBrojuZapisaPoRBPolja($this->Kolekcija, 0, 0);
     }
 
     public function DodajNovuKnjigu()
     {
-        $SQL = "INSERT INTO `knjiga`
-        (ISBN, Naziv, Autor, OznakaZanra, NazivFajlaSlike)
+        $SQL = "INSERT INTO `drustvena_igra`
+        (SifraIgre, Naziv, Proizvodjac, OznakaKategorije, NazivFajlaSlike)
         VALUES
-        ('$this->ISBN', '$this->Naziv', '$this->Autor', '$this->OznakaZanra', '$this->NazivFajlaSlike')";
+        ('$this->SifraIgre', '$this->Naziv', '$this->Proizvodjac', '$this->OznakaKategorije', '$this->NazivFajlaSlike')";
 
         $greska = $this->IzvrsiAktivanSQLUpit($SQL);
         return $greska;
@@ -43,45 +43,46 @@ class DBKnjiga extends Tabela
 
     public function ObrisiKnjigu($IdZaBrisanje)
     {
-        $SQL = "DELETE FROM `knjiga` WHERE ISBN='".$IdZaBrisanje."'";
+        $SQL = "DELETE FROM `drustvena_igra` WHERE SifraIgre='".$IdZaBrisanje."'";
         $greska = $this->IzvrsiAktivanSQLUpit($SQL);
         return $greska;
     }
 
-    public function IzmeniKnjigu($StariISBN, $ISBN, $Naziv, $Autor, $OznakaZanra, $NazivFajlaSlike)
+    public function IzmeniKnjigu($StaraSifraIgre, $SifraIgre, $Naziv, $Proizvodjac, $OznakaKategorije, $NazivFajlaSlike)
     {
-        $SQL = "UPDATE `knjiga`
-        SET ISBN='".$ISBN."',
+        $SQL = "UPDATE `drustvena_igra`
+        SET SifraIgre='".$SifraIgre."',
             Naziv='".$Naziv."',
-            Autor='".$Autor."',
-            OznakaZanra='".$OznakaZanra."',
+            Proizvodjac='".$Proizvodjac."',
+            OznakaKategorije='".$OznakaKategorije."',
             NazivFajlaSlike='".$NazivFajlaSlike."'
-        WHERE ISBN='".$StariISBN."'";
+        WHERE SifraIgre='".$StaraSifraIgre."'";
 
         $greska = $this->IzvrsiAktivanSQLUpit($SQL);
         return $greska;
     }
+
     public function DajSveKnjigeKaoModele()
-{
-    $SQL = "SELECT * FROM `".$this->NazivBazePodataka."`.`knjiga` ORDER BY Naziv ASC";
+    {
+        $SQL = "SELECT * FROM `".$this->NazivBazePodataka."`.`drustvena_igra` ORDER BY Naziv ASC";
 
-    $this->UcitajSvePoUpitu($SQL);
+        $this->UcitajSvePoUpitu($SQL);
 
-    $knjige = array();
+        $knjige = array();
 
-    for ($i = 0; $i < $this->BrojZapisa; $i++) {
-        $red = array(
-            "ISBN" => $this->DajVrednostPoRednomBrojuZapisaPoRBPolja($this->Kolekcija, $i, 0),
-            "Naziv" => $this->DajVrednostPoRednomBrojuZapisaPoRBPolja($this->Kolekcija, $i, 1),
-            "Autor" => $this->DajVrednostPoRednomBrojuZapisaPoRBPolja($this->Kolekcija, $i, 2),
-            "OznakaZanra" => $this->DajVrednostPoRednomBrojuZapisaPoRBPolja($this->Kolekcija, $i, 3),
-            "NazivFajlaSlike" => $this->DajVrednostPoRednomBrojuZapisaPoRBPolja($this->Kolekcija, $i, 4)
-        );
+        for ($i = 0; $i < $this->BrojZapisa; $i++) {
+            $red = array(
+                "SifraIgre" => $this->DajVrednostPoRednomBrojuZapisaPoRBPolja($this->Kolekcija, $i, 0),
+                "Naziv" => $this->DajVrednostPoRednomBrojuZapisaPoRBPolja($this->Kolekcija, $i, 1),
+                "Proizvodjac" => $this->DajVrednostPoRednomBrojuZapisaPoRBPolja($this->Kolekcija, $i, 2),
+                "OznakaKategorije" => $this->DajVrednostPoRednomBrojuZapisaPoRBPolja($this->Kolekcija, $i, 3),
+                "NazivFajlaSlike" => $this->DajVrednostPoRednomBrojuZapisaPoRBPolja($this->Kolekcija, $i, 4)
+            );
 
-        $knjige[] = KnjigaEntitet::IzRedaBaze($red);
+            $knjige[] = KnjigaEntitet::IzRedaBaze($red);
+        }
+
+        return $knjige;
     }
-
-    return $knjige;
-}
 }
 ?>

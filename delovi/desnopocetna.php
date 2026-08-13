@@ -9,10 +9,10 @@
 <td>
 <br/> 
 <font face="Trebuchet MS" color="darkblue" size="4px">
-<b>СПИСАК КЊИГА</b><br/><br/>
+<b>СПИСАК ДРУШТВЕНИХ ИГАРА</b><br/><br/>
 
 <form action="" method="GET">
-ISBN: <input type="text" name="filter" />
+Шифра / назив: <input type="text" name="filter" />
 <input type="submit" name="filtriraj" value="FILTRIRAJ" />
 <input type="submit" name="svi" value="SVI" />
 </form>
@@ -39,18 +39,18 @@ else
     echo "<table style=\"width:90%; padding:0\" align=\"center\" cellspacing=\"0\" cellpadding=\"0\" border=\"1\" bgcolor=\"#D8E7F4\">";
     echo "<tr>";
     echo "<td style=\"width:10%;\"><b><font face=\"Trebuchet MS\" color:#3F4534 size=\"2px\">&nbsp;СЛИКА&nbsp;</font></b><br/></td>";
-    echo "<td style=\"width:15%;\"><b><font face=\"Trebuchet MS\" color:#3F4534 size=\"2px\">&nbsp;ISBN&nbsp;</font></b><br/></td>";
-    echo "<td style=\"width:30%;\"><b><font face=\"Trebuchet MS\" color:#3F4534 size=\"2px\">&nbsp;НАЗИВ КЊИГЕ&nbsp;</font></b><br/></td>";
-    echo "<td style=\"width:25%;\"><b><font face=\"Trebuchet MS\" color:#3F4534 size=\"2px\">&nbsp;АУТОР&nbsp;</font></b><br/></td>";
-    echo "<td style=\"width:20%;\"><b><font face=\"Trebuchet MS\" color:#3F4534 size=\"2px\">&nbsp;ЖАНР&nbsp;</font></b><br/></td>";
+    echo "<td style=\"width:15%;\"><b><font face=\"Trebuchet MS\" color:#3F4534 size=\"2px\">&nbsp;ШИФРА&nbsp;</font></b><br/></td>";
+    echo "<td style=\"width:30%;\"><b><font face=\"Trebuchet MS\" color:#3F4534 size=\"2px\">&nbsp;НАЗИВ ИГРЕ&nbsp;</font></b><br/></td>";
+    echo "<td style=\"width:25%;\"><b><font face=\"Trebuchet MS\" color:#3F4534 size=\"2px\">&nbsp;ПРОИЗВОЂАЧ&nbsp;</font></b><br/></td>";
+    echo "<td style=\"width:20%;\"><b><font face=\"Trebuchet MS\" color:#3F4534 size=\"2px\">&nbsp;КАТЕГОРИЈА&nbsp;</font></b><br/></td>";
     echo "</tr>";
 
     for ($RBZapisa = 0; $RBZapisa < $KnjigaViewObject->BrojZapisa; $RBZapisa++) 
     {
-        $ISBN = $KnjigaViewObject->DajVrednostPoRednomBrojuZapisaPoRBPolja($KnjigaViewObject->Kolekcija, $RBZapisa, 0);
+        $SifraIgre = $KnjigaViewObject->DajVrednostPoRednomBrojuZapisaPoRBPolja($KnjigaViewObject->Kolekcija, $RBZapisa, 0);
         $Naziv = $KnjigaViewObject->DajVrednostPoRednomBrojuZapisaPoRBPolja($KnjigaViewObject->Kolekcija, $RBZapisa, 1);
-        $Autor = $KnjigaViewObject->DajVrednostPoRednomBrojuZapisaPoRBPolja($KnjigaViewObject->Kolekcija, $RBZapisa, 2);
-        $NazivZanra = $KnjigaViewObject->DajVrednostPoRednomBrojuZapisaPoRBPolja($KnjigaViewObject->Kolekcija, $RBZapisa, 3);
+        $Proizvodjac = $KnjigaViewObject->DajVrednostPoRednomBrojuZapisaPoRBPolja($KnjigaViewObject->Kolekcija, $RBZapisa, 2);
+        $NazivKategorije = $KnjigaViewObject->DajVrednostPoRednomBrojuZapisaPoRBPolja($KnjigaViewObject->Kolekcija, $RBZapisa, 3);
         $NazivFajlaSlike = $KnjigaViewObject->DajVrednostPoRednomBrojuZapisaPoRBPolja($KnjigaViewObject->Kolekcija, $RBZapisa, 4);
 
         echo "<tr>";
@@ -66,10 +66,10 @@ else
         }
 
         echo "</td>";
-        echo "<td><font face=\"Trebuchet MS\" color:#3F4534 size=\"2px\">$ISBN</font><br/></td>";
+        echo "<td><font face=\"Trebuchet MS\" color:#3F4534 size=\"2px\">$SifraIgre</font><br/></td>";
         echo "<td><font face=\"Trebuchet MS\" color:#3F4534 size=\"2px\">$Naziv</font><br/></td>";
-        echo "<td><font face=\"Trebuchet MS\" color:#3F4534 size=\"2px\">$Autor</font><br/></td>";
-        echo "<td><font face=\"Trebuchet MS\" color:#3F4534 size=\"2px\">$NazivZanra</font><br/></td>";
+        echo "<td><font face=\"Trebuchet MS\" color:#3F4534 size=\"2px\">$Proizvodjac</font><br/></td>";
+        echo "<td><font face=\"Trebuchet MS\" color:#3F4534 size=\"2px\">$NazivKategorije</font><br/></td>";
         echo "</tr>";
     }
 
@@ -81,6 +81,7 @@ else
     echo "</table>";
     echo "<br/><br/>";
 }
+
 ?>
 
 </font>
@@ -89,3 +90,5 @@ else
 <td style="width:5%;"></td>
 </tr>
 </table>
+
+<img src="images/sredinadole.jpg" width="100%" height="5" alt="" class="flt1" />

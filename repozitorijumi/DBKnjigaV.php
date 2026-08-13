@@ -5,13 +5,14 @@ class DBKnjigaV extends Tabela
     {
         if (isset($filterParametar) && $filterParametar != "")
         {
-            $upit = "SELECT * FROM `".$this->NazivBazePodataka."`.`svipodacioknjigamasaslikom`
-                     WHERE `ISBN` LIKE '%".$filterParametar."%'
-                     OR `Naziv` LIKE '%".$filterParametar."%'";
+            $upit = "SELECT * FROM `".$this->NazivBazePodataka."`.`svipodacioidrutvenimigramasaslikom`
+                     WHERE `SifraIgre` LIKE '%".$filterParametar."%'
+                     OR `Naziv` LIKE '%".$filterParametar."%'
+                     OR `Proizvodjac` LIKE '%".$filterParametar."%'";
         }
         else
         {
-            $upit = "SELECT * FROM `".$this->NazivBazePodataka."`.`svipodacioknjigamasaslikom`";
+            $upit = "SELECT * FROM `".$this->NazivBazePodataka."`.`svipodacioidrutvenimigramasaslikom`";
         }
 
         $this->UcitajSvePoUpitu($upit);
