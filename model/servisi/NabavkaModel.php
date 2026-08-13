@@ -64,6 +64,23 @@ class NabavkaModel
         return mysqli_fetch_assoc($rezultat);
     }
 
+    public function DajNabavkuPoBrojuNaloga($brojNaloga)
+    {
+        $brojNalogaEsc = mysqli_real_escape_string($this->konekcija, $brojNaloga);
+
+        $upit = "SELECT * FROM `".$this->baza."`.`nabavka`
+                 WHERE BrojNaloga = '".$brojNalogaEsc."'
+                 LIMIT 1";
+
+        $rezultat = mysqli_query($this->konekcija, $upit);
+
+        if (!$rezultat || mysqli_num_rows($rezultat) == 0) {
+            return null;
+        }
+
+        return mysqli_fetch_assoc($rezultat);
+    }
+
     public function DajStavkeNabavke($IDNabavke)
     {
         $IDNabavke = mysqli_real_escape_string($this->konekcija, $IDNabavke);

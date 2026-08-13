@@ -109,11 +109,27 @@
 <td style="align:center">
 <a href="ruter.php?stranica=nabavke">
 <font face="Trebuchet MS" color="black" size="2px">
-&nbsp;Налozi za nabavku
+&nbsp;Nalozi za nabavku
 </font>
 </a>
 </td>
 <td></td>
+<td style="width:1px;"></td>
+</tr>
+
+<tr>
+<td style="width:1px;"></td>
+<td>
+<a href="Ruter.php?stranica=stampaNabavke"><font face="Trebuchet MS" color="black" size="2px">&nbsp;Štampa naloga</font></a>
+</td>
+<td style="width:1px;"></td>
+</tr>
+
+<tr>
+<td style="width:1px;"></td>
+<td>
+<a href="Ruter.php?stranica=parametarskaStampaNabavke"><font face="Trebuchet MS" color="black" size="2px">&nbsp;Parametarska štampa naloga</font></a>
+</td>
 <td style="width:1px;"></td>
 </tr>
 

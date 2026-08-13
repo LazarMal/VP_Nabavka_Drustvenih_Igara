@@ -261,6 +261,54 @@ switch ($stranica) {
         require 'kontroler/akcije/nabavkaObrisi.php';
         break;
 
+    case 'stampaNabavke':
+        proveriSesiju();
+
+        require_once 'kontroler/stranice/NabavkeController.php';
+
+        $NabavkeController = new NabavkeController();
+
+        $filterBrojNaloga = "";
+        $filterDatumNabavke = "";
+        $filterDobavljac = "";
+        $filtrirano = false;
+
+        if (isset($_GET['filtriraj']) && !isset($_GET['svi'])) {
+            $filtrirano = true;
+            $filterBrojNaloga = isset($_GET['filterBrojNaloga']) ? trim($_GET['filterBrojNaloga']) : "";
+            $filterDatumNabavke = isset($_GET['filterDatumNabavke']) ? trim($_GET['filterDatumNabavke']) : "";
+            $filterDobavljac = isset($_GET['filterDobavljac']) ? trim($_GET['filterDobavljac']) : "";
+            $rezultatNabavke = $NabavkeController->DajNabavkePoFilteru($filterBrojNaloga, $filterDatumNabavke, $filterDobavljac);
+        } else {
+            $rezultatNabavke = $NabavkeController->DajSveNabavke();
+        }
+
+        include 'pogledi/NabavkeStampa.php';
+
+        $NabavkeController->ZatvoriKonekciju();
+        break;
+
+    case 'parametarskaStampaNabavke':
+        proveriSesiju();
+        include 'pogledi/NabavkaParametarskaStampa.php';
+        break;
+
+    case 'stampaJednogNaloga':
+        proveriSesiju();
+
+        $BrojNalogaFilter = isset($_POST['BrojNalogaFilter']) ? trim($_POST['BrojNalogaFilter']) : null;
+
+        require_once 'kontroler/stranice/NabavkeController.php';
+
+        $NabavkeController = new NabavkeController();
+        $nabavka = ($BrojNalogaFilter != null && $BrojNalogaFilter != "") ? $NabavkeController->DajNabavkuPoBrojuNaloga($BrojNalogaFilter) : null;
+        $rezultatStavke = ($nabavka != null) ? $NabavkeController->DajStavkeNabavke($nabavka['IDNabavke']) : null;
+
+        include 'pogledi/StampaPodatakaONalogu.php';
+
+        $NabavkeController->ZatvoriKonekciju();
+        break;
+
     case 'nabavkaIzmeniForm':
         proveriSesiju();
 

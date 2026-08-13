@@ -23,6 +23,22 @@
 <input type="submit" name="filtriraj" value="FILTRIRAJ" />
 <input type="submit" name="svi" value="SVI" />
 </form>
+<br/>
+<a href="Ruter.php?stranica=stampaNabavke"><input type="button" value="ŠTAMPA SVIH NALOGA" /></a>
+&nbsp;&nbsp;
+<?php
+$stampUrl = "Ruter.php?stranica=stampaNabavke&filtriraj=1";
+if ($filterBrojNaloga != "") {
+    $stampUrl .= "&filterBrojNaloga=" . urlencode($filterBrojNaloga);
+}
+if ($filterDatumNabavke != "") {
+    $stampUrl .= "&filterDatumNabavke=" . urlencode($filterDatumNabavke);
+}
+if ($filterDobavljac != "") {
+    $stampUrl .= "&filterDobavljac=" . urlencode($filterDobavljac);
+}
+?>
+<a href="<?php echo htmlspecialchars($stampUrl); ?>"><input type="button" value="ŠTAMPA FILTRIRANIH NALOGA" /></a>
 </font>
 </td>
 

@@ -39,6 +39,11 @@ class NabavkeController
         return $this->NabavkaModel->DajNabavkuPoID($IDNabavke);
     }
 
+    public function DajNabavkuPoBrojuNaloga($brojNaloga)
+    {
+        return $this->NabavkaModel->DajNabavkuPoBrojuNaloga($brojNaloga);
+    }
+
     public function DajStavkeNabavke($IDNabavke)
     {
         return $this->NabavkaModel->DajStavkeNabavke($IDNabavke);
