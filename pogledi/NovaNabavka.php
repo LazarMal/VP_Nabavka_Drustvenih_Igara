@@ -2,11 +2,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="sr-RS" xml:lang="sr-RS">
 <head>
 <meta charset="UTF-8">
-<title>Нова набавка</title>
+<title>Нови nalog za nabavku društvenih igara</title>
 <?php include 'css/stil.php';?>
 </head>
 
 <body>
+
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+$nalogEvidentirao = isset($_SESSION["korisnik"]) ? $_SESSION["korisnik"] : "";
+?>
 
 <table class="no-spacing" style="width:100%; padding:0; border-spacing:0;" align="center" cellspacing="0" cellpadding="0" border="0">
 
@@ -43,7 +50,7 @@
 <tr>
 <td style="width:3%;"></td>
 <td align="left">
-<b><font face="Trebuchet MS" color="black" size="3px">НОВА НАБАВКА КЊИГА</font></b><br/><br/>
+<b><font face="Trebuchet MS" color="black" size="3px">НОВИ НАЛОГ ЗА НАБАВКУ ДРУШТВЕНИХ ИГАРА</font></b><br/><br/>
 </td>
 <td style="width:3%;"></td>
 </tr>
@@ -62,29 +69,33 @@
 </tr>
 
 <tr>
-<td align="right"><b>Датум набавке&nbsp;&nbsp;</b></td>
+<td align="right"><b>Броj naloga&nbsp;&nbsp;</b></td>
+<td align="left"><input type="text" name="brojNaloga" id="brojNaloga" maxlength="50" required placeholder="Унесите броj naloga"></td>
+</tr>
+
+<tr>
+<td align="right"><b>Датум nabavke&nbsp;&nbsp;</b></td>
 <td align="left"><input type="date" name="datumNabavke" id="datumNabavke" required></td>
 </tr>
 
 <tr>
 <td align="right"><b>Добављач&nbsp;&nbsp;</b></td>
 <td align="left">
-<select name="dobavljac" id="dobavljac" required>
-    <option value="">изаберите добављача...</option>
-    <option value="Laguna">Laguna</option>
-    <option value="Delfi knjižare">Delfi knjižare</option>
-    <option value="Vulkan izdavaštvo">Vulkan izdavaštvo</option>
-    <option value="Klett">Klett</option>
-    <option value="Zavod za udžbenike">Zavod za udžbenike</option>
-    <option value="Službeni glasnik">Službeni glasnik</option>
-</select>
+<input type="text" name="dobavljac" id="dobavljac" maxlength="100" required placeholder="Унесите добављача">
 </td>
 </tr>
 
 <tr>
 <td align="right"><b>Напомена&nbsp;&nbsp;</b></td>
 <td align="left">
-<input type="text" name="napomena" size="50" maxlength="255" value="Redovna nabavka knjiga">
+<input type="text" name="napomena" id="napomena" size="50" maxlength="255" value="">
+</td>
+</tr>
+
+<tr>
+<td align="right"><b>Налог evidentirao&nbsp;&nbsp;</b></td>
+<td align="left">
+<input type="text" value="<?php echo htmlspecialchars($nalogEvidentirao); ?>" readonly style="background-color:#EEEEEE;">
 </td>
 </tr>
 </table>
@@ -95,31 +106,31 @@
 
 <tr>
 <td colspan="5" align="left">
-<b>СТАВКЕ НАБАВКЕ</b>
+<b>СТАВКЕ НАЛОГА</b>
 </td>
 </tr>
 
 <tr>
-<td><b>Књига</b></td>
+<td><b>Друштvena igra</b></td>
 <td><b>Количина</b></td>
-<td><b>Цена</b></td>
+<td><b>Цena</b></td>
 <td><b>Укупно</b></td>
 <td><b>Акција</b></td>
 </tr>
 
 <tr class="stavkaRed">
 <td>
-<select name="isbn[]" class="knjigaSelect" required style="width:280px;">
+<select name="sifraIgre[]" class="igraSelect" required style="width:280px;">
 <?php echo $optionsKnjige; ?>
 </select>
 </td>
 
 <td>
-<input type="number" name="kolicina[]" class="kolicinaInput" min="1" required style="width:90px;">
+<input type="number" name="kolicina[]" class="kolicinaInput" min="1" step="1" required style="width:90px;">
 </td>
 
 <td>
-<input type="number" name="cena[]" class="cenaInput" min="1" step="0.01" required style="width:90px;">
+<input type="number" name="cena[]" class="cenaInput" min="0.01" step="0.01" required style="width:90px;">
 </td>
 
 <td>
@@ -140,7 +151,7 @@
 <td align="center">
 <button type="button" onclick="dodajStavku()">ДОДАЈ ЈОШ ЈЕДНУ СТАВКУ</button>
 <br/><br/>
-<input type="submit" value="САЧУВАЈ НАБАВКУ">
+<input type="submit" value="САЧУВАЈ НАЛОГ">
 </td>
 </tr>
 </table>
@@ -188,18 +199,20 @@
 </table>
 
 <script>
-let optionsKnjige = `<?php echo str_replace("`", "\`", $optionsKnjige); ?>`;
+let optionsIgre = `<?php echo str_replace("`", "\`", $optionsKnjige); ?>`;
 
 function postaviDogadjajeZaRed(red) {
-    let knjigaSelect = red.querySelector(".knjigaSelect");
+    let igraSelect = red.querySelector(".igraSelect");
     let kolicinaInput = red.querySelector(".kolicinaInput");
     let cenaInput = red.querySelector(".cenaInput");
 
-    knjigaSelect.addEventListener("change", function() {
+    igraSelect.addEventListener("change", function() {
         let selectedOption = this.options[this.selectedIndex];
         let cena = selectedOption.getAttribute("data-cena");
 
-        cenaInput.value = cena;
+        if (cena !== null && cena !== "") {
+            cenaInput.value = cena;
+        }
         izracunajUkupno(red);
     });
 
@@ -232,15 +245,15 @@ function dodajStavku() {
 
     noviRed.innerHTML = `
         <td>
-            <select name="isbn[]" class="knjigaSelect" required style="width:280px;">
-                ${optionsKnjige}
+            <select name="sifraIgre[]" class="igraSelect" required style="width:280px;">
+                ${optionsIgre}
             </select>
         </td>
         <td>
-            <input type="number" name="kolicina[]" class="kolicinaInput" min="1" required style="width:90px;">
+            <input type="number" name="kolicina[]" class="kolicinaInput" min="1" step="1" required style="width:90px;">
         </td>
         <td>
-            <input type="number" name="cena[]" class="cenaInput" min="1" step="0.01" required style="width:90px;">
+            <input type="number" name="cena[]" class="cenaInput" min="0.01" step="0.01" required style="width:90px;">
         </td>
         <td>
             <input type="text" class="ukupnoInput" readonly style="width:90px;">
@@ -258,7 +271,7 @@ function obrisiStavku(dugme) {
     let redovi = document.querySelectorAll(".stavkaRed");
 
     if (redovi.length <= 1) {
-        alert("Набавка мора имати бар једну ставку.");
+        alert("Нalog мора имати бар једну ставку.");
         return;
     }
 
@@ -266,27 +279,28 @@ function obrisiStavku(dugme) {
 }
 
 function proveriNabavku() {
+    let brojNaloga = document.getElementById("brojNaloga").value.trim();
     let datum = document.getElementById("datumNabavke").value;
-    let dobavljac = document.getElementById("dobavljac").value;
+    let dobavljac = document.getElementById("dobavljac").value.trim();
     let redovi = document.querySelectorAll(".stavkaRed");
 
-    if (datum == "" || dobavljac == "") {
-        alert("Морате попунити податке о набавци.");
+    if (brojNaloga == "" || datum == "" || dobavljac == "") {
+        alert("Морате попунити сва обавезна поља o nalogu.");
         return false;
     }
 
     if (redovi.length == 0) {
-        alert("Набавка мора имати бар једну ставку.");
+        alert("Нalog мора имати бар једну ставку.");
         return false;
     }
 
     for (let i = 0; i < redovi.length; i++) {
-        let knjiga = redovi[i].querySelector(".knjigaSelect").value;
-        let kolicina = redovi[i].querySelector(".kolicinaInput").value;
-        let cena = redovi[i].querySelector(".cenaInput").value;
+        let igra = redovi[i].querySelector(".igraSelect").value;
+        let kolicina = parseFloat(redovi[i].querySelector(".kolicinaInput").value);
+        let cena = parseFloat(redovi[i].querySelector(".cenaInput").value);
 
-        if (knjiga == "" || kolicina <= 0 || cena <= 0) {
-            alert("Морате исправно попунити све ставке набавке.");
+        if (igra == "" || isNaN(kolicina) || kolicina <= 0 || isNaN(cena) || cena <= 0) {
+            alert("Морате исправно попунити све ставке naloga.");
             return false;
         }
     }

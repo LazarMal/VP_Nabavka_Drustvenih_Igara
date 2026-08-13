@@ -23,16 +23,16 @@ class NabavkaModel
 
         $upit = "
         SELECT 
-            stavka_nabavke.ISBN,
-            knjiga.Naziv,
-            SUM(stavka_nabavke.Kolicina) AS Kolicina,
-            stavka_nabavke.Cena,
-            SUM(stavka_nabavke.Kolicina * stavka_nabavke.Cena) AS Ukupno
+            stavka_nabavke.SifraIgre AS SifraIgre,
+            drustvena_igra.Naziv AS Naziv,
+            stavka_nabavke.Kolicina AS Kolicina,
+            stavka_nabavke.Cena AS Cena,
+            (stavka_nabavke.Kolicina * stavka_nabavke.Cena) AS Ukupno
         FROM `".$this->baza."`.`stavka_nabavke`
-        INNER JOIN `".$this->baza."`.`knjiga`
-        ON stavka_nabavke.ISBN = knjiga.ISBN
+        INNER JOIN `".$this->baza."`.`drustvena_igra`
+        ON stavka_nabavke.SifraIgre = drustvena_igra.SifraIgre
         WHERE stavka_nabavke.IDNabavke = '".$IDNabavke."'
-        GROUP BY stavka_nabavke.ISBN, knjiga.Naziv, stavka_nabavke.Cena";
+        ORDER BY stavka_nabavke.IDStavke ASC";
 
         return mysqli_query($this->konekcija, $upit);
     }

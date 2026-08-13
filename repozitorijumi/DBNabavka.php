@@ -5,29 +5,24 @@ require_once __DIR__ . "/DBStavkaNabavke.php";
 
 class DBNabavka extends Tabela
 {
-    public function PronadjiNabavku($DatumNabavke, $Dobavljac)
+    public function PostojiBrojNaloga($BrojNaloga)
     {
         $SQL = "SELECT IDNabavke 
                 FROM `nabavka`
-                WHERE DatumNabavke = '".$DatumNabavke."'
-                AND Dobavljac = '".$Dobavljac."'
+                WHERE BrojNaloga = '".$BrojNaloga."'
                 LIMIT 1";
 
         $this->UcitajSvePoUpitu($SQL);
 
-        if ($this->BrojZapisa > 0) {
-            return $this->DajVrednostPoRednomBrojuZapisaPoRBPolja($this->Kolekcija, 0, 0);
-        }
-
-        return null;
+        return $this->BrojZapisa > 0;
     }
 
-    public function DodajNabavku($DatumNabavke, $Dobavljac, $Napomena)
+    public function DodajNabavku($BrojNaloga, $DatumNabavke, $Dobavljac, $Napomena, $NalogEvidentirao)
     {
         $SQL = "INSERT INTO `nabavka`
-                (DatumNabavke, Dobavljac, Napomena)
+                (BrojNaloga, DatumNabavke, Dobavljac, Napomena, NalogEvidentirao)
                 VALUES
-                ('".$DatumNabavke."', '".$Dobavljac."', '".$Napomena."')";
+                ('".$BrojNaloga."', '".$DatumNabavke."', '".$Dobavljac."', '".$Napomena."', '".$NalogEvidentirao."')";
 
         return $this->IzvrsiAktivanSQLUpit($SQL);
     }
@@ -43,7 +38,7 @@ class DBNabavka extends Tabela
 
     public function DajNabavkuKaoModel($IDNabavke)
     {
-        $SQL = "SELECT IDNabavke, DatumNabavke, Dobavljac, Napomena
+        $SQL = "SELECT IDNabavke, BrojNaloga, DatumNabavke, Dobavljac, Napomena, NalogEvidentirao
                 FROM `nabavka`
                 WHERE IDNabavke = '".$IDNabavke."'";
 
@@ -55,14 +50,16 @@ class DBNabavka extends Tabela
 
         $red = array(
             "IDNabavke" => $this->DajVrednostPoRednomBrojuZapisaPoRBPolja($this->Kolekcija, 0, 0),
-            "DatumNabavke" => $this->DajVrednostPoRednomBrojuZapisaPoRBPolja($this->Kolekcija, 0, 1),
-            "Dobavljac" => $this->DajVrednostPoRednomBrojuZapisaPoRBPolja($this->Kolekcija, 0, 2),
-            "Napomena" => $this->DajVrednostPoRednomBrojuZapisaPoRBPolja($this->Kolekcija, 0, 3)
+            "BrojNaloga" => $this->DajVrednostPoRednomBrojuZapisaPoRBPolja($this->Kolekcija, 0, 1),
+            "DatumNabavke" => $this->DajVrednostPoRednomBrojuZapisaPoRBPolja($this->Kolekcija, 0, 2),
+            "Dobavljac" => $this->DajVrednostPoRednomBrojuZapisaPoRBPolja($this->Kolekcija, 0, 3),
+            "Napomena" => $this->DajVrednostPoRednomBrojuZapisaPoRBPolja($this->Kolekcija, 0, 4),
+            "NalogEvidentirao" => $this->DajVrednostPoRednomBrojuZapisaPoRBPolja($this->Kolekcija, 0, 5)
         );
 
         $nabavka = NabavkaEntitet::IzRedaBaze($red);
 
-        $StavkaRepo = new DBStavkaNabavke($this->KonekcijaObject, "stavka_nabavke");
+        $StavkaRepo = new DBStavkaNabavke($this->OtvorenaKonekcija, "stavka_nabavke");
         $stavke = $StavkaRepo->DajStavkeKaoModele($IDNabavke);
 
         foreach ($stavke as $stavka) {

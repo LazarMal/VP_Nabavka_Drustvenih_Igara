@@ -36,8 +36,10 @@ if (mysqli_num_rows($rezultatNabavke) == 0) {
         echo "<td colspan=\"5\">";
         echo "<font face=\"Trebuchet MS\" color=\"black\" size=\"3px\">";
         echo "<b>Набавка број: ".$nabavka['IDNabavke']."</b><br/>";
+        echo "Број naloga: ".$nabavka['BrojNaloga']."<br/>";
         echo "Датум: ".$nabavka['DatumNabavke']."<br/>";
         echo "Добављач: ".$nabavka['Dobavljac']."<br/>";
+        echo "Evidentirao: ".$nabavka['NalogEvidentirao']."<br/>";
         echo "Напомена: ".$nabavka['Napomena'];
         echo "</font>";
         echo "</td>";
@@ -58,7 +60,7 @@ if (mysqli_num_rows($rezultatNabavke) == 0) {
             $ukupnoNabavka += $stavka['Ukupno'];
 
             echo "<tr>";
-            echo "<td>".$stavka['ISBN']."</td>";
+            echo "<td>".$stavka['SifraIgre']."</td>";
             echo "<td>".$stavka['Naziv']."</td>";
             echo "<td>".$stavka['Kolicina']."</td>";
             echo "<td>".$stavka['Cena']."</td>";

@@ -44,8 +44,8 @@
 | TECH-05 | Stored procedure | Profesor PDF | SP za katalog | Da (`DodajKnjigu`) | Adapt na igre | `bazapodataka/Pogledi i Stored procedure.txt`, `DBKnjigaSP.php` | CALL iz PHP | NEEDS_ADAPTATION |
 | TECH-06 | Pogledi VIEW | Profesor PDF | VIEW za katalog | Da (`svipodacioknjigama*`) | Adapt na igre | SQL, `DBKnjigaV.php` | SELECT iz VIEW | NEEDS_ADAPTATION |
 | TECH-07 | Multipage | Profesor PDF | Ruter + više stranica | Da (`Ruter.php`, `pogledi/`) | Proširiti rute za nabavku | `Ruter.php` | Više URL stranica | SATISFIED_BY_TEMPLATE |
-| TECH-08 | MD unos jedna forma | Profesor PDF | Nova nabavka forma | Da (`NovaNabavka.php`) | Polja dokumenta + igre | `pogledi/NovaNabavka.php` | Jedna forma master+detail | NEEDS_ADAPTATION |
-| TECH-09 | Transakcija pri unosu | Profesor PDF | nabavkaSnimi | Da (`BaznaTransakcija`, `nabavkaSnimi.php`) | Ukloniti merge; adapt polja | `kontroler/akcije/nabavkaSnimi.php` | Rollback test | NEEDS_ADAPTATION |
+| TECH-08 | MD unos jedna forma | Profesor PDF | Nova nabavka forma | Da (`NovaNabavka.php`) | Polja dokumenta + igre | `pogledi/NovaNabavka.php` | Jedna forma master+detail | IMPLEMENTED |
+| TECH-09 | Transakcija pri unosu | Profesor PDF | nabavkaSnimi | Da (`BaznaTransakcija`, `nabavkaSnimi.php`) | Ukloniti merge; adapt polja | `kontroler/akcije/nabavkaSnimi.php` | Rollback test | IMPLEMENTED |
 | TECH-10 | MD tabelarni prikaz | Profesor PDF | Lista naloga sa stavkama | Delimično (lista bez filter/CRUD) | Filter, izmena, brisanje | `NabavkeLista.php`, `desnoNabavkeLista.php` | Tabela master+detail | NEEDS_ADAPTATION |
 | TECH-11 | Client-side validacija | Profesor PDF | JS/HTML | Delimično (`proveriNabavku`) | Adapt pravila (1A, VAL) | `NovaNabavka.php`, forme | DevTools + prazna forma | NEEDS_ADAPTATION |
 | TECH-12 | Server-side validacija | Profesor PDF | PHP u akcijama | Delimično (pogrešan domen dobavljača) | Adapt `nabavkaSnimi.php` | `kontroler/akcije/*.php` | POST sa nevalidnim podacima | NEEDS_ADAPTATION |
@@ -65,14 +65,14 @@
 | DB-07 | igra 1:N stavka | Mapiranje | — | Da (knjiga) | Adapt FK | SQL | FK | VERIFIED |
 | DB-08 | kategorija 1:N igra | Šablon | — | Da (zanr–knjiga) | Adapt | SQL | FK | VERIFIED |
 | DB-09 | BrojNaloga | Prijava DOCX | Poslovni ID | **Nema** | ADD kolona | SQL, forme | Kolona u bazi | VERIFIED |
-| DB-10 | BrojNaloga UNIQUE | Odluka | Ne spajati naloge | **Nema**; merge u kodu | UNIQUE + ukloniti PronadjiNabavku merge | SQL, `DBNabavka.php`, `nabavkaSnimi.php` | Dva ista broja odbijena | NEEDS_ADAPTATION |
+| DB-10 | BrojNaloga UNIQUE | Odluka | Ne spajati naloge | **Nema**; merge u kodu | UNIQUE + ukloniti PronadjiNabavku merge | SQL, `DBNabavka.php`, `nabavkaSnimi.php` | Dva ista broja odbijena | IMPLEMENTED |
 | DB-11 | DatumNabavke | Prijava | — | Da | KEEP | SQL | DATE NOT NULL | SATISFIED_BY_TEMPLATE |
-| DB-12 | Dobavljac slobodan tekst | Odluka 1A | — | VARCHAR; select u UI | Text input, ukloniti listu | Forme, validacija | Unos произvoljnog teksta | NEEDS_ADAPTATION |
+| DB-12 | Dobavljac slobodan tekst | Odluka 1A | — | VARCHAR; select u UI | Text input, ukloniti listu | Forme, validacija | Unos произvoljnog teksta | IMPLEMENTED |
 | DB-13 | Napomena | Prijava | — | Da | KEEP | SQL | NULL OK | SATISFIED_BY_TEMPLATE |
 | DB-14 | NalogEvidentirao | Prijava | — | **Nema** | ADD kolona | SQL, unos iz sesije | Kolona popunjena | VERIFIED |
 | DB-15 | SifraIgre, Kolicina, Cena | Prijava | Detail polja | Da (ISBN, Kolicina, Cena) | Rename ISBN | SQL, stavke | Detail red | VERIFIED |
 | DB-16 | Ukupno izračunato | Odluka | Kolicina*Cena | JS + SQL calc | KEEP calculated | JS, prikaz, štampa | Nema kolone Ukupno u DB | SATISFIED_BY_TEMPLATE |
-| DB-17 | Rekapitulacija izračunata | Prijava | Broj stavki, suma | Delimično u listi | U prikaz, filter, štampu | Views, print | Sum matches | NEEDS_ADAPTATION |
+| DB-17 | Rekapitulacija izračunata | Prijava | Broj stavki, suma | Delimično u listi | U prikaz, filter, štampu | Views, print | Sum matches | IMPLEMENTED |
 | DB-18 | Surrogate PK | D | IDNabavke, IDStavke | Da | KEEP | SQL | AUTO_INCREMENT | SATISFIED_BY_TEMPLATE |
 | DB-19 | Mapiranje kolona šifarnika | Mapiranje | SifraIgre, Proizvodjac… | knjiga kolone | Rename u SQL i PHP | Entiteti, repozitorijumi | Imena kolona | IMPLEMENTED |
 
@@ -95,8 +95,8 @@
 | ID | Requirement | Source | Interpretation | Template status | Required adaptation | Planned location | Verification | Status |
 |----|-------------|--------|----------------|-----------------|---------------------|------------------|--------------|--------|
 | FUN-01 | Login | Profesor PDF | — | Da (`prijavaprovera.php`, sesija) | KEEP; proveriti index.php sesiju | `kontroler/akcije/prijavaprovera.php` | Login/logout | IMPLEMENTED |
-| FUN-02 | Unos MD jedna forma | Profesor PDF | Nalog | Da (`novaNabavka`) | +BrojNaloga, +evidentirao, igre | `NovaNabavka.php` | Form submit | NEEDS_ADAPTATION |
-| FUN-03 | Unos transakcija | Profesor PDF | — | Da | Fix merge (DEF-01) | `nabavkaSnimi.php` | DB rollback | NEEDS_ADAPTATION |
+| FUN-02 | Unos MD jedna forma | Profesor PDF | Nalog | Da (`novaNabavka`) | +BrojNaloga, +evidentirao, igre | `NovaNabavka.php` | Form submit | IMPLEMENTED |
+| FUN-03 | Unos transakcija | Profesor PDF | — | Da | Fix merge (DEF-01) | `nabavkaSnimi.php` | DB rollback | IMPLEMENTED |
 | FUN-04 | Izmena master | Profesor PDF | — | **Nema** | Nova ruta, forma, akcija | `Ruter.php`, nova forma, `nabavkaIzmeni.php` | UPDATE nabavka | MISSING |
 | FUN-05 | Izmena stavki | Profesor PDF | — | **Nema** | U istoj izmeni MD | `nabavkaIzmeni.php`, repo | UPDATE/DELETE/INSERT stavki | MISSING |
 | FUN-06 | Brisanje naloga | Profesor PDF | — | **Nema** | Akcija + CASCADE | `nabavkaObrisi.php`, ruta | DELETE + confirm | MISSING |
@@ -125,17 +125,17 @@
 | VAL-03 | Dužina | Profesor PDF | — | Delimično (napomena 255) | maxlength + server | Forme | Prekoračenje | NEEDS_ADAPTATION |
 | VAL-04 | Domen vrednosti | Profesor PDF | Šifra igre, količina, cena, datum | Pogrešno (lista dobavljača) | 1A + minimalni domen | Akcije | FK igra, >0 | NEEDS_ADAPTATION |
 | VAL-05 | Jedinstvenost | Profesor PDF | BrojNaloga, šifra igre | ISBN unique za knjigu | BrojNaloga UNIQUE | SQL, akcije | Duplikat odbijen | NEEDS_ADAPTATION |
-| VAL-06 | BrojNaloga | Prijava + VAL | — | **Nema polja** | ADD validacija | Forme, PHP | Required + unique | MISSING |
+| VAL-06 | BrojNaloga | Prijava + VAL | — | **Nema polja** | ADD validacija | Forme, PHP | Required + unique | IMPLEMENTED |
 | VAL-07 | DatumNabavke | Prijava | — | Da | KEEP | `nabavkaSnimi.php` | Invalid date | SATISFIED_BY_TEMPLATE |
-| VAL-08 | Dobavljac tekst | Odluka 1A | — | Select lista | Text + length | Forme | Slobodan unos | NEEDS_ADAPTATION |
+| VAL-08 | Dobavljac tekst | Odluka 1A | — | Select lista | Text + length | Forme | Slobodan unos | IMPLEMENTED |
 | VAL-09 | Napomena dužina | Prijava | — | Da (255) | KEEP | PHP | >255 odbijeno | SATISFIED_BY_TEMPLATE |
-| VAL-10 | DrustvenaIgra FK | Prijava | — | ISBN validacija | FK postoji u katalogu | PHP | Nepostojeća igra | NEEDS_ADAPTATION |
-| VAL-11 | Kolicina > 0 int | Odluka | — | Ima + gornja 100 | Ukloniti gornju granicu | PHP, JS | 0 odbijeno; -1 odbijeno | NEEDS_ADAPTATION |
-| VAL-12 | Cena > 0 decimal | Odluka | — | Ima + gornja 100000 | Ukloniti gornju granicu | PHP, JS | 0 odbijeno | NEEDS_ADAPTATION |
+| VAL-10 | DrustvenaIgra FK | Prijava | — | ISBN validacija | FK postoji u katalogu | PHP | Nepostojeća igra | IMPLEMENTED |
+| VAL-11 | Kolicina > 0 int | Odluka | — | Ima + gornja 100 | Ukloniti gornju granicu | PHP, JS | 0 odbijeno; -1 odbijeno | IMPLEMENTED |
+| VAL-12 | Cena > 0 decimal | Odluka | — | Ima + gornja 100000 | Ukloniti gornju granicu | PHP, JS | 0 odbijeno | IMPLEMENTED |
 | VAL-13 | Min 1 stavka | Profesor PDF | — | Da | KEEP | JS + PHP | 0 stavki odbijeno | SATISFIED_BY_TEMPLATE |
-| VAL-14 | NalogEvidentirao | Prijava | Iz sesije | **Nema** | Auto iz $_SESSION | `nabavkaSnimi.php` | Polje popunjeno | MISSING |
-| VAL-15 | Bez proizvoljnih limita | Odluka | — | Šablon ima limite | Ukloniti 100/100000 | Akcije | Nema gornjeg limita | NEEDS_ADAPTATION |
-| VAL-16 | Bez zabrane duplikata igre | Odluka | — | Šablon zabranjuje | **Ukloniti** proveru duplikata | `nabavkaSnimi.php` | Ista igra 2x dozvoljena | NEEDS_ADAPTATION |
+| VAL-14 | NalogEvidentirao | Prijava | Iz sesije | **Nema** | Auto iz $_SESSION | `nabavkaSnimi.php` | Polje popunjeno | IMPLEMENTED |
+| VAL-15 | Bez proizvoljnih limita | Odluka | — | Šablon ima limite | Ukloniti 100/100000 | Akcije | Nema gornjeg limita | IMPLEMENTED |
+| VAL-16 | Bez zabrane duplikata igre | Odluka | — | Šablon zabranjuje | **Ukloniti** proveru duplikata | `nabavkaSnimi.php` | Ista igra 2x dozvoljena | IMPLEMENTED |
 
 ---
 
@@ -220,14 +220,14 @@
 
 | ID | Opis | Status | Required adaptation |
 |----|------|--------|---------------------|
-| DEF-01 | Merge po Datum+Dobavljac | NEEDS_ADAPTATION | Ukloniti PronadjiNabavku merge |
+| DEF-01 | Merge po Datum+Dobavljac | IMPLEMENTED | Ukloniti PronadjiNabavku merge |
 | DEF-02 | Parametarska = knjiga | MISSING funkcionalnost | Nova štampa naloga |
 | DEF-03 | Nepun CRUD nabavka | MISSING | FUN-04–09 |
 | DEF-04 | Nedostaju polja | VERIFIED | DB-09, DB-14 (SQL kolone) |
 | DEF-05 | GROUP BY stavke | NEEDS_ADAPTATION | Pojedinačni redovi stavki |
-| DEF-06 | Zatvoreni dobavljači | NEEDS_ADAPTATION | 1A text |
-| DEF-07 | Zabrana duplikata | NEEDS_ADAPTATION | Ukloniti (VAL-16) |
-| DEF-08 | Gornji limiti | NEEDS_ADAPTATION | Ukloniti (VAL-15) |
+| DEF-06 | Zatvoreni dobavljači | IMPLEMENTED | 1A text |
+| DEF-07 | Zabrana duplikata | IMPLEMENTED | Ukloniti (VAL-16) |
+| DEF-08 | Gornji limiti | IMPLEMENTED | Ukloniti (VAL-15) |
 | DEF-09 | Dead route brisanja | IMPLEMENTED | Ruta `obrisiKnjigu` u `Ruter.php` |
 | DEF-10 | index.php session_destroy | IMPLEMENTED | Uklonjeno sa landing; odjava preko `Ruter.php?stranica=odjava` |
 
@@ -239,8 +239,9 @@
 |--------|------|
 | VERIFIED | 18 |
 | SATISFIED_BY_TEMPLATE | 15 |
-| NEEDS_ADAPTATION | 50 |
-| MISSING | 20 |
+| IMPLEMENTED | 32 |
+| NEEDS_ADAPTATION | 27 |
+| MISSING | 17 |
 | BLOCKED | 0 |
 
 **Napomena:** Brojevi uključuju FUN-KAT, VAL, PRINT, TOP, TECH-SP/VIEW, MVC, REST, DEF kao zasebne stavke u matrici. DOC (15) svi MISSING.
