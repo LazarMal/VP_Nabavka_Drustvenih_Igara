@@ -33,6 +33,7 @@ if ($reklamacija == null) {
     echo "<tr><td><b>Dobavljač</b></td><td>".htmlspecialchars($reklamacija['Dobavljac'])."</td></tr>";
     echo "<tr><td><b>Napomena</b></td><td>".htmlspecialchars($reklamacija['Napomena'])."</td></tr>";
     echo "<tr><td><b>Reklamaciju evidentirao</b></td><td>".htmlspecialchars($reklamacija['ReklamacijuEvidentirao'])."</td></tr>";
+    echo "<tr><td><b>Datum evidentiranja</b></td><td>".htmlspecialchars(isset($reklamacija['DatumEvidentiranja']) ? $reklamacija['DatumEvidentiranja'] : '')."</td></tr>";
     echo "</table>";
 
     echo "<table style=\"width:95%; padding:0; margin-bottom:15px;\" align=\"center\" cellspacing=\"0\" cellpadding=\"5\" border=\"1\" bgcolor=\"#FFFFFF\">";

@@ -22,7 +22,7 @@
 | 5 tabela: korisnik, kategorija_igre, drustvena_igra, reklamacija, stavka_reklamacije | ✅ |
 | FK relacije celina–deo–šifarnik | ✅ |
 | UNIQUE BrojReklamacije | ✅ |
-| Kolone BrojReklamacije, ReklamacijuEvidentirao, RazlogReklamacije | ✅ |
+| Kolone BrojReklamacije, ReklamacijuEvidentirao, RazlogReklamacije, DatumEvidentiranja, Napomena NOT NULL | ✅ |
 | Baza: reklamacije_drustvenih_igara_vp_2026 | ✅ |
 
 ---
@@ -42,7 +42,7 @@
 | Stavka | Status |
 |--------|--------|
 | CRUD društvenih igara | ✅ |
-| CRUD kategorija igara | ✅ |
+| Kategorija igara — šifarnik za izbor (bez posebnog CRUD-a) | ✅ |
 | Unos igre preko stored procedure | ✅ |
 | Pregled kataloga preko VIEW-ova | ✅ |
 | Upload slike igre | ✅ |
@@ -56,6 +56,7 @@
 | Forma master + stavke na jednoj stranici | ✅ |
 | Transakcioni unos (reklamacija + stavke) | ✅ |
 | RazlogReklamacije na stavkama | ✅ |
+| Napomena obavezna; Datum evidentiranja readonly na formi | ✅ |
 | Validacije unosa | ✅ |
 
 ---
@@ -75,6 +76,7 @@
 | Stavka | Status |
 |--------|--------|
 | Pojedinačni prikaz zapisnika | ✅ |
+| Datum evidentiranja i Reklamaciju evidentirao | ✅ |
 | Sve stavke sa Razlog reklamacije | ✅ |
 | Rekapitulacija | ✅ |
 
@@ -84,7 +86,7 @@
 
 | Stavka | Status |
 |--------|--------|
-| Izmena master podataka | ✅ |
+| Izmena master podataka (DatumEvidentiranja se ne menja) | ✅ |
 | Izmena postojećih stavki | ✅ |
 | Dodavanje novih stavki | ✅ |
 | Brisanje uklonjenih stavki | ✅ |
@@ -115,8 +117,8 @@
 | Stavka | Status |
 |--------|--------|
 | Parametarska štampa jednog zapisnika | ✅ |
-| Layout po prijavljenom dokumentu | ✅ |
-| PODACI O REKLAMACIJI, STAVKE, REKAPITULACIJA | ✅ |
+| Layout po prijavljenom dokumentu (01/02/03, evidentirao, datum evidentiranja) | ✅ |
+| Bez „Odgovorno lice“ i generičkog datuma štampe | ✅ |
 
 ---
 
@@ -125,9 +127,9 @@
 | Stavka | Status |
 |--------|--------|
 | Client-side validacije (HTML/JS) | ✅ |
-| Server-side validacije (PHP) | ✅ |
+| Server-side validacije (PHP) — reklamacije i katalog igara | ✅ |
 | Jedinstvenost BrojReklamacije i SifraIgre | ✅ |
-| RazlogReklamacije validacija | ✅ |
+| RazlogReklamacije, Napomena, DatumEvidentiranja validacija | ✅ |
 
 ---
 
@@ -165,6 +167,7 @@
 | Stavka | Status |
 |--------|--------|
 | Login → katalog → unos → lista → detalj → izmena → brisanje → štampa | ✅ |
+| Runtime: prazna Napomena odbijena; DatumEvidentiranja nepromenjen pri edit-u | ✅ |
 
 ---
 

@@ -14,7 +14,7 @@
 | Baza | `reklamacije_drustvenih_igara_vp_2026` |
 | Celina | `reklamacija` |
 | Deo | `stavka_reklamacije` |
-| Šifarnici | `drustvena_igra`, `kategorija_igre` |
+| Šifarnici | `drustvena_igra` (CRUD), `kategorija_igre` (šifarnik za izbor u formi, bez posebnog CRUD-a) |
 | Nezavisna tabela | `korisnik` |
 
 ---
@@ -27,8 +27,9 @@ reklamacija (celina)
 ├── BrojReklamacije (UNIQUE)
 ├── DatumReklamacije
 ├── Dobavljac
-├── Napomena
-└── ReklamacijuEvidentirao
+├── Napomena (NOT NULL)
+├── ReklamacijuEvidentirao
+└── DatumEvidentiranja (NOT NULL)
 
 stavka_reklamacije (deo)
 ├── IDStavkeReklamacije
@@ -78,6 +79,9 @@ korisnik (nezavisna)
 | SQL VIEW-ovi za katalog igara | ✅ Završeno |
 | Login i sesije | ✅ Završeno |
 | Šifarnik društvenih igara (CRUD) | ✅ Završeno |
+| DatumEvidentiranja i obavezna Napomena | ✅ Završeno |
+| Individualna parametarska štampa (01/02/03) | ✅ Završeno |
+| PHP server-side validacije kataloga igara (regular/SP/edit) | ✅ Završeno |
 | CRUD reklamacija | ✅ Završeno |
 | Master-detail create (transakcija) | ✅ Završeno |
 | Master-detail edit (transakcija) | ✅ Završeno |
@@ -97,6 +101,8 @@ korisnik (nezavisna)
 
 - `BrojReklamacije` je jedinstven i obavezan
 - `Dobavljac` je slobodan tekst
+- `Napomena` je obavezna (VARCHAR(255) NOT NULL; client + PHP server)
+- `DatumEvidentiranja` postavlja server pri kreiranju; ne menja se pri edit-u
 - `RazlogReklamacije` je obavezan na svakoj stavci (max 255)
 - `Kolicina` i `Cena` moraju biti > 0
 - Zapisnik mora imati najmanje jednu stavku
@@ -104,6 +110,7 @@ korisnik (nezavisna)
 - `Ukupno` = `Kolicina × Cena` (izračunato, ne persistirano)
 - Nema zabrane duplikata iste igre u jednom zapisniku
 - Nema proizvoljnih gornjih limita za količinu i cenu
+- Katalog igara: `SifraIgre` alfanumerička 1–13, `Naziv`/`Proizvodjac` max 100, `OznakaKategorije` max 2, naziv slike max 100, jedinstvenost šifre (PHP server-side na regular/SP/edit)
 
 ---
 

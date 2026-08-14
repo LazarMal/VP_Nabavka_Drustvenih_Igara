@@ -13,6 +13,7 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 $reklamacijuEvidentirao = isset($_SESSION["korisnik"]) ? $_SESSION["korisnik"] : "";
+$datumEvidentiranja = date('Y-m-d');
 ?>
 
 <table class="no-spacing" style="width:100%; padding:0; border-spacing:0;" align="center" cellspacing="0" cellpadding="0" border="0">
@@ -86,7 +87,7 @@ $reklamacijuEvidentirao = isset($_SESSION["korisnik"]) ? $_SESSION["korisnik"] :
 <tr>
 <td align="right"><b>Napomena&nbsp;&nbsp;</b></td>
 <td align="left">
-<input type="text" name="napomena" id="napomena" size="50" maxlength="255" value="">
+<input type="text" name="napomena" id="napomena" size="50" maxlength="255" required value="">
 </td>
 </tr>
 
@@ -94,6 +95,13 @@ $reklamacijuEvidentirao = isset($_SESSION["korisnik"]) ? $_SESSION["korisnik"] :
 <td align="right"><b>Reklamaciju evidentirao&nbsp;&nbsp;</b></td>
 <td align="left">
 <input type="text" value="<?php echo htmlspecialchars($reklamacijuEvidentirao); ?>" readonly style="background-color:#EEEEEE;">
+</td>
+</tr>
+
+<tr>
+<td align="right"><b>Datum evidentiranja&nbsp;&nbsp;</b></td>
+<td align="left">
+<input type="text" value="<?php echo htmlspecialchars($datumEvidentiranja); ?>" readonly style="background-color:#EEEEEE;">
 </td>
 </tr>
 </table>
@@ -292,6 +300,11 @@ function proveriReklamaciju() {
 
     if (dobavljac.length > 100) {
         alert("Dobavljač ne sme biti duži od 100 karaktera.");
+        return false;
+    }
+
+    if (napomena === "") {
+        alert("Napomena je obavezna.");
         return false;
     }
 

@@ -69,12 +69,17 @@ function napraviOpcijeIgara($listaIgara, $selectedSifra = "")
 
 <tr>
 <td align="right"><b>Napomena&nbsp;&nbsp;</b></td>
-<td align="left"><input type="text" name="napomena" id="napomena" size="50" maxlength="255" value="<?php echo htmlspecialchars($reklamacija['Napomena']); ?>"></td>
+<td align="left"><input type="text" name="napomena" id="napomena" size="50" maxlength="255" required value="<?php echo htmlspecialchars($reklamacija['Napomena']); ?>"></td>
 </tr>
 
 <tr>
 <td align="right"><b>Reklamaciju evidentirao&nbsp;&nbsp;</b></td>
 <td align="left"><input type="text" value="<?php echo htmlspecialchars($reklamacija['ReklamacijuEvidentirao']); ?>" readonly style="background-color:#EEEEEE;"></td>
+</tr>
+
+<tr>
+<td align="right"><b>Datum evidentiranja&nbsp;&nbsp;</b></td>
+<td align="left"><input type="text" value="<?php echo htmlspecialchars(isset($reklamacija['DatumEvidentiranja']) ? $reklamacija['DatumEvidentiranja'] : ''); ?>" readonly style="background-color:#EEEEEE;"></td>
 </tr>
 </table>
 
@@ -241,6 +246,11 @@ function proveriReklamaciju() {
 
     if (dobavljac.length > 100) {
         alert("Dobavljač ne sme biti duži od 100 karaktera.");
+        return false;
+    }
+
+    if (napomena === "") {
+        alert("Napomena je obavezna.");
         return false;
     }
 

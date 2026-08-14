@@ -43,8 +43,9 @@ CREATE TABLE `reklamacija`
    `BrojReklamacije` VARCHAR(50) NOT NULL,
    `DatumReklamacije` DATE NOT NULL,
    `Dobavljac` VARCHAR(100) NOT NULL,
-   `Napomena` VARCHAR(255) NULL,
+   `Napomena` VARCHAR(255) NOT NULL,
    `ReklamacijuEvidentirao` VARCHAR(100) NOT NULL,
+   `DatumEvidentiranja` DATE NOT NULL,
    CONSTRAINT `UQ_REKLAMACIJA_BROJREKLAMACIJE` UNIQUE (`BrojReklamacije`)
 );
 

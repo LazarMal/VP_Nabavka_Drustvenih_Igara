@@ -50,6 +50,10 @@ if (strlen($dobavljac) > 100) {
     prekiniSaGreskom("Greska: Dobavljac ne sme biti duzi od 100 karaktera.", $povratakUrl);
 }
 
+if ($napomena == "") {
+    prekiniSaGreskom("Greska: Napomena je obavezna.", $povratakUrl);
+}
+
 if (strlen($napomena) > 255) {
     prekiniSaGreskom("Greska: Napomena ne sme biti duza od 255 karaktera.", $povratakUrl);
 }

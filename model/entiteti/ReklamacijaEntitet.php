@@ -10,9 +10,10 @@ class ReklamacijaEntitet
     public $Dobavljac;
     public $Napomena;
     public $ReklamacijuEvidentirao;
+    public $DatumEvidentiranja;
     public $ListaStavki;
 
-    public function __construct($BrojReklamacije = "", $DatumReklamacije = "", $Dobavljac = "", $Napomena = "", $ReklamacijuEvidentirao = "", $IDReklamacije = null)
+    public function __construct($BrojReklamacije = "", $DatumReklamacije = "", $Dobavljac = "", $Napomena = "", $ReklamacijuEvidentirao = "", $DatumEvidentiranja = "", $IDReklamacije = null)
     {
         $this->IDReklamacije = $IDReklamacije;
         $this->BrojReklamacije = $BrojReklamacije;
@@ -20,6 +21,7 @@ class ReklamacijaEntitet
         $this->Dobavljac = $Dobavljac;
         $this->Napomena = $Napomena;
         $this->ReklamacijuEvidentirao = $ReklamacijuEvidentirao;
+        $this->DatumEvidentiranja = $DatumEvidentiranja;
         $this->ListaStavki = array();
     }
 
@@ -47,6 +49,7 @@ class ReklamacijaEntitet
             isset($red["Dobavljac"]) ? $red["Dobavljac"] : "",
             isset($red["Napomena"]) ? $red["Napomena"] : "",
             isset($red["ReklamacijuEvidentirao"]) ? $red["ReklamacijuEvidentirao"] : "",
+            isset($red["DatumEvidentiranja"]) ? $red["DatumEvidentiranja"] : "",
             isset($red["IDReklamacije"]) ? $red["IDReklamacije"] : null
         );
     }

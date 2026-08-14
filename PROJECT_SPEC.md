@@ -60,13 +60,14 @@
 | DB-10 | `BrojReklamacije` mora biti **jedinstven** (UNIQUE); ne spajati reklamacije po datumu i dobavljaču. | T / D |
 | DB-11 | Polje `DatumReklamacije` (DATE, obavezno). | T |
 | DB-12 | Polje `Dobavljac` (VARCHAR, obavezno) — **slobodan tekst**. | T / D |
-| DB-13 | Polje `Napomena` (VARCHAR, opciono). | T |
+| DB-13 | Polje `Napomena` (VARCHAR(255), NOT NULL, obavezno). | T |
 | DB-14 | Polje `ReklamacijuEvidentirao` u `reklamacija` — ko je evidentirao reklamaciju. | T |
-| DB-15 | Detail: `SifraIgre`, `Kolicina`, `Cena`, `RazlogReklamacije` po stavci. | T |
-| DB-16 | `Ukupno` po stavci = `Kolicina * Cena` — **izračunato**, ne obavezno persistirati. | T / D |
-| DB-17 | Rekapitulacija: ukupan broj stavki i ukupna vrednost — **izračunati** iz detail redova. | T / D |
-| DB-18 | `IDReklamacije` / `IDStavkeReklamacije` — interni surrogate PK po potrebi implementacije. | D |
-| DB-19 | Mapiranje šifarnika: `SifraIgre`, `Proizvodjac`, `OznakaKategorije` u katalogu igara. | D |
+| DB-15 | Polje `DatumEvidentiranja` (DATE, NOT NULL) — datum prvog kreiranja zapisnika; postavlja server pri unosu, ne menja se pri izmeni. | T |
+| DB-16 | Detail: `SifraIgre`, `Kolicina`, `Cena`, `RazlogReklamacije` po stavci. | T |
+| DB-17 | `Ukupno` po stavci = `Kolicina * Cena` — **izračunato**, ne obavezno persistirati. | T / D |
+| DB-18 | Rekapitulacija: ukupan broj stavki i ukupna vrednost — **izračunati** iz detail redova. | T / D |
+| DB-19 | `IDReklamacije` / `IDStavkeReklamacije` — interni surrogate PK po potrebi implementacije. | D |
+| DB-20 | Mapiranje šifarnika: `SifraIgre`, `Proizvodjac`, `OznakaKategorije` u katalogu igara. | D |
 
 ---
 
@@ -120,15 +121,17 @@
 | VAL-06 | `BrojReklamacije`: obavezno, dužina prema koloni, **jedinstveno**. | T / D |
 | VAL-07 | `DatumReklamacije`: obavezno, validan datum. | T |
 | VAL-08 | `Dobavljac`: obavezno, dužina prema koloni; **slobodan tekst** (bez zatvorene liste). | T / D |
-| VAL-09 | `Napomena`: dužina prema koloni ako je uneta. | T |
-| VAL-10 | `DrustvenaIgra` / `SifraIgre` u stavci: obavezno, mora postojati u katalogu (FK/domen). | T |
-| VAL-11 | `Kolicina`: obavezno, pozitivan ceo broj (`> 0`). | T / D |
-| VAL-12 | `Cena`: obavezno, pozitivna decimalna vrednost (`> 0`). | T / D |
-| VAL-13 | Zapisnik mora imati **najmanje jednu** detail stavku pri unosu/izmeni. | E / T |
-| VAL-14 | `ReklamacijuEvidentirao`: popunjava se pri unosu (npr. iz sesije prijavljenog korisnika). | T / D |
-| VAL-15 | Tehničko ograničenje tipa kolone (INT, DECIMAL) ≠ poslovno pravilo; **ne uvoditi** proizvoljne gornje granice (npr. 1–100, 1–100000) bez specifikacije. | D |
-| VAL-16 | Duplikat iste igre u jednom zapisniku: **nije** profesorov zahtev; ne uvoditi zabranu kao poslovno pravilo. | D |
-| VAL-17 | `RazlogReklamacije`: obavezno, tekst, maksimalna dužina 255 karaktera (client-side i PHP server-side validacija). | T |
+| VAL-09 | `Napomena`: obavezna, maksimalna dužina 255 karaktera (client-side i PHP server-side). | T |
+| VAL-10 | `DatumEvidentiranja`: postavlja PHP server pri kreiranju (`date('Y-m-d')`); ne menja se pri izmeni; prikazuje se na create/edit/detail i individualnoj štampi. | T |
+| VAL-11 | `DrustvenaIgra` / `SifraIgre` u stavci: obavezno, mora postojati u katalogu (FK/domen). | T |
+| VAL-12 | `Kolicina`: obavezno, pozitivan ceo broj (`> 0`). | T / D |
+| VAL-13 | `Cena`: obavezno, pozitivna decimalna vrednost (`> 0`). | T / D |
+| VAL-14 | Zapisnik mora imati **najmanje jednu** detail stavku pri unosu/izmeni. | E / T |
+| VAL-15 | `ReklamacijuEvidentirao`: popunjava se pri unosu (npr. iz sesije prijavljenog korisnika). | T / D |
+| VAL-16 | Tehničko ograničenje tipa kolone (INT, DECIMAL) ≠ poslovno pravilo; **ne uvoditi** proizvoljne gornje granice (npr. 1–100, 1–100000) bez specifikacije. | D |
+| VAL-17 | Duplikat iste igre u jednom zapisniku: **nije** profesorov zahtev; ne uvoditi zabranu kao poslovno pravilo. | D |
+| VAL-18 | `RazlogReklamacije`: obavezno, tekst, maksimalna dužina 255 karaktera (client-side i PHP server-side validacija). | T |
+| VAL-19 | Katalog `drustvena_igra` (regularni unos, SP unos, edit): `SifraIgre` obavezna, alfanumerička 1–13; `Naziv` i `Proizvodjac` obavezni max 100; `OznakaKategorije` obavezna max 2; naziv slike max 100; jedinstvenost šifre. | D |
 
 ---
 
@@ -140,11 +143,12 @@
 | PRINT-02 | **Štampa filtriranog** spiska reklamacija. | E |
 | PRINT-03 | **Parametarska štampa** pojedinačnog zapisnika. | E |
 | PRINT-04 | Parametarska štampa mora vizuelno i semantički odgovarati prijavljenom dokumentu „Zapisnik o reklamaciji društvenih igara“. | E / T |
-| PRINT-05 | Parametarska štampa — sekcija PODACI O REKLAMACIJI: Broj reklamacije, Datum reklamacije, Dobavljač, Napomena. | T |
-| PRINT-06 | Parametarska štampa — STAVKE REKLAMACIJE: Stavka, Društvena igra, Cena po komadu, Količina, Razlog reklamacije, Ukupno. | T |
-| PRINT-07 | Parametarska štampa — REKAPITULACIJA: Ukupan broj stavki, Ukupna vrednost reklamacije. | T |
+| PRINT-05 | Parametarska štampa — sekcija **01 PODACI O REKLAMACIJI**: Broj reklamacije, Datum reklamacije, Dobavljač, Napomena. | T |
+| PRINT-06 | Parametarska štampa — **02 STAVKE REKLAMACIJE**: Stavka, Društvena igra, Cena po komadu, Količina, Razlog reklamacije, Ukupno. | T |
+| PRINT-07 | Parametarska štampa — **03 REKAPITULACIJA**: Ukupan broj stavki, Ukupna vrednost reklamacije. | T |
 | PRINT-08 | Parametarska štampa — „Reklamaciju evidentirao“. | T |
-| PRINT-09 | Parametarska štampa mora prikazati master-detail odnos podataka. | E |
+| PRINT-09 | Parametarska štampa — „Datum evidentiranja“. | T |
+| PRINT-10 | Parametarska štampa mora prikazati master-detail odnos podataka; bez generičkog datuma štampe i bez polja „Odgovorno lice“. | E / T |
 
 ---
 
@@ -154,10 +158,10 @@
 |----|--------|-----|
 | TOP-01 | Naziv poslovnog procesa: Evidentiranje reklamacija neispravnih društvenih igara dobavljaču. | T |
 | TOP-02 | Naziv dokumenta: Zapisnik o reklamaciji društvenih igara. | T |
-| TOP-03 | Master polja: Broj reklamacije, Datum reklamacije, Dobavljač, Napomena. | T |
+| TOP-03 | Master polja: Broj reklamacije, Datum reklamacije, Dobavljač, Napomena, Reklamaciju evidentirao, Datum evidentiranja. | T |
 | TOP-04 | Detail kolone: Stavka (redni broj), Društvena igra, Cena po komadu, Količina, Razlog reklamacije, Ukupno. | T |
 | TOP-05 | Rekapitulacija: Ukupan broj stavki, Ukupna vrednost reklamacije. | T |
-| TOP-06 | Dodatno polje: Reklamaciju evidentirao. | T |
+| TOP-06 | Dodatna polja: Reklamaciju evidentirao, Datum evidentiranja. | T |
 
 ---
 
@@ -245,12 +249,12 @@
 |------------|------|
 | NF | 6 |
 | TECH | 12 |
-| DB | 19 |
+| DB | 20 |
 | OOP | 5 |
 | FUN | 10 |
 | FUN-KAT | 2 |
-| VAL | 17 |
-| PRINT | 9 |
+| VAL | 19 |
+| PRINT | 10 |
 | TOP | 6 |
 | TECH-SP/VIEW | 5 |
 | MVC | 3 |
@@ -258,4 +262,4 @@
 | DOC | 15 |
 | SUB | 7 |
 | AMB | 3 (informativno) |
-| **Ukupno (proverljivi zahtevi, bez AMB)** | **109** |
+| **Ukupno (proverljivi zahtevi, bez AMB)** | **112** |

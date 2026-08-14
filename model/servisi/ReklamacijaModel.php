@@ -121,6 +121,7 @@ class ReklamacijaModel
         $dobavljacEsc = mysqli_real_escape_string($konekcija, $reklamacijaEntitet->Dobavljac);
         $napomenaEsc = mysqli_real_escape_string($konekcija, $reklamacijaEntitet->Napomena);
         $reklamacijuEvidentiraoEsc = mysqli_real_escape_string($konekcija, $reklamacijaEntitet->ReklamacijuEvidentirao);
+        $datumEvidentiranjaEsc = mysqli_real_escape_string($konekcija, $reklamacijaEntitet->DatumEvidentiranja);
 
         $ReklamacijaObject = new DBReklamacija($konekcijaObject, "reklamacija");
         $StavkaObject = new DBStavkaReklamacije($konekcijaObject, "stavka_reklamacije");
@@ -134,7 +135,8 @@ class ReklamacijaModel
             $datumReklamacijeEsc,
             $dobavljacEsc,
             $napomenaEsc,
-            $reklamacijuEvidentiraoEsc
+            $reklamacijuEvidentiraoEsc,
+            $datumEvidentiranjaEsc
         );
 
         $idReklamacije = $ReklamacijaObject->DajPoslednjiID();

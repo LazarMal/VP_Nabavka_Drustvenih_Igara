@@ -98,12 +98,12 @@ class DBReklamacija extends Tabela
         return $this->IzvrsiAktivanSQLUpit($SQL);
     }
 
-    public function DodajReklamaciju($BrojReklamacije, $DatumReklamacije, $Dobavljac, $Napomena, $ReklamacijuEvidentirao)
+    public function DodajReklamaciju($BrojReklamacije, $DatumReklamacije, $Dobavljac, $Napomena, $ReklamacijuEvidentirao, $DatumEvidentiranja)
     {
         $SQL = "INSERT INTO `reklamacija`
-                (BrojReklamacije, DatumReklamacije, Dobavljac, Napomena, ReklamacijuEvidentirao)
+                (BrojReklamacije, DatumReklamacije, Dobavljac, Napomena, ReklamacijuEvidentirao, DatumEvidentiranja)
                 VALUES
-                ('".$BrojReklamacije."', '".$DatumReklamacije."', '".$Dobavljac."', '".$Napomena."', '".$ReklamacijuEvidentirao."')";
+                ('".$BrojReklamacije."', '".$DatumReklamacije."', '".$Dobavljac."', '".$Napomena."', '".$ReklamacijuEvidentirao."', '".$DatumEvidentiranja."')";
 
         return $this->IzvrsiAktivanSQLUpit($SQL);
     }
@@ -119,7 +119,7 @@ class DBReklamacija extends Tabela
 
     public function DajReklamacijuKaoModel($IDReklamacije)
     {
-        $SQL = "SELECT IDReklamacije, BrojReklamacije, DatumReklamacije, Dobavljac, Napomena, ReklamacijuEvidentirao
+        $SQL = "SELECT IDReklamacije, BrojReklamacije, DatumReklamacije, Dobavljac, Napomena, ReklamacijuEvidentirao, DatumEvidentiranja
                 FROM `reklamacija`
                 WHERE IDReklamacije = '".$IDReklamacije."'";
 
@@ -135,7 +135,8 @@ class DBReklamacija extends Tabela
             "DatumReklamacije" => $this->DajVrednostPoRednomBrojuZapisaPoRBPolja($this->Kolekcija, 0, 2),
             "Dobavljac" => $this->DajVrednostPoRednomBrojuZapisaPoRBPolja($this->Kolekcija, 0, 3),
             "Napomena" => $this->DajVrednostPoRednomBrojuZapisaPoRBPolja($this->Kolekcija, 0, 4),
-            "ReklamacijuEvidentirao" => $this->DajVrednostPoRednomBrojuZapisaPoRBPolja($this->Kolekcija, 0, 5)
+            "ReklamacijuEvidentirao" => $this->DajVrednostPoRednomBrojuZapisaPoRBPolja($this->Kolekcija, 0, 5),
+            "DatumEvidentiranja" => $this->DajVrednostPoRednomBrojuZapisaPoRBPolja($this->Kolekcija, 0, 6)
         );
 
         $reklamacija = ReklamacijaEntitet::IzRedaBaze($red);

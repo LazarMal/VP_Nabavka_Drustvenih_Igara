@@ -22,6 +22,7 @@ $datumReklamacije = isset($_POST['datumReklamacije']) ? trim($_POST['datumReklam
 $dobavljac = isset($_POST['dobavljac']) ? trim($_POST['dobavljac']) : "";
 $napomena = isset($_POST['napomena']) ? trim($_POST['napomena']) : "";
 $reklamacijuEvidentirao = $korisnik;
+$datumEvidentiranja = date('Y-m-d');
 
 $sifraIgreNiz = isset($_POST['sifraIgre']) ? $_POST['sifraIgre'] : array();
 $kolicinaNiz = isset($_POST['kolicina']) ? $_POST['kolicina'] : array();
@@ -45,6 +46,10 @@ if (strlen($dobavljac) > 100) {
     prekiniSaGreskom("Greska: Dobavljac ne sme biti duzi od 100 karaktera.", $povratakUrl);
 }
 
+if ($napomena == "") {
+    prekiniSaGreskom("Greska: Napomena je obavezna.", $povratakUrl);
+}
+
 if (strlen($napomena) > 255) {
     prekiniSaGreskom("Greska: Napomena ne sme biti duza od 255 karaktera.", $povratakUrl);
 }
@@ -66,7 +71,7 @@ require_once __DIR__ . '/../../model/entiteti/StavkaReklamacijeEntitet.php';
 require_once __DIR__ . '/../../model/entiteti/ReklamacijaEntitet.php';
 require_once __DIR__ . '/../../kontroler/stranice/ReklamacijeController.php';
 
-$ReklamacijaEntitet = new ReklamacijaEntitet($brojReklamacije, $datumReklamacije, $dobavljac, $napomena, $reklamacijuEvidentirao);
+$ReklamacijaEntitet = new ReklamacijaEntitet($brojReklamacije, $datumReklamacije, $dobavljac, $napomena, $reklamacijuEvidentirao, $datumEvidentiranja);
 
 for ($i = 0; $i < count($sifraIgreNiz); $i++) {
     $sifraIgre = trim($sifraIgreNiz[$i]);

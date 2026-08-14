@@ -66,13 +66,14 @@
 | DB-10 | BrojReklamacije UNIQUE | VERIFIED |
 | DB-11 | DatumReklamacije | VERIFIED |
 | DB-12 | Dobavljac slobodan tekst | VERIFIED |
-| DB-13 | Napomena | VERIFIED |
+| DB-13 | Napomena (VARCHAR(255) NOT NULL) | VERIFIED |
 | DB-14 | ReklamacijuEvidentirao | VERIFIED |
-| DB-15 | SifraIgre, Kolicina, Cena, RazlogReklamacije | VERIFIED |
-| DB-16 | Ukupno = Kolicina × Cena (izračunato) | VERIFIED |
-| DB-17 | Rekapitulacija izračunata | VERIFIED |
-| DB-18 | Surrogate PK (IDReklamacije, IDStavkeReklamacije) | VERIFIED |
-| DB-19 | Mapiranje kolona šifarnika igara | VERIFIED |
+| DB-15 | DatumEvidentiranja (DATE NOT NULL, server pri create, immutable pri edit) | VERIFIED |
+| DB-16 | SifraIgre, Kolicina, Cena, RazlogReklamacije | VERIFIED |
+| DB-17 | Ukupno = Kolicina × Cena (izračunato) | VERIFIED |
+| DB-18 | Rekapitulacija izračunata | VERIFIED |
+| DB-19 | Surrogate PK (IDReklamacije, IDStavkeReklamacije) | VERIFIED |
+| DB-20 | Mapiranje kolona šifarnika igara | VERIFIED |
 
 ---
 
@@ -126,15 +127,17 @@
 | VAL-06 | BrojReklamacije obavezno i jedinstveno | VERIFIED |
 | VAL-07 | DatumReklamacije validan | VERIFIED |
 | VAL-08 | Dobavljac slobodan tekst | VERIFIED |
-| VAL-09 | Napomena dužina | VERIFIED |
-| VAL-10 | SifraIgre postoji u katalogu | VERIFIED |
-| VAL-11 | Kolicina > 0 (ceo broj) | VERIFIED |
-| VAL-12 | Cena > 0 (decimalna) | VERIFIED |
-| VAL-13 | Minimum jedna stavka | VERIFIED |
-| VAL-14 | ReklamacijuEvidentirao iz sesije | VERIFIED |
-| VAL-15 | Bez proizvoljnih gornjih limita | VERIFIED |
-| VAL-16 | Bez zabrane duplikata iste igre u zapisniku | VERIFIED |
-| VAL-17 | RazlogReklamacije obavezno, max 255 | VERIFIED |
+| VAL-09 | Napomena obavezna, max 255 (client + server) | VERIFIED |
+| VAL-10 | DatumEvidentiranja server-set, ne menja se pri edit-u | VERIFIED |
+| VAL-11 | SifraIgre postoji u katalogu | VERIFIED |
+| VAL-12 | Kolicina > 0 (ceo broj) | VERIFIED |
+| VAL-13 | Cena > 0 (decimalna) | VERIFIED |
+| VAL-14 | Minimum jedna stavka | VERIFIED |
+| VAL-15 | ReklamacijuEvidentirao iz sesije | VERIFIED |
+| VAL-16 | Bez proizvoljnih gornjih limita | VERIFIED |
+| VAL-17 | Bez zabrane duplikata iste igre u zapisniku | VERIFIED |
+| VAL-18 | RazlogReklamacije obavezno, max 255 | VERIFIED |
+| VAL-19 | Katalog igara: SifraIgre 1–13 alfanumerička, Naziv/Proizvodjac max 100, OznakaKategorije max 2, naziv slike max 100, uniqueness | VERIFIED |
 
 ---
 
@@ -146,11 +149,12 @@
 | PRINT-02 | Štampa filtriranih reklamacija | VERIFIED |
 | PRINT-03 | Parametarska štampa jednog zapisnika | VERIFIED |
 | PRINT-04 | Izgled kao prijavljeni dokument | VERIFIED |
-| PRINT-05 | Sekcija PODACI O REKLAMACIJI | VERIFIED |
-| PRINT-06 | Sekcija STAVKE REKLAMACIJE (uključujući Razlog reklamacije) | VERIFIED |
-| PRINT-07 | REKAPITULACIJA | VERIFIED |
+| PRINT-05 | Sekcija 01 PODACI O REKLAMACIJI | VERIFIED |
+| PRINT-06 | Sekcija 02 STAVKE REKLAMACIJE (uključujući Razlog reklamacije) | VERIFIED |
+| PRINT-07 | Sekcija 03 REKAPITULACIJA | VERIFIED |
 | PRINT-08 | Reklamaciju evidentirao | VERIFIED |
-| PRINT-09 | Master-detail u štampi | VERIFIED |
+| PRINT-09 | Datum evidentiranja | VERIFIED |
+| PRINT-10 | Master-detail u štampi; bez „Odgovorno lice“ i generičkog datuma štampe | VERIFIED |
 
 ---
 
@@ -160,10 +164,10 @@
 |----|--------|--------|
 | TOP-01 | Naziv poslovnog procesa | VERIFIED |
 | TOP-02 | Naziv dokumenta (Zapisnik o reklamaciji) | VERIFIED |
-| TOP-03 | Master polja | VERIFIED |
+| TOP-03 | Master polja (uključujući Napomena, Datum evidentiranja) | VERIFIED |
 | TOP-04 | Detail kolone | VERIFIED |
 | TOP-05 | Rekapitulacija | VERIFIED |
-| TOP-06 | Reklamaciju evidentirao | VERIFIED |
+| TOP-06 | Reklamaciju evidentirao i Datum evidentiranja | VERIFIED |
 
 ---
 
@@ -215,12 +219,26 @@
 
 ---
 
+## Runtime provereno (poslednja faza)
+
+| Tok | Status |
+|-----|--------|
+| Create reklamacije | VERIFIED |
+| Detail reklamacije | VERIFIED |
+| Edit reklamacije (DatumEvidentiranja ostaje isti) | VERIFIED |
+| Parametarska štampa jednog zapisnika | VERIFIED |
+| Delete reklamacije | VERIFIED |
+| Odbijanje prazne Napomene (create/edit) | VERIFIED |
+| Katalog: regular create, SP create, edit, invalid šifra odbijena, delete | VERIFIED |
+
+---
+
 ## Rezime
 
 | Status | Broj |
 |--------|------|
-| VERIFIED | 95 |
+| VERIFIED | 101 |
 | IMPLEMENTED | 4 |
 | MISSING | 16 (DOC-01–15 + NF-06) |
 
-**Napomena:** Seminarska dokumentacija (DOC-01–15, NF-06) još nije kreirana u repozitorijumu.
+**Napomena:** Finalna seminarska dokumentacija (DOC-01–15, NF-06) **nije završena** — sledeća faza; nije kreirana u repozitorijumu.
