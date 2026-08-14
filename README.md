@@ -1,32 +1,44 @@
-# Biblioteka VP 2026
+# Evidentiranje reklamacija društvenih igara
 
-Web aplikacija za upravljanje bibliotekom realizovana u okviru projekta iz predmeta **Veb programiranje**.
+PHP veb aplikacija bez framework-a za poslovni proces **evidentiranja reklamacija neispravnih društvenih igara dobavljaču**.
 
-## Opis projekta
+Poslovni dokument: **Zapisnik o reklamaciji društvenih igara**.
 
-Aplikacija omogućava:
+Baza podataka: `reklamacije_drustvenih_igara_vp_2026`
 
-- evidenciju knjiga
-- unos novih knjiga
-- izmenu i brisanje knjiga
-- pregled svih knjiga
-- filtriranje knjiga po nazivu
-- štampu svih knjiga
-- parametarsku štampu pojedinačne knjige
-- evidenciju nabavki knjiga
-- automatsko grupisanje stavki nabavke
-- REST API pristup podacima
-- rad sa SQL pogledima (VIEW)
-- rad sa stored procedurama
+## Funkcionalnosti
 
----
+- prijava korisnika i rad sa sesijom
+- šifarnik društvenih igara i kategorija igara
+- unos društvene igre (regularan unos i unos preko stored procedure)
+- pregled kataloga igara preko SQL VIEW-ova
+- CRUD nad reklamacijama (glavni poslovni dokument)
+- master-detail unos reklamacije sa stavkama na jednoj formi
+- polje **Razlog reklamacije** na svakoj stavci
+- transakcioni create i edit (master + stavke)
+- lista reklamacija sa filterom
+- detaljni prikaz zapisnika
+- brisanje reklamacije
+- štampa svih reklamacija
+- štampa filtriranih reklamacija
+- parametarska štampa jednog zapisnika
+- REST servis za društvene igre
+- MVC organizacija (Controller → Model → Repository → View)
+- client-side i PHP server-side validacije
 
-# Korišćene tehnologije
+## Tehnologije
 
-- PHP
+- PHP (bez framework-a)
 - MySQL
-- HTML
-- CSS
-- JavaScript
-- XAMPP
-- phpMyAdmin
+- HTML, CSS, JavaScript
+- XAMPP / phpMyAdmin
+
+## Struktura domena
+
+| Tabela | Uloga |
+|--------|-------|
+| `reklamacija` | glavni dokument (celina) |
+| `stavka_reklamacije` | stavke zapisnika (deo) |
+| `drustvena_igra` | šifarnik igara |
+| `kategorija_igre` | šifarnik kategorija |
+| `korisnik` | nezavisna tabela za login |

@@ -1,9 +1,9 @@
-# PROJECT_SPEC — Nabavka društvenih igara (VP 2025/26)
+# PROJECT_SPEC — Evidentiranje reklamacija društvenih igara (VP 2025/26)
 
-**Student:** Lazar Malešev, SI 44/22  
-**Poslovni proces:** Nabavka društvenih igara za klub društvenih igara  
-**Poslovni dokument:** Nalog za nabavku društvenih igara  
-**Izvori:** `docs/izvori/VP Plan rada sk 2025 26 STANJE 7 6 2026 dopunjena struktura dokumenta seminarskog rada.pdf`, `docs/izvori/Prijava_VP_Nabavka_drustvenih_igara.docx` (original), `docs/izvori/Prijava_VP_Nabavka_drustvenih_igara.pdf` (potvrđen isti sadržaj)
+**Student:** Lazar Malešev, SI 44/22
+**Poslovni proces:** Evidentiranje reklamacija neispravnih društvenih igara dobavljaču
+**Poslovni dokument:** Zapisnik o reklamaciji društvenih igara
+**Izvori:** `docs/izvori/VP Plan rada sk 2025 26 STANJE 7 6 2026 dopunjena struktura dokumenta seminarskog rada.pdf`, `docs/izvori/VP_Prijava_reklamacija_drustvenih_igara.docx`, `docs/izvori/VP_Prijava_reklamacija_drustvenih_igara.pdf`
 
 **Legenda tipa zahteva:**
 - **E** — eksplicitni profesorov zahtev
@@ -49,24 +49,24 @@
 | ID | Zahtev | Tip |
 |----|--------|-----|
 | DB-01 | Tabela `korisnik` — nezavisna tabela za autentifikaciju. | E / T |
-| DB-02 | Tabela `kategorija_igre` — šifarnik (adaptacija `zanr`). | T / D |
-| DB-03 | Tabela `drustvena_igra` — šifarnik/katalog igara (adaptacija `knjiga`). | T / D |
-| DB-04 | Tabela `nabavka` — **celina** / glavni poslovni dokument. | E / T |
-| DB-05 | Tabela `stavka_nabavke` — **deo** / detail redovi naloga. | E / T |
-| DB-06 | Relacija `nabavka` 1:N `stavka_nabavke`. | E / T |
-| DB-07 | Relacija `drustvena_igra` 1:N `stavka_nabavke` (FK na šifru igre). | T / D |
+| DB-02 | Tabela `kategorija_igre` — šifarnik kategorija igara. | T / D |
+| DB-03 | Tabela `drustvena_igra` — šifarnik/katalog igara. | T / D |
+| DB-04 | Tabela `reklamacija` — **celina** / glavni poslovni dokument. | E / T |
+| DB-05 | Tabela `stavka_reklamacije` — **deo** / detail redovi zapisnika. | E / T |
+| DB-06 | Relacija `reklamacija` 1:N `stavka_reklamacije`. | E / T |
+| DB-07 | Relacija `drustvena_igra` 1:N `stavka_reklamacije` (FK na šifru igre). | T / D |
 | DB-08 | Relacija `kategorija_igre` 1:N `drustvena_igra` (opciono po šablonu). | D |
-| DB-09 | Polje `BrojNaloga` u `nabavka` — poslovni identifikator naloga. | T |
-| DB-10 | `BrojNaloga` mora biti **jedinstven** (UNIQUE); ne spajati naloge po datumu i dobavljaču. | T / D |
-| DB-11 | Polje `DatumNabavke` (DATE, obavezno). | T |
+| DB-09 | Polje `BrojReklamacije` u `reklamacija` — poslovni identifikator zapisnika. | T |
+| DB-10 | `BrojReklamacije` mora biti **jedinstven** (UNIQUE); ne spajati reklamacije po datumu i dobavljaču. | T / D |
+| DB-11 | Polje `DatumReklamacije` (DATE, obavezno). | T |
 | DB-12 | Polje `Dobavljac` (VARCHAR, obavezno) — **slobodan tekst**. | T / D |
 | DB-13 | Polje `Napomena` (VARCHAR, opciono). | T |
-| DB-14 | Polje `NalogEvidentirao` u `nabavka` — ko je evidentirao nalog. | T |
-| DB-15 | Detail: `SifraIgre`, `Kolicina`, `Cena` po stavci. | T |
+| DB-14 | Polje `ReklamacijuEvidentirao` u `reklamacija` — ko je evidentirao reklamaciju. | T |
+| DB-15 | Detail: `SifraIgre`, `Kolicina`, `Cena`, `RazlogReklamacije` po stavci. | T |
 | DB-16 | `Ukupno` po stavci = `Kolicina * Cena` — **izračunato**, ne obavezno persistirati. | T / D |
 | DB-17 | Rekapitulacija: ukupan broj stavki i ukupna vrednost — **izračunati** iz detail redova. | T / D |
-| DB-18 | `IDNabavke` / `IDStavke` — interni surrogate PK po potrebi implementacije. | D |
-| DB-19 | Mapiranje šifarnika: `ISBN`→`SifraIgre`, `Autor`→`Proizvodjac`, `OznakaZanra`→`OznakaKategorije`. | D |
+| DB-18 | `IDReklamacije` / `IDStavkeReklamacije` — interni surrogate PK po potrebi implementacije. | D |
+| DB-19 | Mapiranje šifarnika: `SifraIgre`, `Proizvodjac`, `OznakaKategorije` u katalogu igara. | D |
 
 ---
 
@@ -75,26 +75,26 @@
 | ID | Zahtev | Tip |
 |----|--------|-----|
 | OOP-01 | **Nasleđivanje:** semantički nezavisne domenske klase nasleđuju tehnološke bazne klase (konekcija, upiti, SP, pogledi). | E |
-| OOP-02 | **Kompozicija:** klasa Celina (`NabavkaEntitet`) sadrži listu delova (`ListaStavki`). | E |
-| OOP-03 | **Asocijacija:** klasa Deo (`StavkaNabavkeEntitet`) sadrži/referencira objekat šifarnika (`DrustvenaIgraEntitet`). | E |
+| OOP-02 | **Kompozicija:** klasa Celina (`ReklamacijaEntitet`) sadrži listu delova (`ListaStavki` — objekti `StavkaReklamacijeEntitet`). | E |
+| OOP-03 | **Asocijacija:** klasa Deo (`StavkaReklamacijeEntitet`) sadrži/referencira objekat šifarnika (`DrustvenaIgraEntitet`). | E |
 | OOP-04 | Repozitorijumi (`DB*`) nasleđuju `Tabela` iz `tehnoloskeKlase/BaznaTabela.php`. | E / D |
 | OOP-05 | Konekcija i transakcija kroz `Konekcija`, `Transakcija` bazne klase. | E / D |
 
 ---
 
-## 5. Funkcionalni — glavni dokument `nabavka` (FUN)
+## 5. Funkcionalni — glavni dokument `reklamacija` (FUN)
 
 | ID | Zahtev | Tip |
 |----|--------|-----|
 | FUN-01 | **Login** korisnika pre pristupa poslovnim funkcijama. | E |
-| FUN-02 | **Unos** naloga: master (podaci o nabavci) + detail (stavke igara) na **jednoj formi**. | E |
-| FUN-03 | Unos naloga mora koristiti **transakciju** (celina + svi delovi atomarno). | E |
-| FUN-04 | **Izmena** postojećeg naloga (master podaci). | E |
-| FUN-05 | **Izmena** stavki postojećeg naloga (detail). | E |
-| FUN-06 | **Brisanje** naloga (celine). | E |
-| FUN-07 | **Tabelarni prikaz** svih naloga. | E |
-| FUN-08 | **Filtriranje** naloga u tabelarnom prikazu. | E |
-| FUN-09 | **Prikaz pojedinačnog** naloga sa **svim** stavkama (detail). | E |
+| FUN-02 | **Unos** zapisnika: master (podaci o reklamaciji) + detail (stavke reklamacije) na **jednoj formi**. | E |
+| FUN-03 | Unos zapisnika mora koristiti **transakciju** (celina + svi delovi atomarno). | E |
+| FUN-04 | **Izmena** postojećeg zapisnika (master podaci). | E |
+| FUN-05 | **Izmena** stavki postojećeg zapisnika (detail). | E |
+| FUN-06 | **Brisanje** zapisnika (celine). | E |
+| FUN-07 | **Tabelarni prikaz** svih reklamacija. | E |
+| FUN-08 | **Filtriranje** reklamacija u tabelarnom prikazu. | E |
+| FUN-09 | **Prikaz pojedinačnog** zapisnika sa **svim** stavkama (detail). | E |
 | FUN-10 | CRUD se odnosi na **glavnu tabelu** koja izražava suštinu dokumenta — **ne** zadovoljava se CRUD-om nad katalogom igara. | E / T |
 
 ---
@@ -103,7 +103,7 @@
 
 | ID | Zahtev | Tip |
 |----|--------|-----|
-| FUN-KAT-01 | Adaptirati puni CRUD kataloga iz šablona (`knjiga`→`drustvena_igra`) radi upravljanja šifarnikom. | D |
+| FUN-KAT-01 | Pun CRUD kataloga igara radi upravljanja šifarnikom. | D |
 | FUN-KAT-02 | CRUD kataloga **ne zamenjuje** obavezni CRUD nad glavnim dokumentom (FUN-02–FUN-09). | D |
 
 ---
@@ -117,17 +117,18 @@
 | VAL-03 | Provera **dužine podatka** (client + server). | E |
 | VAL-04 | Provera **domena ispravnih vrednosti** (client + server). | E |
 | VAL-05 | Provera **jedinstvenosti zapisa** gde je poslovno potrebno (client + server). | E |
-| VAL-06 | `BrojNaloga`: obavezno, dužina prema koloni, **jedinstveno**. | T / D |
-| VAL-07 | `DatumNabavke`: obavezno, validan datum. | T |
+| VAL-06 | `BrojReklamacije`: obavezno, dužina prema koloni, **jedinstveno**. | T / D |
+| VAL-07 | `DatumReklamacije`: obavezno, validan datum. | T |
 | VAL-08 | `Dobavljac`: obavezno, dužina prema koloni; **slobodan tekst** (bez zatvorene liste). | T / D |
 | VAL-09 | `Napomena`: dužina prema koloni ako je uneta. | T |
 | VAL-10 | `DrustvenaIgra` / `SifraIgre` u stavci: obavezno, mora postojati u katalogu (FK/domen). | T |
 | VAL-11 | `Kolicina`: obavezno, pozitivan ceo broj (`> 0`). | T / D |
 | VAL-12 | `Cena`: obavezno, pozitivna decimalna vrednost (`> 0`). | T / D |
-| VAL-13 | Nalog mora imati **najmanje jednu** detail stavku pri unosu/izmeni. | E / T |
-| VAL-14 | `NalogEvidentirao`: popunjava se pri unosu (npr. iz sesije prijavljenog korisnika). | T / D |
+| VAL-13 | Zapisnik mora imati **najmanje jednu** detail stavku pri unosu/izmeni. | E / T |
+| VAL-14 | `ReklamacijuEvidentirao`: popunjava se pri unosu (npr. iz sesije prijavljenog korisnika). | T / D |
 | VAL-15 | Tehničko ograničenje tipa kolone (INT, DECIMAL) ≠ poslovno pravilo; **ne uvoditi** proizvoljne gornje granice (npr. 1–100, 1–100000) bez specifikacije. | D |
-| VAL-16 | Duplikat iste igre u jednom nalogu: **nije** profesorov zahtev; ne uvoditi zabranu kao poslovno pravilo (šablonska zabrana = postojeće ponašanje šablona). | D |
+| VAL-16 | Duplikat iste igre u jednom zapisniku: **nije** profesorov zahtev; ne uvoditi zabranu kao poslovno pravilo. | D |
+| VAL-17 | `RazlogReklamacije`: obavezno, tekst, maksimalna dužina 255 karaktera (client-side i PHP server-side validacija). | T |
 
 ---
 
@@ -135,14 +136,14 @@
 
 | ID | Zahtev | Tip |
 |----|--------|-----|
-| PRINT-01 | **Štampa spiska svih** naloga (glavna tabela). | E |
-| PRINT-02 | **Štampa filtriranog** spiska naloga. | E |
-| PRINT-03 | **Parametarska štampa** pojedinačnog naloga. | E |
-| PRINT-04 | Parametarska štampa mora vizuelno i semantički odgovarati prijavljenom dokumentu „Nalog za nabavku društvenih igara“. | E / T |
-| PRINT-05 | Parametarska štampa — sekcija PODACI O NABAVCI: Broj naloga, Datum nabavke, Dobavljač, Napomena. | T |
-| PRINT-06 | Parametarska štampa — SPISAK IGARA: Stavka, Društvena igra, Cena po komadu, Količina, Ukupno. | T |
-| PRINT-07 | Parametarska štampa — REKAPITULACIJA: Ukupan broj stavki, Ukupna vrednost nabavke. | T |
-| PRINT-08 | Parametarska štampa — „Nalog evidentirao“. | T |
+| PRINT-01 | **Štampa spiska svih** reklamacija (glavna tabela). | E |
+| PRINT-02 | **Štampa filtriranog** spiska reklamacija. | E |
+| PRINT-03 | **Parametarska štampa** pojedinačnog zapisnika. | E |
+| PRINT-04 | Parametarska štampa mora vizuelno i semantički odgovarati prijavljenom dokumentu „Zapisnik o reklamaciji društvenih igara“. | E / T |
+| PRINT-05 | Parametarska štampa — sekcija PODACI O REKLAMACIJI: Broj reklamacije, Datum reklamacije, Dobavljač, Napomena. | T |
+| PRINT-06 | Parametarska štampa — STAVKE REKLAMACIJE: Stavka, Društvena igra, Cena po komadu, Količina, Razlog reklamacije, Ukupno. | T |
+| PRINT-07 | Parametarska štampa — REKAPITULACIJA: Ukupan broj stavki, Ukupna vrednost reklamacije. | T |
+| PRINT-08 | Parametarska štampa — „Reklamaciju evidentirao“. | T |
 | PRINT-09 | Parametarska štampa mora prikazati master-detail odnos podataka. | E |
 
 ---
@@ -151,12 +152,12 @@
 
 | ID | Zahtev | Tip |
 |----|--------|-----|
-| TOP-01 | Naziv poslovnog procesa: Nabavka društvenih igara za klub društvenih igara. | T |
-| TOP-02 | Naziv dokumenta: Nalog za nabavku društvenih igara. | T |
-| TOP-03 | Master polja: Broj naloga, Datum nabavke, Dobavljač, Napomena. | T |
-| TOP-04 | Detail kolone: Stavka (redni broj), Društvena igra, Cena po komadu, Količina, Ukupno. | T |
-| TOP-05 | Rekapitulacija: Ukupan broj stavki, Ukupna vrednost nabavke. | T |
-| TOP-06 | Dodatno polje: Nalog evidentirao. | T |
+| TOP-01 | Naziv poslovnog procesa: Evidentiranje reklamacija neispravnih društvenih igara dobavljaču. | T |
+| TOP-02 | Naziv dokumenta: Zapisnik o reklamaciji društvenih igara. | T |
+| TOP-03 | Master polja: Broj reklamacije, Datum reklamacije, Dobavljač, Napomena. | T |
+| TOP-04 | Detail kolone: Stavka (redni broj), Društvena igra, Cena po komadu, Količina, Razlog reklamacije, Ukupno. | T |
+| TOP-05 | Rekapitulacija: Ukupan broj stavki, Ukupna vrednost reklamacije. | T |
+| TOP-06 | Dodatno polje: Reklamaciju evidentirao. | T |
 
 ---
 
@@ -165,10 +166,10 @@
 | ID | Zahtev | Tip |
 |----|--------|-----|
 | TECH-SP-01 | Postoji SQL stored procedure korišćena iz PHP aplikacije. | E |
-| TECH-SP-02 | Stored procedure adaptirana na domen društvenih igara (adaptacija `DodajKnjigu`→`DodajDrustvenuIgru` ili ekvivalent). | D |
+| TECH-SP-02 | Stored procedure za domen društvenih igara (`DodajDrustvenuIgru` ili ekvivalent). | D |
 | TECH-VIEW-01 | Postoji SQL VIEW korišćen iz PHP aplikacije. | E |
-| TECH-VIEW-02 | VIEW adaptiran na domen (adaptacija `svipodacioknjigama*`→ekvivalent za igre). | D |
-| TECH-SP-VIEW-03 | Dodatna SP/VIEW/REST nad `nabavka` **nije obavezna** ako katalog adaptacija dokazivo zadovoljava kriterijum. | D |
+| TECH-VIEW-02 | VIEW za katalog igara (join sa kategorijom). | D |
+| TECH-SP-VIEW-03 | Dodatna SP/VIEW/REST nad `reklamacija` **nije obavezna** ako katalog dokazivo zadovoljava kriterijum. | D |
 
 ---
 
@@ -177,8 +178,8 @@
 | ID | Zahtev | Tip |
 |----|--------|-----|
 | MVC-01 | Organizacija rešenja primenom arhitekture MVC (opciono, 10 bodova). | E |
-| MVC-02 | Odvojeni model, view i kontroler slojevi u adaptiranom rešenju. | E |
-| MVC-03 | Poslovna logika nabavke i kataloga učestvuje koherentno u MVC toku. | D |
+| MVC-02 | Odvojeni model, view i kontroler slojevi u rešenju. | E |
+| MVC-03 | Poslovna logika reklamacije i kataloga učestvuje koherentno u MVC toku. | D |
 
 ---
 
@@ -188,7 +189,7 @@
 |----|--------|-----|
 | REST-01 | REST servis sa ruterom (opciono, 10 bodova). | E |
 | REST-02 | Ruter (`api/router.php` ili ekvivalent) mapira akcije na endpoint resurse. | E |
-| REST-03 | REST endpointi adaptirani na domen društvenih igara (adaptacija `knjige`/`knjiga`). | D |
+| REST-03 | REST endpointi za domen društvenih igara (`igre`/`igra`). | D |
 
 ---
 
@@ -228,29 +229,12 @@
 
 ---
 
-## 15. Konflikti i defekti šablona (DEF) — za ispravku pri implementaciji
-
-| ID | Opis | Tip |
-|----|------|-----|
-| DEF-01 | `DBNabavka::PronadjiNabavku(Datum, Dobavljac)` spaja naloge — u sukobu sa UNIQUE `BrojNaloga`. | D (šablon) |
-| DEF-02 | Parametarska štampa u šablonu = knjiga, ne prijavljeni nalog. | D (šablon) |
-| DEF-03 | CRUD nad `nabavka` nepotpun: nema izmena, brisanja, filtera, štampe, parametarske. | D (šablon) |
-| DEF-04 | Šema `nabavka` nema `BrojNaloga`, `NalogEvidentirao`. | D (šablon) |
-| DEF-05 | `NabavkaModel::DajStavkeNabavke` koristi GROUP BY — rizik za veran detail prikaz. | D (šablon) |
-| DEF-06 | Validacija dobavljača u šablonu = zatvorena lista knjižara — u sukobu sa 1A. | D (šablon) |
-| DEF-07 | `nabavkaSnimi.php` zabranjuje duplikat knjige — šablonsko ponašanje, ne zahtev. | D (šablon) |
-| DEF-08 | Gornje limite Količina/Cena u šablonu (100, 100000) — nisu specifikacija. | D (šablon) |
-| DEF-09 | Mogući dead route brisanja knjige (`obrisiKnjigu` u listi vs akcija). | D (šablon) |
-| DEF-10 | `index.php` na učitavanju uništava sesiju — rizik za login tok. | D (šablon) |
-
----
-
-## 16. Ambiguities (AMB) — dokumentovati, ne pretvarati u zahtev
+## 15. Ambiguities (AMB) — dokumentovati, ne pretvarati u zahtev
 
 | ID | Tema | Bezbedna interpretacija |
 |----|------|-------------------------|
-| AMB-01 | Duplikat iste igre u jednom nalogu | Nedefinisano; ne uvoditi zabranu kao poslovno pravilo |
-| AMB-02 | Format `BrojNaloga` | UNIQUE string; dužina kolone; bez izmišljenog regex-a |
+| AMB-01 | Duplikat iste igre u jednom zapisniku | Nedefinisano; ne uvoditi zabranu kao poslovno pravilo |
+| AMB-02 | Format `BrojReklamacije` | UNIQUE string; dužina kolone; bez izmišljenog regex-a |
 | AMB-03 | Gornji limiti Količina/Cena | Samo `> 0` + tip; bez proizvoljnih gornjih granica |
 
 ---
@@ -265,7 +249,7 @@
 | OOP | 5 |
 | FUN | 10 |
 | FUN-KAT | 2 |
-| VAL | 16 |
+| VAL | 17 |
 | PRINT | 9 |
 | TOP | 6 |
 | TECH-SP/VIEW | 5 |
@@ -273,6 +257,5 @@
 | REST | 3 |
 | DOC | 15 |
 | SUB | 7 |
-| DEF | 10 |
 | AMB | 3 (informativno) |
-| **Ukupno (proverljivi zahtevi, bez AMB)** | **118** |
+| **Ukupno (proverljivi zahtevi, bez AMB)** | **109** |

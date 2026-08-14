@@ -26,12 +26,12 @@ $konekcija = $KonekcijaObject->konekcijaDB;
 $baza = $KonekcijaObject->KompletanNazivBazePodataka;
 $postoji = false;
 
-if ($tip === 'brojNaloga') {
+if ($tip === 'brojReklamacije') {
     $vrednostEsc = mysqli_real_escape_string($konekcija, $vrednost);
-    $upit = "SELECT BrojNaloga FROM `$baza`.`nabavka` WHERE BrojNaloga='".$vrednostEsc."'";
+    $upit = "SELECT BrojReklamacije FROM `$baza`.`reklamacija` WHERE BrojReklamacije='".$vrednostEsc."'";
     if ($izuzmiId !== "") {
         $izuzmiEsc = mysqli_real_escape_string($konekcija, $izuzmiId);
-        $upit .= " AND IDNabavke <> '".$izuzmiEsc."'";
+        $upit .= " AND IDReklamacije <> '".$izuzmiEsc."'";
     }
     $upit .= " LIMIT 1";
     $rez = mysqli_query($konekcija, $upit);

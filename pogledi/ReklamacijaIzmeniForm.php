@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="sr-RS" xml:lang="sr-RS">
 <head>
 <meta charset="UTF-8">
-<title>Detalji naloga za nabavku</title>
+<title>Izmena reklamacije</title>
 <?php include 'css/stil.php';?>
 </head>
 
@@ -28,7 +28,7 @@
 <td style="width:1%;"></td>
 
 <td style="width:80%;padding:0" valign="top">
-<?php include 'delovi/desnoNabavkaDetalj.php';?>
+<?php include 'delovi/desnoReklamacijaIzmeniForm.php';?>
 </td>
 
 <td style="width:1%;"></td>

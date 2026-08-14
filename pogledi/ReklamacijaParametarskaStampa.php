@@ -1,42 +1,49 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="sr-RS" xml:lang="sr-RS">
-<head>
 <meta charset="UTF-8">
-<title>Izmena naloga za nabavku</title>
+<head>
+<title>Parametarska stampa reklamacije</title>
+<meta charset="UTF-8">
 <?php include 'css/stil.php';?>
 </head>
-
 <body>
 
-<table class="no-spacing" style="width:100%; padding:0; border-spacing:0;" align="center" cellspacing="0" cellpadding="0" border="0">
+<table class="no-spacing" style="width:100%; padding:0" align="center" cellspacing="0" cellpadding="0" border="0" style="border-spacing: 0;">
 
 <?php include 'delovi/zaglavljewelcome.php';?>
 
 <tr style="padding:0px;">
 <td style="width:10%;"></td>
 
-<td align="center" valign="middle" style="width:80%; padding:0"> 
+<td align="center" valign="middle" style="width:80%; padding:0" > 
 
 <table style="width:100%; padding:0" align="center" cellspacing="0" cellpadding="0" border="0" bgcolor="#003366">
+
 <tr>
 <td style="width:1%;"></td>
 
-<td style="width:15%;padding:0" valign="top">
+<td style="width:15%;padding:0" cellspacing="0" cellpadding="0" border="0" valign="top">
 <?php include 'delovi/menilevoadmin.php';?>
 </td>
 
 <td style="width:1%;"></td>
 
-<td style="width:80%;padding:0" valign="top">
-<?php include 'delovi/desnoNabavkaIzmeniForm.php';?>
+<td style="width:80%;padding:0" cellspacing="0" cellpadding="0" border="0" valign="top">
+<?php include __DIR__ . '/../delovi/desnoParametarskaStampaReklamacija.php';?>
 </td>
 
 <td style="width:1%;"></td>
+
 </tr>
 </table>
 
 </td>
+<td style="width:10%;"></td>
+</tr>
 
+<tr style="padding:0px;">
+<td style="width:10%;"></td>
+<td align="center" valign="middle"></td>
 <td style="width:10%;"></td>
 </tr>
 

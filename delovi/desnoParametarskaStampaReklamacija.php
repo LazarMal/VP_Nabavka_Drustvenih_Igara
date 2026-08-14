@@ -1,4 +1,4 @@
-﻿<meta charset="UTF-8">
+<meta charset="UTF-8">
 
 <table style="width:100%; padding:0" align="center" cellspacing="0" cellpadding="0" border="0" bgcolor="#D8E7F4">
 
@@ -8,10 +8,10 @@
 <td>
 <font face="Trebuchet MS" color="darkblue" size="4px">
 <br/>
-<b>PARAMETARSKA ŠTAMPA NALOGA ZA NABAVKU DRUŠTVENIH IGARA</b><br/><br/>
+<b>PARAMETARSKA ŠTAMPA REKLAMACIJE</b><br/><br/>
 
-<form action="Ruter.php?stranica=stampaJednogNaloga" method="POST">
-Broj naloga: <input type="text" name="BrojNalogaFilter" required maxlength="50" />
+<form action="Ruter.php?stranica=stampaJedneReklamacije" method="POST">
+Broj reklamacije: <input type="text" name="brojReklamacije" required maxlength="50" />
 <input type="submit" name="stampaj" value="ŠTAMPAJ" />
 </form>
 </font>

@@ -1,8 +1,8 @@
-CREATE DATABASE IF NOT EXISTS `nabavka_drustvenih_igara_vp_2026`
+CREATE DATABASE IF NOT EXISTS `reklamacije_drustvenih_igara_vp_2026`
 CHARACTER SET utf8mb4
 COLLATE utf8mb4_unicode_ci;
 
-USE `nabavka_drustvenih_igara_vp_2026`;
+USE `reklamacije_drustvenih_igara_vp_2026`;
 
 CREATE TABLE `kategorija_igre`
 (
@@ -37,26 +37,27 @@ CREATE TABLE `KORISNIK`
    `statusucesca` VARCHAR(30) NOT NULL
 );
 
-CREATE TABLE `nabavka`
+CREATE TABLE `reklamacija`
 (
-   `IDNabavke` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-   `BrojNaloga` VARCHAR(50) NOT NULL,
-   `DatumNabavke` DATE NOT NULL,
+   `IDReklamacije` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   `BrojReklamacije` VARCHAR(50) NOT NULL,
+   `DatumReklamacije` DATE NOT NULL,
    `Dobavljac` VARCHAR(100) NOT NULL,
    `Napomena` VARCHAR(255) NULL,
-   `NalogEvidentirao` VARCHAR(100) NOT NULL,
-   CONSTRAINT `UQ_NABAVKA_BROJNALOGA` UNIQUE (`BrojNaloga`)
+   `ReklamacijuEvidentirao` VARCHAR(100) NOT NULL,
+   CONSTRAINT `UQ_REKLAMACIJA_BROJREKLAMACIJE` UNIQUE (`BrojReklamacije`)
 );
 
-CREATE TABLE `stavka_nabavke`
+CREATE TABLE `stavka_reklamacije`
 (
-   `IDStavke` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-   `IDNabavke` INT NOT NULL,
+   `IDStavkeReklamacije` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   `IDReklamacije` INT NOT NULL,
    `SifraIgre` VARCHAR(13) NOT NULL,
    `Kolicina` INT NOT NULL,
    `Cena` DECIMAL(10,2) NOT NULL,
-   CONSTRAINT `FK_STAVKA_NABAVKA`
-   FOREIGN KEY (`IDNabavke`) REFERENCES `nabavka`(`IDNabavke`)
+   `RazlogReklamacije` VARCHAR(255) NOT NULL,
+   CONSTRAINT `FK_STAVKA_REKLAMACIJA`
+   FOREIGN KEY (`IDReklamacije`) REFERENCES `reklamacija`(`IDReklamacije`)
    ON DELETE CASCADE
    ON UPDATE CASCADE,
    CONSTRAINT `FK_STAVKA_IGRA`

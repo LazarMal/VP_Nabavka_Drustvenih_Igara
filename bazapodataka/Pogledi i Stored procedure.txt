@@ -1,4 +1,4 @@
-USE `nabavka_drustvenih_igara_vp_2026`;
+USE `reklamacije_drustvenih_igara_vp_2026`;
 
 DROP VIEW IF EXISTS `svipodacioidrutvenimigramasaslikom`;
 DROP VIEW IF EXISTS `svipodacioidrutvenimigrama`;

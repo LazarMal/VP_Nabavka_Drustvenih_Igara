@@ -2,21 +2,23 @@
 
 require_once __DIR__ . "/DrustvenaIgraEntitet.php";
 
-class StavkaNabavkeEntitet
+class StavkaReklamacijeEntitet
 {
-    public $IDStavke;
-    public $IDNabavke;
+    public $IDStavkeReklamacije;
+    public $IDReklamacije;
     public $DrustvenaIgra;
     public $Kolicina;
     public $Cena;
+    public $RazlogReklamacije;
 
-    public function __construct($DrustvenaIgra = null, $Kolicina = 0, $Cena = 0, $IDStavke = null, $IDNabavke = null)
+    public function __construct($DrustvenaIgra = null, $Kolicina = 0, $Cena = 0, $RazlogReklamacije = "", $IDStavkeReklamacije = null, $IDReklamacije = null)
     {
-        $this->IDStavke = $IDStavke;
-        $this->IDNabavke = $IDNabavke;
+        $this->IDStavkeReklamacije = $IDStavkeReklamacije;
+        $this->IDReklamacije = $IDReklamacije;
         $this->DrustvenaIgra = $DrustvenaIgra;
         $this->Kolicina = $Kolicina;
         $this->Cena = $Cena;
+        $this->RazlogReklamacije = $RazlogReklamacije;
     }
 
     public function DajUkupno()
@@ -34,12 +36,13 @@ class StavkaNabavkeEntitet
             isset($red["NazivFajlaSlike"]) ? $red["NazivFajlaSlike"] : ""
         );
 
-        return new StavkaNabavkeEntitet(
+        return new StavkaReklamacijeEntitet(
             $igra,
             isset($red["Kolicina"]) ? $red["Kolicina"] : 0,
             isset($red["Cena"]) ? $red["Cena"] : 0,
-            isset($red["IDStavke"]) ? $red["IDStavke"] : null,
-            isset($red["IDNabavke"]) ? $red["IDNabavke"] : null
+            isset($red["RazlogReklamacije"]) ? $red["RazlogReklamacije"] : "",
+            isset($red["IDStavkeReklamacije"]) ? $red["IDStavkeReklamacije"] : null,
+            isset($red["IDReklamacije"]) ? $red["IDReklamacije"] : null
         );
     }
 }

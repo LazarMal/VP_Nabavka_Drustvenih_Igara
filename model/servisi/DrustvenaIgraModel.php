@@ -16,7 +16,7 @@ class DrustvenaIgraModel
         $this->baza = $baza;
     }
 
-    public function DajSveDrustveneIgreZaNabavku()
+    public function DajSveDrustveneIgreZaReklamaciju()
     {
         $upit = "SELECT SifraIgre, Naziv
                  FROM `".$this->baza."`.`drustvena_igra`
@@ -35,7 +35,14 @@ class DrustvenaIgraModel
 
     public function IgraPostoji($sifraIgre)
     {
-        return $this->PostojiSifraIgre($sifraIgre);
+        $konekcijaObject = new stdClass();
+        $konekcijaObject->konekcijaDB = $this->konekcija;
+        $konekcijaObject->KompletanNazivBazePodataka = $this->baza;
+        $konekcijaObject->VerzijaMYSQLNaredbi = "mysqli";
+
+        $repo = new DBDrustvenaIgra($konekcijaObject, 'drustvena_igra');
+
+        return $repo->IgraPostoji($sifraIgre);
     }
 
     public function SnimiNovuDrustvenuIgru($konekcijaObject, $sifraIgre, $naziv, $proizvodjac, $oznakaKategorije, $nazivFajlaSlike)
@@ -101,11 +108,11 @@ class DrustvenaIgraModel
 
         $provera = mysqli_query(
             $this->konekcija,
-            "SELECT COUNT(*) AS broj FROM `".$this->baza."`.`stavka_nabavke` WHERE SifraIgre='".$sifraEsc."'"
+            "SELECT COUNT(*) AS broj FROM `".$this->baza."`.`stavka_reklamacije` WHERE SifraIgre='".$sifraEsc."'"
         );
         $red = mysqli_fetch_assoc($provera);
         if ($red && (int)$red['broj'] > 0) {
-            return "Igra se ne moze obrisati jer postoji u evidentiranim nalozima.";
+            return "Igra se ne moze obrisati jer postoji u evidentiranim reklamacijama.";
         }
 
         $igraRepo = new DBDrustvenaIgra($konekcijaObject, 'drustvena_igra');

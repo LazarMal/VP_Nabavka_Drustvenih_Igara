@@ -145,13 +145,13 @@ switch ($stranica) {
         require 'kontroler/akcije/DrustvenaIgraObrisi.php';
         break;
 
-    case 'novaNabavka':
+    case 'novaReklamacija':
         proveriSesiju();
 
-        require_once 'kontroler/stranice/NabavkeController.php';
+        require_once 'kontroler/stranice/ReklamacijeController.php';
 
-        $NabavkeController = new NabavkeController();
-        $rezultatDrustveneIgre = $NabavkeController->DajDrustveneIgreZaNabavku();
+        $ReklamacijeController = new ReklamacijeController();
+        $rezultatDrustveneIgre = $ReklamacijeController->DajDrustveneIgreZaReklamaciju();
 
         $optionsDrustveneIgre = "<option value=\"\">izaberite igru...</option>";
 
@@ -161,122 +161,122 @@ switch ($stranica) {
                 . "</option>";
         }
 
-        include 'pogledi/NovaNabavka.php';
+        include 'pogledi/NovaReklamacija.php';
 
-        $NabavkeController->ZatvoriKonekciju();
+        $ReklamacijeController->ZatvoriKonekciju();
         break;
 
-    case 'nabavke':
+    case 'reklamacije':
         proveriSesiju();
 
-        require_once 'kontroler/stranice/NabavkeController.php';
+        require_once 'kontroler/stranice/ReklamacijeController.php';
 
-        $NabavkeController = new NabavkeController();
+        $ReklamacijeController = new ReklamacijeController();
 
-        $filterBrojNaloga = "";
-        $filterDatumNabavke = "";
+        $filterBrojReklamacije = "";
+        $filterDatumReklamacije = "";
         $filterDobavljac = "";
 
         if (isset($_GET['filtriraj']) && !isset($_GET['svi'])) {
-            $filterBrojNaloga = isset($_GET['filterBrojNaloga']) ? trim($_GET['filterBrojNaloga']) : "";
-            $filterDatumNabavke = isset($_GET['filterDatumNabavke']) ? trim($_GET['filterDatumNabavke']) : "";
+            $filterBrojReklamacije = isset($_GET['filterBrojReklamacije']) ? trim($_GET['filterBrojReklamacije']) : "";
+            $filterDatumReklamacije = isset($_GET['filterDatumReklamacije']) ? trim($_GET['filterDatumReklamacije']) : "";
             $filterDobavljac = isset($_GET['filterDobavljac']) ? trim($_GET['filterDobavljac']) : "";
-            $rezultatNabavke = $NabavkeController->DajNabavkePoFilteru($filterBrojNaloga, $filterDatumNabavke, $filterDobavljac);
+            $rezultatReklamacije = $ReklamacijeController->DajReklamacijePoFilteru($filterBrojReklamacije, $filterDatumReklamacije, $filterDobavljac);
         } else {
-            $rezultatNabavke = $NabavkeController->DajSveNabavke();
+            $rezultatReklamacije = $ReklamacijeController->DajSveReklamacije();
         }
 
-        $listaNabavaka = $NabavkeController->DajNabavkeSaStavkama($rezultatNabavke);
+        $listaReklamacija = $ReklamacijeController->DajReklamacijeSaStavkama($rezultatReklamacije);
 
-        include 'pogledi/NabavkeLista.php';
+        include 'pogledi/ReklamacijeLista.php';
 
-        $NabavkeController->ZatvoriKonekciju();
+        $ReklamacijeController->ZatvoriKonekciju();
         break;
 
-    case 'nabavkaDetalj':
+    case 'reklamacijaDetalj':
         proveriSesiju();
 
-        require_once 'kontroler/stranice/NabavkeController.php';
+        require_once 'kontroler/stranice/ReklamacijeController.php';
 
-        $NabavkeController = new NabavkeController();
+        $ReklamacijeController = new ReklamacijeController();
 
-        $IDNabavke = isset($_GET['id']) ? trim($_GET['id']) : "";
-        $nabavka = $IDNabavke != "" ? $NabavkeController->DajNabavkuPoID($IDNabavke) : null;
-        $rezultatStavke = ($nabavka != null) ? $NabavkeController->DajStavkeNabavke($IDNabavke) : null;
+        $IDReklamacije = isset($_GET['id']) ? trim($_GET['id']) : "";
+        $reklamacija = $IDReklamacije != "" ? $ReklamacijeController->DajReklamacijuPoID($IDReklamacije) : null;
+        $rezultatStavke = ($reklamacija != null) ? $ReklamacijeController->DajStavkeReklamacije($IDReklamacije) : null;
 
-        include 'pogledi/NabavkaDetalj.php';
+        include 'pogledi/ReklamacijaDetalj.php';
 
-        $NabavkeController->ZatvoriKonekciju();
+        $ReklamacijeController->ZatvoriKonekciju();
         break;
 
-    case 'obrisiNabavku':
+    case 'obrisiReklamaciju':
         proveriSesiju();
-        require 'kontroler/akcije/nabavkaObrisi.php';
+        require 'kontroler/akcije/reklamacijaObrisi.php';
         break;
 
-    case 'stampaNabavke':
+    case 'stampaReklamacija':
         proveriSesiju();
 
-        require_once 'kontroler/stranice/NabavkeController.php';
+        require_once 'kontroler/stranice/ReklamacijeController.php';
 
-        $NabavkeController = new NabavkeController();
+        $ReklamacijeController = new ReklamacijeController();
 
-        $filterBrojNaloga = "";
-        $filterDatumNabavke = "";
+        $filterBrojReklamacije = "";
+        $filterDatumReklamacije = "";
         $filterDobavljac = "";
         $filtrirano = false;
 
         if (isset($_GET['filtriraj']) && !isset($_GET['svi'])) {
             $filtrirano = true;
-            $filterBrojNaloga = isset($_GET['filterBrojNaloga']) ? trim($_GET['filterBrojNaloga']) : "";
-            $filterDatumNabavke = isset($_GET['filterDatumNabavke']) ? trim($_GET['filterDatumNabavke']) : "";
+            $filterBrojReklamacije = isset($_GET['filterBrojReklamacije']) ? trim($_GET['filterBrojReklamacije']) : "";
+            $filterDatumReklamacije = isset($_GET['filterDatumReklamacije']) ? trim($_GET['filterDatumReklamacije']) : "";
             $filterDobavljac = isset($_GET['filterDobavljac']) ? trim($_GET['filterDobavljac']) : "";
-            $rezultatNabavke = $NabavkeController->DajNabavkePoFilteru($filterBrojNaloga, $filterDatumNabavke, $filterDobavljac);
+            $rezultatReklamacije = $ReklamacijeController->DajReklamacijePoFilteru($filterBrojReklamacije, $filterDatumReklamacije, $filterDobavljac);
         } else {
-            $rezultatNabavke = $NabavkeController->DajSveNabavke();
+            $rezultatReklamacije = $ReklamacijeController->DajSveReklamacije();
         }
 
-        $listaNabavaka = $NabavkeController->DajNabavkeSaStavkama($rezultatNabavke);
+        $listaReklamacija = $ReklamacijeController->DajReklamacijeSaStavkama($rezultatReklamacije);
 
-        include 'pogledi/NabavkeStampa.php';
+        include 'pogledi/ReklamacijeStampa.php';
 
-        $NabavkeController->ZatvoriKonekciju();
+        $ReklamacijeController->ZatvoriKonekciju();
         break;
 
-    case 'parametarskaStampaNabavke':
+    case 'parametarskaStampaReklamacija':
         proveriSesiju();
-        include 'pogledi/NabavkaParametarskaStampa.php';
+        include 'pogledi/ReklamacijaParametarskaStampa.php';
         break;
 
-    case 'stampaJednogNaloga':
+    case 'stampaJedneReklamacije':
         proveriSesiju();
 
-        $BrojNalogaFilter = isset($_POST['BrojNalogaFilter']) ? trim($_POST['BrojNalogaFilter']) : null;
+        $brojReklamacije = isset($_POST['brojReklamacije']) ? trim($_POST['brojReklamacije']) : "";
 
-        require_once 'kontroler/stranice/NabavkeController.php';
+        require_once 'kontroler/stranice/ReklamacijeController.php';
 
-        $NabavkeController = new NabavkeController();
-        $nabavka = ($BrojNalogaFilter != null && $BrojNalogaFilter != "") ? $NabavkeController->DajNabavkuPoBrojuNaloga($BrojNalogaFilter) : null;
-        $rezultatStavke = ($nabavka != null) ? $NabavkeController->DajStavkeNabavke($nabavka['IDNabavke']) : null;
+        $ReklamacijeController = new ReklamacijeController();
+        $reklamacija = ($brojReklamacije != "") ? $ReklamacijeController->DajReklamacijuPoBrojuReklamacije($brojReklamacije) : null;
+        $rezultatStavke = ($reklamacija != null) ? $ReklamacijeController->DajStavkeReklamacije($reklamacija['IDReklamacije']) : null;
 
-        include 'pogledi/StampaPodatakaONalogu.php';
+        include 'pogledi/StampaPodatakaOReklamaciji.php';
 
-        $NabavkeController->ZatvoriKonekciju();
+        $ReklamacijeController->ZatvoriKonekciju();
         break;
 
-    case 'nabavkaIzmeniForm':
+    case 'reklamacijaIzmeniForm':
         proveriSesiju();
 
-        require_once 'kontroler/stranice/NabavkeController.php';
+        require_once 'kontroler/stranice/ReklamacijeController.php';
 
-        $NabavkeController = new NabavkeController();
+        $ReklamacijeController = new ReklamacijeController();
 
-        $IDNabavke = isset($_POST['IDNabavke']) ? trim($_POST['IDNabavke']) : (isset($_GET['id']) ? trim($_GET['id']) : "");
-        $nabavka = $IDNabavke != "" ? $NabavkeController->DajNabavkuPoID($IDNabavke) : null;
-        $rezultatStavke = ($nabavka != null) ? $NabavkeController->DajStavkeNabavke($IDNabavke) : null;
+        $IDReklamacije = isset($_POST['IDReklamacije']) ? trim($_POST['IDReklamacije']) : (isset($_GET['id']) ? trim($_GET['id']) : "");
+        $reklamacija = $IDReklamacije != "" ? $ReklamacijeController->DajReklamacijuPoID($IDReklamacije) : null;
+        $rezultatStavke = ($reklamacija != null) ? $ReklamacijeController->DajStavkeReklamacije($IDReklamacije) : null;
 
         $listaIgara = array();
-        $rezultatDrustveneIgre = $NabavkeController->DajDrustveneIgreZaNabavku();
+        $rezultatDrustveneIgre = $ReklamacijeController->DajDrustveneIgreZaReklamaciju();
         while ($igra = mysqli_fetch_assoc($rezultatDrustveneIgre)) {
             $listaIgara[] = $igra;
         }
@@ -289,9 +289,9 @@ switch ($stranica) {
                 . "</option>";
         }
 
-        include 'pogledi/NabavkaIzmeniForm.php';
+        include 'pogledi/ReklamacijaIzmeniForm.php';
 
-        $NabavkeController->ZatvoriKonekciju();
+        $ReklamacijeController->ZatvoriKonekciju();
         break;
 
     default:

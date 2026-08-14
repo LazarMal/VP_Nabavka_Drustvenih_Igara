@@ -1,8 +1,8 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="sr-RS" xml:lang="sr-RS">
 <head>
 <meta charset="UTF-8">
-<title>Novi nalog za nabavku društvenih igara</title>
+<title>Novi zapisnik o reklamaciji drustvenih igara</title>
 <?php include 'css/stil.php';?>
 </head>
 
@@ -12,7 +12,7 @@
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-$nalogEvidentirao = isset($_SESSION["korisnik"]) ? $_SESSION["korisnik"] : "";
+$reklamacijuEvidentirao = isset($_SESSION["korisnik"]) ? $_SESSION["korisnik"] : "";
 ?>
 
 <table class="no-spacing" style="width:100%; padding:0; border-spacing:0;" align="center" cellspacing="0" cellpadding="0" border="0">
@@ -48,7 +48,7 @@ $nalogEvidentirao = isset($_SESSION["korisnik"]) ? $_SESSION["korisnik"] : "";
 <tr>
 <td style="width:3%;"></td>
 <td align="left">
-<b><font face="Trebuchet MS" color="black" size="3px">NOVI NALOG ZA NABAVKU DRUŠTVENIH IGARA</font></b><br/><br/>
+<b><font face="Trebuchet MS" color="black" size="3px">NOVI ZAPISNIK O REKLAMACIJI DRUŠTVENIH IGARA</font></b><br/><br/>
 </td>
 <td style="width:3%;"></td>
 </tr>
@@ -57,23 +57,23 @@ $nalogEvidentirao = isset($_SESSION["korisnik"]) ? $_SESSION["korisnik"] : "";
 <td style="width:3%;"></td>
 <td align="center">
 
-<form action="kontroler/akcije/nabavkaSnimi.php" method="POST" onsubmit="return proveriNabavku();">
+<form action="kontroler/akcije/reklamacijaSnimi.php" method="POST" onsubmit="return proveriReklamaciju();">
 
 <table style="width:90%;" bgcolor="#B7F0F7" align="center" cellspacing="0" cellpadding="5" border="1">
 <tr>
 <td colspan="2" align="left">
-<b>PODACI O NABAVCI</b>
+<b>PODACI O REKLAMACIJI</b>
 </td>
 </tr>
 
 <tr>
-<td align="right"><b>Broj naloga&nbsp;&nbsp;</b></td>
-<td align="left"><input type="text" name="brojNaloga" id="brojNaloga" maxlength="50" required placeholder="Unesite broj naloga"></td>
+<td align="right"><b>Broj reklamacije&nbsp;&nbsp;</b></td>
+<td align="left"><input type="text" name="brojReklamacije" id="brojReklamacije" maxlength="50" required placeholder="Unesite broj reklamacije"></td>
 </tr>
 
 <tr>
-<td align="right"><b>Datum nabavke&nbsp;&nbsp;</b></td>
-<td align="left"><input type="date" name="datumNabavke" id="datumNabavke" required></td>
+<td align="right"><b>Datum reklamacije&nbsp;&nbsp;</b></td>
+<td align="left"><input type="date" name="datumReklamacije" id="datumReklamacije" required></td>
 </tr>
 
 <tr>
@@ -91,9 +91,9 @@ $nalogEvidentirao = isset($_SESSION["korisnik"]) ? $_SESSION["korisnik"] : "";
 </tr>
 
 <tr>
-<td align="right"><b>Nalog evidentirao&nbsp;&nbsp;</b></td>
+<td align="right"><b>Reklamaciju evidentirao&nbsp;&nbsp;</b></td>
 <td align="left">
-<input type="text" value="<?php echo htmlspecialchars($nalogEvidentirao); ?>" readonly style="background-color:#EEEEEE;">
+<input type="text" value="<?php echo htmlspecialchars($reklamacijuEvidentirao); ?>" readonly style="background-color:#EEEEEE;">
 </td>
 </tr>
 </table>
@@ -103,32 +103,37 @@ $nalogEvidentirao = isset($_SESSION["korisnik"]) ? $_SESSION["korisnik"] : "";
 <table id="stavkeTabela" style="width:90%; margin-left:auto; margin-right:auto;" bgcolor="#B7F0F7" align="center" cellspacing="0" cellpadding="5" border="1">
 
 <tr>
-<td colspan="5" align="left">
-<b>STAVKE NALOGA</b>
+<td colspan="6" align="left">
+<b>STAVKE REKLAMACIJE</b>
 </td>
 </tr>
 
 <tr>
 <td><b>Društvena igra</b></td>
 <td><b>Količina</b></td>
-<td><b>Cena</b></td>
+<td><b>Cena po komadu</b></td>
+<td><b>Razlog reklamacije</b></td>
 <td><b>Ukupno</b></td>
 <td><b>Akcija</b></td>
 </tr>
 
 <tr class="stavkaRed">
 <td>
-<select name="sifraIgre[]" class="igraSelect" required style="width:280px;">
+<select name="sifraIgre[]" class="igraSelect" required style="width:200px;">
 <?php echo $optionsDrustveneIgre; ?>
 </select>
 </td>
 
 <td>
-<input type="number" name="kolicina[]" class="kolicinaInput" min="1" step="1" required style="width:90px;">
+<input type="number" name="kolicina[]" class="kolicinaInput" min="1" step="1" required style="width:70px;">
 </td>
 
 <td>
 <input type="number" name="cena[]" class="cenaInput" min="0.01" step="0.01" required style="width:90px;">
+</td>
+
+<td>
+<input type="text" name="razlogReklamacije[]" class="razlogInput" maxlength="255" required style="width:180px;">
 </td>
 
 <td>
@@ -149,7 +154,7 @@ $nalogEvidentirao = isset($_SESSION["korisnik"]) ? $_SESSION["korisnik"] : "";
 <td align="center">
 <button type="button" onclick="dodajStavku()">DODAJ JOS JEDNU STAVKU</button>
 <br/><br/>
-<input type="submit" value="SACUVAJ NALOG">
+<input type="submit" value="SACUVAJ REKLAMACIJU">
 </td>
 </tr>
 </table>
@@ -196,17 +201,11 @@ $nalogEvidentirao = isset($_SESSION["korisnik"]) ? $_SESSION["korisnik"] : "";
 
 <script>
 let optionsIgre = `<?php echo str_replace("`", "\`", $optionsDrustveneIgre); ?>`;
-let brojNalogaZauzet = false;
-let sifraIgreZauzeta = false;
+let brojReklamacijeZauzet = false;
 
 function postaviDogadjajeZaRed(red) {
-    let igraSelect = red.querySelector(".igraSelect");
     let kolicinaInput = red.querySelector(".kolicinaInput");
     let cenaInput = red.querySelector(".cenaInput");
-
-    igraSelect.addEventListener("change", function() {
-        izracunajUkupno(red);
-    });
 
     kolicinaInput.addEventListener("input", function() {
         izracunajUkupno(red);
@@ -237,15 +236,18 @@ function dodajStavku() {
 
     noviRed.innerHTML = `
         <td>
-            <select name="sifraIgre[]" class="igraSelect" required style="width:280px;">
+            <select name="sifraIgre[]" class="igraSelect" required style="width:200px;">
                 ${optionsIgre}
             </select>
         </td>
         <td>
-            <input type="number" name="kolicina[]" class="kolicinaInput" min="1" step="1" required style="width:90px;">
+            <input type="number" name="kolicina[]" class="kolicinaInput" min="1" step="1" required style="width:70px;">
         </td>
         <td>
             <input type="number" name="cena[]" class="cenaInput" min="0.01" step="0.01" required style="width:90px;">
+        </td>
+        <td>
+            <input type="text" name="razlogReklamacije[]" class="razlogInput" maxlength="255" required style="width:180px;">
         </td>
         <td>
             <input type="text" class="ukupnoInput" readonly style="width:90px;">
@@ -263,28 +265,28 @@ function obrisiStavku(dugme) {
     let redovi = document.querySelectorAll(".stavkaRed");
 
     if (redovi.length <= 1) {
-        alert("Nalog mora imati bar jednu stavku.");
+        alert("Reklamacija mora imati bar jednu stavku.");
         return;
     }
 
     dugme.closest("tr").remove();
 }
 
-function proveriNabavku() {
-    let brojNaloga = document.getElementById("brojNaloga").value.trim();
-    let datum = document.getElementById("datumNabavke").value;
+function proveriReklamaciju() {
+    let brojReklamacije = document.getElementById("brojReklamacije").value.trim();
+    let datum = document.getElementById("datumReklamacije").value;
     let dobavljac = document.getElementById("dobavljac").value.trim();
     let napomenaEl = document.getElementById("napomena");
     let napomena = napomenaEl ? napomenaEl.value.trim() : "";
     let redovi = document.querySelectorAll(".stavkaRed");
 
-    if (brojNaloga == "" || datum == "" || dobavljac == "") {
-        alert("Morate popuniti sva obavezna polja o nalogu.");
+    if (brojReklamacije == "" || datum == "" || dobavljac == "") {
+        alert("Morate popuniti sva obavezna polja o reklamaciji.");
         return false;
     }
 
-    if (brojNaloga.length > 50) {
-        alert("Broj naloga ne sme biti duži od 50 karaktera.");
+    if (brojReklamacije.length > 50) {
+        alert("Broj reklamacije ne sme biti duži od 50 karaktera.");
         return false;
     }
 
@@ -299,12 +301,12 @@ function proveriNabavku() {
     }
 
     if (!/^\d{4}-\d{2}-\d{2}$/.test(datum)) {
-        alert("Datum nabavke nije ispravan.");
+        alert("Datum reklamacije nije ispravan.");
         return false;
     }
 
     if (redovi.length == 0) {
-        alert("Nalog mora imati bar jednu stavku.");
+        alert("Reklamacija mora imati bar jednu stavku.");
         return false;
     }
 
@@ -312,7 +314,8 @@ function proveriNabavku() {
         let igra = redovi[i].querySelector(".igraSelect").value;
         let kolicinaVal = redovi[i].querySelector(".kolicinaInput").value;
         let cenaVal = redovi[i].querySelector(".cenaInput").value;
-        let kolicina = parseInt(kolicinaVal, 10);
+        let razlogVal = redovi[i].querySelector(".razlogInput").value.trim();
+        let kolicinaNum = Number(kolicinaVal);
         let cena = parseFloat(cenaVal);
 
         if (igra == "") {
@@ -320,7 +323,7 @@ function proveriNabavku() {
             return false;
         }
 
-        if (kolicinaVal === "" || isNaN(kolicina) || String(kolicina) !== String(parseInt(kolicinaVal, 10)) || kolicina <= 0) {
+        if (kolicinaVal === "" || !Number.isInteger(kolicinaNum) || kolicinaNum <= 0) {
             alert("Količina mora biti pozitivan ceo broj veći od 0.");
             return false;
         }
@@ -329,32 +332,42 @@ function proveriNabavku() {
             alert("Cena mora biti pozitivna decimalna vrednost veća od 0.");
             return false;
         }
+
+        if (razlogVal === "") {
+            alert("Razlog reklamacije je obavezan u svakoj stavci.");
+            return false;
+        }
+
+        if (razlogVal.length > 255) {
+            alert("Razlog reklamacije ne sme biti duži od 255 karaktera.");
+            return false;
+        }
     }
 
-    if (brojNalogaZauzet) {
-        alert("Broj naloga je već zauzet.");
+    if (brojReklamacijeZauzet) {
+        alert("Broj reklamacije je već zauzet.");
         return false;
     }
 
     return true;
 }
 
-function proveriBrojNaloga() {
-    let brojNaloga = document.getElementById("brojNaloga").value.trim();
-    brojNalogaZauzet = false;
-    if (brojNaloga === "") return;
+function proveriBrojReklamacije() {
+    let brojReklamacije = document.getElementById("brojReklamacije").value.trim();
+    brojReklamacijeZauzet = false;
+    if (brojReklamacije === "") return;
 
-    fetch("api/router.php?akcija=proveraJedinstvenosti&tip=brojNaloga&vrednost=" + encodeURIComponent(brojNaloga))
+    fetch("api/router.php?akcija=proveraJedinstvenosti&tip=brojReklamacije&vrednost=" + encodeURIComponent(brojReklamacije))
         .then(r => r.json())
         .then(data => {
-            brojNalogaZauzet = data.postoji === true;
-            if (brojNalogaZauzet) {
-                alert("Broj naloga je već zauzet.");
+            brojReklamacijeZauzet = data.postoji === true;
+            if (brojReklamacijeZauzet) {
+                alert("Broj reklamacije je već zauzet.");
             }
         });
 }
 
-document.getElementById("brojNaloga").addEventListener("blur", proveriBrojNaloga);
+document.getElementById("brojReklamacije").addEventListener("blur", proveriBrojReklamacije);
 
 let prviRed = document.querySelector(".stavkaRed");
 postaviDogadjajeZaRed(prviRed);

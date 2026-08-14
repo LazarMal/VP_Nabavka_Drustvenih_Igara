@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="sr-RS" xml:lang="sr-RS">
 <meta charset="UTF-8">
 <head>
-<title>TF M Pupin</title>
+<title>Zapisnik o reklamaciji</title>
 <meta charset="UTF-8">
 <?php include 'css/stil.php';?>
 </head>
 <body>
 
-<table class="no-spacing" style="width:100%; padding:0" align="center" cellspacing="0" cellpadding="0" border="0" style="border-spacing: 0;">
+<table class="no-spacing" style="width:100%; padding:0" align="center" cellspacing="0" cellpadding="0" border="0">
 
 <?php include 'delovi/zaglavljestampa.php';?>
 
@@ -22,8 +22,8 @@
 <tr>
 <td style="width:1%;"></td>
 
-<td style="width:80%;padding:0" cellspacing="0" cellpadding="0" border="0" valign="top">
-<?php include __DIR__ . '/../delovi/desnoStampaNabavke.php';?>
+<td align="right" valign="middle">
+<?php include __DIR__ . '/../delovi/desnoStampaOReklamaciji.php';?>
 </td>
 
 <td style="width:1%;"></td>
@@ -32,6 +32,7 @@
 </table>
 
 </td>
+
 <td style="width:10%;"></td>
 </tr>
 
